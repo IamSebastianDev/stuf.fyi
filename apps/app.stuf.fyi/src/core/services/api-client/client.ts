@@ -33,12 +33,12 @@ export function requestConfig(path: `/${string}`, options: RequestOptions = {}) 
         return {
             url: createUrl(path, clientOptions.baseUrl, params ?? {}),
             options: {
-                method: 'GET',
+                method: 'GET', // default, can be easily overwritten
                 headers: {
-                    ...(json ? { 'Content-Type': 'application/json' } : {}),
+                    ...(json !== undefined ? { 'Content-Type': 'application/json' } : {}),
                     ...requestInit.headers,
                 },
-                ...(json ? { body: JSON.stringify(json) } : {}),
+                ...(json !== undefined ? { body: JSON.stringify(json) } : {}),
                 ...(authenticated ? { credentials: 'include' } : {}),
                 ...requestInit,
             },
