@@ -1,0 +1,24 @@
+{
+    "name": "@stuf/contracts",
+    "version": "0.0.1",
+    "private": true,
+    "type": "module",
+    "imports": {
+        "#/*": "./src/*.ts"
+    },
+    "exports": {
+        "./*": "./src/*/index.ts"
+    },
+    "scripts": {
+        "format:write": "oxfmt --write .",
+        "format:check": "oxfmt --check .",
+        "lint": "oxlint --type-aware ."
+    },
+    "dependencies": {
+        "valibot": "^1.1.0"
+    },
+    "devDependencies": {
+        "@repository/config": "*",
+        "typescript": "^7.0.2"
+    }
+}
