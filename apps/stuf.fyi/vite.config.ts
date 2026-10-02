@@ -6,6 +6,7 @@ export default defineConfig(({ mode }) => {
     return {
         envDir: '../..',
         server: {
+            strictPort: true,
             host: env.LND_HOST ?? 'localhost',
             port: Number(env.LND_PORT ?? 5174),
         },

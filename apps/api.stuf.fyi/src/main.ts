@@ -4,6 +4,7 @@ import { AppModule } from './app.module.js';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
+    app.enableShutdownHooks();
 
     // We set up API versioning from the beginning.
     app.enableVersioning({ type: VersioningType.URI, defaultVersion: '1' });
