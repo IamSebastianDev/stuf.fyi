@@ -6,10 +6,26 @@ import {
 } from '@nestjs/common';
 import { NestFactory, Reflector } from '@nestjs/core';
 import { FastifyAdapter, type NestFastifyApplication } from '@nestjs/platform-fastify';
+import { randomUUIDv7 } from 'node:crypto';
 import { AppModule } from './app.module';
 
+const configureAdapter = () => {
+    const adapter = new FastifyAdapter({
+        genReqId: () => randomUUIDv7(),
+        logger: true,
+    });
+
+    adapter.getInstance().addHook('onSend', async (request, reply) => {
+        reply.header('x-request-id', request.id);
+    });
+
+    return adapter;
+};
+
 async function bootstrap() {
-    const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
+    const adapter = configureAdapter();
+    const app = await NestFactory.create<NestFastifyApplication>(AppModule, adapter);
+
     app.enableShutdownHooks();
 
     // We set up API versioning from the beginning.
