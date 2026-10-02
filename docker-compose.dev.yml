@@ -1,0 +1,24 @@
+services:
+    db:
+        image: postgres:18-alpine
+        restart: unless-stopped
+
+        environment:
+            POSTGRES_DB: stuf
+            POSTGRES_USER: stuf
+            POSTGRES_PASSWORD: stuf
+
+        ports:
+            - "5432:5432"
+
+        volumes:
+            - stuf-db:/var/lib/postgresql/data
+
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U stuf -d stuf"]
+            interval: 5s
+            timeout: 5s
+            retries: 10
+
+volumes:
+    stuf-db:

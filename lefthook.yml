@@ -1,0 +1,14 @@
+pre-commit:
+    parallel: true
+    commands:
+        format:
+            run: npm run format:write
+            stage_fixed: true
+
+        lint:
+            run: npm run lint
+
+commit-msg:
+    commands:
+        commitlint:
+            run: npx commitlint --default-config --edit {1}
