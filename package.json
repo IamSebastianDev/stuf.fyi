@@ -7,7 +7,7 @@
         "email": "sebastian@iamsebastian.dev"
     },
     "workspaces": [
-        "./packages/*",
+        "./packages/**/*",
         "./apps/*"
     ],
     "repository": {
@@ -21,7 +21,10 @@
         "db:up": "docker compose -f compose.dev.yml up -d",
         "db:down": "docker compose -f compose.dev.yml down",
         "db:logs": "docker compose -f compose.dev.yml logs -f db",
-        "db:reset": "docker compose -f compose.dev.yml down -v"
+        "db:reset": "docker compose -f compose.dev.yml down -v",
+        "db:generate": "node --env-file=.env node_modules/prisma/build/index.js generate --config packages/@stuf/prisma/prisma.config.ts",
+        "db:migrate": "node --env-file=.env node_modules/prisma/build/index.js migrate dev --config packages/@stuf/prisma//prisma.config.ts",
+        "db:studio": "node --env-file=.env node_modules/prisma/build/index.js studio --config packages/@stuf/prisma//prisma.config.ts"
     },
     "devDependencies": {
         "@commitlint/cli": "^21.2.3",
@@ -29,7 +32,8 @@
         "lefthook": "^2.1.16",
         "oxfmt": "^0.71.0",
         "oxlint": "^1.86.0",
-        "turbo": "^2.11.6"
+        "turbo": "^2.11.6",
+        "typescript": "^7.0.2"
     },
     "devEngines": {
         "packageManager": {

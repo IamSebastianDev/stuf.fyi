@@ -1,0 +1,8 @@
+{
+    "extends": "@repository/config/base.json",
+    "compilerOptions": {
+        "noEmit": true,
+        "types": ["@types/node"]
+    },
+    "include": ["src", "./prisma.config.ts", "generated/prisma"]
+}

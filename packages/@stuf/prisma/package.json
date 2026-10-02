@@ -1,0 +1,24 @@
+{
+    "name": "@stuf/prisma",
+    "private": true,
+    "type": "module",
+    "main": "./src/index.ts",
+    "scripts": {
+        "prisma": "node --env-file=../../../.env ../../../node_modules/prisma/build/index.js",
+        "db:generate": "npm run prisma -- generate",
+        "db:migrate": "npm run prisma -- migrate dev",
+        "db:deploy": "npm run prisma -- migrate deploy",
+        "db:studio": "npm run prisma -- studio"
+    },
+    "dependencies": {
+        "@prisma/adapter-pg": "^7.9.1",
+        "@prisma/client": "^7.9.1",
+        "pg": "^8.22.0",
+        "prisma": "^7.10.0"
+    },
+    "devDependencies": {
+        "@types/pg": "^8.20.3",
+        "@repository/config": "*",
+        "@types/node": "^26.6.4"
+    }
+}
