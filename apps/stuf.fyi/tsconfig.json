@@ -1,0 +1,9 @@
+{
+    "extends": "@repository/config/base.json",
+    "compilerOptions": {
+        "lib": ["esnext", "dom", "dom.iterable"],
+        "skipLibCheck": true,
+        "noEmit": true
+    },
+    "include": ["src"]
+}

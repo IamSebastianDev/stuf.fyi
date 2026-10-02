@@ -1,0 +1,11 @@
+{
+    "extends": "@repository/config/base.json",
+    "compilerOptions": {
+        "noEmit": true,
+        "types": ["@types/node"],
+        "lib": ["ESNext"],
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
+    },
+    "include": ["src"]
+}

@@ -1,0 +1,36 @@
+{
+    "name": "api.stuf.fyi",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "nest start --watch --env-file ../../.env",
+        "build": "nest build",
+        "start": "node --env-file=../../.env dist/main.js",
+        "typecheck": "tsc --noEmit",
+        "format:write": "oxfmt --write .",
+        "format:check": "oxfmt --check .",
+        "lint": "oxlint --type-aware ."
+    },
+    "dependencies": {
+        "@nestjs/common": "^12.0.1",
+        "@nestjs/core": "^12.0.1",
+        "@nestjs/platform-express": "^12.0.1",
+        "reflect-metadata": "^0.2.2",
+        "rxjs": "^7.8.1"
+    },
+    "devDependencies": {
+        "@nestjs/cli": "^12.0.0",
+        "@nestjs/schematics": "^12.0.0",
+        "@repository/config": "*",
+        "@swc/cli": "^0.8.1",
+        "@swc/core": "^1.16.13",
+        "@types/express": "^5.0.0",
+        "@types/node": "^26.0.0",
+        "oxfmt": "^0.71.0",
+        "oxlint": "^1.58.0",
+        "oxlint-tsgolint": "^7.0.2001",
+        "source-map-support": "^0.5.21",
+        "typescript": "^6.0.2"
+    }
+}

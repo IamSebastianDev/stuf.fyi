@@ -1,0 +1,22 @@
+{
+    "name": "app.stuf.fyi",
+    "type": "module",
+    "scripts": {
+        "dev": "vite dev",
+        "build": "vite build",
+        "preview": "vite preview",
+        "format:write": "oxfmt --write .",
+        "format:check": "oxfmt --check .",
+        "lint": "oxlint ."
+    },
+    "dependencies": {
+        "@grainular/grains": "latest",
+        "@grainular/nord": "latest",
+        "@grainular/router": "latest",
+        "vite": "^8.2.2"
+    },
+    "devDependencies": {
+        "@repository/config": "*",
+        "typescript": "^7.0.2"
+    }
+}

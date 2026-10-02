@@ -6,15 +6,17 @@
         "name": "Sebastian Heinz",
         "email": "sebastian@iamsebastian.dev"
     },
-    "workspaces": [
-        "./packages/**/*",
-        "./apps/*"
-    ],
     "repository": {
         "type": "git",
         "url": "git+https://github.com/npm/cli.git"
     },
+    "workspaces": [
+        "./packages/**/*",
+        "./apps/*"
+    ],
     "scripts": {
+        "dev": "turbo run dev",
+        "build": "turbo run build",
         "format:write": "turbo run format:write",
         "format:check": "turbo run format:check",
         "lint": "turbo run lint",
@@ -38,8 +40,8 @@
     "devEngines": {
         "packageManager": {
             "name": "npm",
-            "onFail": "error",
-            "version": "12.2.0"
+            "version": "12.2.0",
+            "onFail": "error"
         }
     }
 }
