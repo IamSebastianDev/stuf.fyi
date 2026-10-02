@@ -12,7 +12,10 @@
     "dependencies": {
         "@grainular/grains": "latest",
         "@grainular/nord": "latest",
+        "@grainular/resource": "^2.3.0",
         "@grainular/router": "latest",
+        "@stuf/contracts": "*",
+        "valibot": "^1.4.2",
         "vite": "^8.2.2"
     },
     "devDependencies": {

@@ -1,6 +1,3 @@
 import * as v from 'valibot';
 
-export const dateSchema = v.pipe(
-    v.date(),
-    v.transform((date) => date.toISOString()),
-);
+export const DateSchema = v.pipe(v.string(), v.isoTimestamp());
