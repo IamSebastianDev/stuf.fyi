@@ -11,6 +11,7 @@ async function bootstrap() {
     app.enableVersioning({ type: VersioningType.URI, defaultVersion: '1' });
 
     // Register global stuff
+    app.setGlobalPrefix('api');
     app.useGlobalPipes(new StandardSchemaValidationPipe());
     app.useGlobalInterceptors(new StandardSchemaSerializerInterceptor(app.get(Reflector)));
 
