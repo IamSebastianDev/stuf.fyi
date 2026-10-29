@@ -15,6 +15,7 @@
         "@grainular/resource": "^2.3.0",
         "@grainular/router": "latest",
         "@stuf/contracts": "*",
+        "socket.io-client": "^4.8.4",
         "valibot": "^1.4.2",
         "vite": "^8.2.2"
     },

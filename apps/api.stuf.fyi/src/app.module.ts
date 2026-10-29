@@ -2,10 +2,11 @@ import { Module } from '@nestjs/common';
 import { APP_FILTER } from '@nestjs/core';
 import { PrismaExceptionFilter } from './core/prisma/prisma-exception-filter';
 import { PrismaModule } from './core/prisma/prisma.module';
+import { SocketModule } from './core/socket/socket.module';
 import { HealthModule } from './features/health/health.module';
 
 @Module({
-    imports: [HealthModule, PrismaModule],
+    imports: [HealthModule, PrismaModule, SocketModule],
     providers: [
         {
             provide: APP_FILTER,

@@ -19,6 +19,12 @@ export default defineConfig(({ mode }) => {
                     target: `http://${apiHost}:${apiPort}`,
                     changeOrigin: true,
                 },
+
+                '/socket': {
+                    target: `http://${apiHost}:${apiPort}`,
+                    changeOrigin: true,
+                    ws: true,
+                },
             },
         },
     };

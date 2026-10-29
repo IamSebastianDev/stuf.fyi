@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { NestFactory, Reflector } from '@nestjs/core';
 import { FastifyAdapter, type NestFastifyApplication } from '@nestjs/platform-fastify';
+import { IoAdapter } from '@nestjs/platform-socket.io';
 import { randomUUIDv7 } from 'node:crypto';
 import { AppModule } from './app.module';
 
@@ -25,6 +26,7 @@ const configureAdapter = () => {
 async function bootstrap() {
     const adapter = configureAdapter();
     const app = await NestFactory.create<NestFastifyApplication>(AppModule, adapter);
+    app.useWebSocketAdapter(new IoAdapter(app));
 
     app.enableShutdownHooks();
 
