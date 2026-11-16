@@ -5,28 +5,18 @@ import {
     VersioningType,
 } from '@nestjs/common';
 import { NestFactory, Reflector } from '@nestjs/core';
-import { FastifyAdapter, type NestFastifyApplication } from '@nestjs/platform-fastify';
+import type { NestFastifyApplication } from '@nestjs/platform-fastify';
 import { IoAdapter } from '@nestjs/platform-socket.io';
+import { ConfigService } from '@nestjs/config';
 import { Logger, LoggerErrorInterceptor } from 'nestjs-pino';
-import { randomUUIDv7 } from 'node:crypto';
+import { createAppAdapter } from './app.adapter';
 import { AppModule } from './app.module';
-import { pinoOptions } from './core/logging/pino-options';
-
-const configureAdapter = () => {
-    const adapter = new FastifyAdapter({
-        genReqId: () => randomUUIDv7(),
-        logger: pinoOptions,
-    });
-
-    adapter.getInstance().addHook('onSend', async (request, reply) => {
-        reply.header('x-request-id', request.id);
-    });
-
-    return adapter;
-};
+import { PinoConfig } from './core/logging/pino.config';
 
 async function bootstrap() {
-    const adapter = configureAdapter();
+    const config = new ConfigService();
+    const pinoConfig = new PinoConfig(config);
+    const adapter = createAppAdapter(pinoConfig);
     const app = await NestFactory.create<NestFastifyApplication>(AppModule, adapter, { bufferLogs: true });
     app.useLogger(app.get(Logger));
     app.useWebSocketAdapter(new IoAdapter(app));
@@ -62,9 +52,8 @@ async function bootstrap() {
     );
 
     // Set up the application bootstrap
-    const host = process.env.API_HOST ?? 'localhost';
-    const port = process.env.API_PORT ?? '5172';
-
-    await app.listen(Number(port), host);
+    const host = config.get<string>('API_HOST', 'localhost');
+    const port = Number(config.get<string>('API_PORT', '5172'));
+    await app.listen(port, host);
 }
 await bootstrap();

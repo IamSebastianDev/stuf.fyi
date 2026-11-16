@@ -7,7 +7,7 @@ export class HealthService {
 
     async getHealth() {
         return {
-            timestamp: new Date(Date.now()).toISOString(),
+            timestamp: new Date(),
             database: await this.prismaService.client.$healthy().catch(() => false),
             api: true,
         };

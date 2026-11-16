@@ -65,15 +65,18 @@ model Session {
 /// A short-lived, single-use challenge for a WebAuthn registration or login.
 ///
 /// Challenges may be anonymous during account creation or authentication with
-/// a discoverable credential. They must be consumed after successful use.
+/// a discoverable credential. During anonymous registration, webAuthnUserId
+/// carries the generated WebAuthn user handle until the User is created.
+/// They must be consumed after successful use.
 model WebAuthnChallenge {
-  id         String                   @id @default(uuid())
-  challenge  String                   @unique
-  purpose    WebAuthnChallengePurpose
-  userId     String?
-  createdAt  DateTime                 @default(now())
-  expiresAt  DateTime
-  consumedAt DateTime?
+  id             String                   @id @default(uuid())
+  challenge      String                   @unique
+  purpose        WebAuthnChallengePurpose
+  userId         String?
+  webAuthnUserId String?
+  createdAt      DateTime                 @default(now())
+  expiresAt      DateTime
+  consumedAt     DateTime?
 
   user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
 

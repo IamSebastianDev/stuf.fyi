@@ -1,5 +1,5 @@
 import { Controller, Get, SerializeOptions } from '@nestjs/common';
-import { HealthResponseSchema, type HealthResponse } from '@stuf/contracts/health';
+import { HealthResponseSchema, type HealthResponseDto } from '@stuf/contracts/health';
 import { HealthService } from './health.service';
 
 @Controller({ version: '1', path: '/health' })
@@ -10,7 +10,7 @@ export class HealthController {
     @SerializeOptions({
         schema: HealthResponseSchema,
     })
-    async getHealth(): Promise<HealthResponse> {
-        return this.healthService.getHealth();
+    async getHealth(): Promise<HealthResponseDto> {
+        return this.healthService.getHealth() as unknown as Promise<HealthResponseDto>;
     }
 }

@@ -1,2 +1,2 @@
-export type { HealthResponse } from './health.response';
+export type { HealthResponseDto } from './health.response';
 export { HealthResponseSchema } from './health.response.schema';

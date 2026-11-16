@@ -1,4 +1,5 @@
 import * as v from 'valibot';
 import type { HealthResponseSchema } from './health.response.schema';
 
-export type HealthResponse = v.InferOutput<typeof HealthResponseSchema>;
+/** Serialized health status returned by the API. */
+export type HealthResponseDto = v.InferOutput<typeof HealthResponseSchema>;

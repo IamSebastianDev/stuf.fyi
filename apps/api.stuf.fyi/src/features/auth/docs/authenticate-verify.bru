@@ -1,0 +1,34 @@
+meta {
+  name: authenticate-verify
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseUrl}}/api/v1/auth/passkeys/authenticate/verify
+  body: json
+  auth: none
+}
+
+headers {
+  Accept: application/json
+  Content-Type: application/json
+}
+
+body:json {
+  "id": "{{credentialId}}",
+  "rawId": "{{credentialRawId}}",
+  "response": {
+    "clientDataJSON": "{{clientDataJSON}}",
+    "authenticatorData": "{{authenticatorData}}",
+    "signature": "{{signature}}",
+    "userHandle": "{{userHandle}}"
+  },
+  "authenticatorAttachment": "platform",
+  "clientExtensionResults": {},
+  "type": "public-key"
+}
+
+assert {
+  res.status: eq 201
+}

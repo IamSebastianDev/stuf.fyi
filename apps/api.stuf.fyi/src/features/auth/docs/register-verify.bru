@@ -1,0 +1,33 @@
+meta {
+  name: register-verify
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/api/v1/auth/passkeys/register/verify
+  body: json
+  auth: none
+}
+
+headers {
+  Accept: application/json
+  Content-Type: application/json
+}
+
+body:json {
+  "id": "{{credentialId}}",
+  "rawId": "{{credentialRawId}}",
+  "response": {
+    "clientDataJSON": "{{clientDataJSON}}",
+    "attestationObject": "{{attestationObject}}",
+    "transports": ["internal"]
+  },
+  "authenticatorAttachment": "platform",
+  "clientExtensionResults": {},
+  "type": "public-key"
+}
+
+assert {
+  res.status: eq 201
+}

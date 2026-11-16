@@ -1,0 +1,19 @@
+meta {
+  name: authenticate-options
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/api/v1/auth/passkeys/authenticate/options
+  body: none
+  auth: none
+}
+
+headers {
+  Accept: application/json
+}
+
+assert {
+  res.status: eq 201
+}
