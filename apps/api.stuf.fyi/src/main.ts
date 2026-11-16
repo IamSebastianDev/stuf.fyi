@@ -7,13 +7,15 @@ import {
 import { NestFactory, Reflector } from '@nestjs/core';
 import { FastifyAdapter, type NestFastifyApplication } from '@nestjs/platform-fastify';
 import { IoAdapter } from '@nestjs/platform-socket.io';
+import { Logger, LoggerErrorInterceptor } from 'nestjs-pino';
 import { randomUUIDv7 } from 'node:crypto';
 import { AppModule } from './app.module';
+import { pinoOptions } from './core/logging/pino-options';
 
 const configureAdapter = () => {
     const adapter = new FastifyAdapter({
         genReqId: () => randomUUIDv7(),
-        logger: true,
+        logger: pinoOptions,
     });
 
     adapter.getInstance().addHook('onSend', async (request, reply) => {
@@ -25,7 +27,8 @@ const configureAdapter = () => {
 
 async function bootstrap() {
     const adapter = configureAdapter();
-    const app = await NestFactory.create<NestFastifyApplication>(AppModule, adapter);
+    const app = await NestFactory.create<NestFastifyApplication>(AppModule, adapter, { bufferLogs: true });
+    app.useLogger(app.get(Logger));
     app.useWebSocketAdapter(new IoAdapter(app));
 
     app.enableShutdownHooks();
@@ -35,7 +38,10 @@ async function bootstrap() {
 
     // Register global stuff
     app.setGlobalPrefix('api');
-    app.useGlobalInterceptors(new StandardSchemaSerializerInterceptor(app.get(Reflector)));
+    app.useGlobalInterceptors(
+        new LoggerErrorInterceptor(),
+        new StandardSchemaSerializerInterceptor(app.get(Reflector)),
+    );
     app.useGlobalPipes(
         new StandardSchemaValidationPipe({
             exceptionFactory: (issues) => {

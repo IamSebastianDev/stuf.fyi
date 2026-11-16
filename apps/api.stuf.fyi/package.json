@@ -20,6 +20,9 @@
         "@nestjs/websockets": "^12.1.2",
         "@stuf/contracts": "*",
         "@stuf/prisma": "*",
+        "nestjs-pino": "5.3.1",
+        "pino": "10.4.0",
+        "pino-http": "11.0.0",
         "reflect-metadata": "^0.2.2",
         "rxjs": "^7.8.1",
         "socket.io": "^4.8.4"
@@ -35,6 +38,7 @@
         "oxfmt": "^0.71.0",
         "oxlint": "^1.58.0",
         "oxlint-tsgolint": "^7.0.2001",
+        "pino-pretty": "13.2.0",
         "source-map-support": "^0.5.21",
         "tsconfig-paths-webpack-plugin": "^4.2.0",
         "typescript": "^6.0.2",
