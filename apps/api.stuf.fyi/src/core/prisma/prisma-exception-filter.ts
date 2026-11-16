@@ -1,4 +1,10 @@
-import { Catch, ConflictException, NotFoundException, type ArgumentsHost } from '@nestjs/common';
+import {
+    Catch,
+    ConflictException,
+    NotFoundException,
+    ServiceUnavailableException,
+    type ArgumentsHost,
+} from '@nestjs/common';
 import { BaseExceptionFilter } from '@nestjs/core';
 import { Prisma } from '@stuf/prisma';
 
@@ -34,6 +40,24 @@ export class PrismaExceptionFilter extends BaseExceptionFilter {
                 errorCode: 'NOT_FOUND',
                 message: 'Resource not found',
                 ctor: NotFoundException,
+            },
+        ],
+        [
+            'ECONNREFUSED',
+            {
+                status: 503,
+                errorCode: 'DEPENDENCY_UNAVAILABLE',
+                message: 'Service temporarily unavailable',
+                ctor: ServiceUnavailableException,
+            },
+        ],
+        [
+            'ECONNRESET',
+            {
+                status: 503,
+                errorCode: 'DEPENDENCY_UNAVAILABLE',
+                message: 'Service temporarily unavailable',
+                ctor: ServiceUnavailableException,
             },
         ],
     ]);
