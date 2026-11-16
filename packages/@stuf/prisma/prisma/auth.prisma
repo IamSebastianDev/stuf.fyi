@@ -1,0 +1,82 @@
+/// Identifies which WebAuthn ceremony a temporary challenge belongs to.
+enum WebAuthnChallengePurpose {
+  REGISTRATION
+  AUTHENTICATION
+}
+
+/// The application identity associated with one or more passkeys.
+///
+/// Users are intentionally not identified by email or password. The
+/// webAuthnUserId is the stable opaque identifier supplied to WebAuthn.
+model User {
+  id             String              @id @default(uuid())
+  webAuthnUserId String              @unique
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+  disabledAt     DateTime?
+  passkeys       PasskeyCredential[]
+  sessions       Session[]
+  challenges     WebAuthnChallenge[]
+}
+
+/// A public-key credential registered by a user on an authenticator.
+///
+/// The private key remains on the authenticator. The database stores the
+/// credential identifier, public key, signature counter, and device metadata
+/// required to verify future authentication ceremonies.
+model PasskeyCredential {
+  id           String    @id @default(uuid())
+  userId       String
+  credentialId String    @unique
+  publicKey    Bytes
+  counter      BigInt    @default(0)
+  deviceType   String?
+  backedUp     Boolean   @default(false)
+  transports   String[]  @default([])
+  name         String?
+  lastUsedAt   DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+/// A server-side authenticated login session for a user.
+///
+/// Only a hash of the bearer token is stored, allowing sessions to be revoked
+/// or expired without storing the raw token in the database.
+model Session {
+  id         String    @id @default(uuid())
+  userId     String
+  tokenHash  String    @unique
+  createdAt  DateTime  @default(now())
+  expiresAt  DateTime
+  lastUsedAt DateTime?
+  revokedAt  DateTime?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+/// A short-lived, single-use challenge for a WebAuthn registration or login.
+///
+/// Challenges may be anonymous during account creation or authentication with
+/// a discoverable credential. They must be consumed after successful use.
+model WebAuthnChallenge {
+  id         String                   @id @default(uuid())
+  challenge  String                   @unique
+  purpose    WebAuthnChallengePurpose
+  userId     String?
+  createdAt  DateTime                 @default(now())
+  expiresAt  DateTime
+  consumedAt DateTime?
+
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([expiresAt])
+  @@index([userId, purpose])
+}
