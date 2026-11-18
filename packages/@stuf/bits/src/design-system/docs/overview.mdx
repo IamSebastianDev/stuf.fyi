@@ -19,10 +19,14 @@ Stuf is an iOS-inspired web app for planning meals together and shopping from on
 
 ## Review in Storybook
 
+Give each component a `Variants` story that compares its supported appearances, sizes, and states side by side.
+
 Check each primitive at a phone width and with larger text. Review its active states in both themes, then try it with a keyboard and touch. Use the token pages for color, type, sizing, and motion decisions.
 
 Import the shared stylesheet at the app's CSS entry point.
 
 ```css
-@import '@stuf/bits/tokens.css';
+@import '@stuf/bits/theme.css';
 ```
+
+For literal `stuf-button` markup, also import `@stuf/bits/button.css`. Set `appearance`, `layout`, and `size` on the element to choose a style.

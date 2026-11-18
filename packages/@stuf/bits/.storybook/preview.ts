@@ -1,10 +1,11 @@
 import type { Preview } from '@storybook/html-vite';
-import '@stuf/bits/tokens.css';
+import '@stuf/bits/theme.css';
 import './preview.css';
 import { ThemedDocs } from './themed-docs';
 
 const preview: Preview = {
     parameters: {
+        a11y: { test: 'error' },
         docs: {
             container: ThemedDocs,
         },

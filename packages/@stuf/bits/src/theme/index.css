@@ -1,2 +1,5 @@
+@layer stuf.tokens, stuf.components;
+
+@import '@fontsource-variable/geist';
 @import '../design-system/tokens/index.css';
 @import './colors.css' layer(stuf.tokens);

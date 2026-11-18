@@ -1,6 +1,6 @@
 import { html, on } from '@grainular/nord';
 import type { Meta, StoryObj } from '@storybook/html-vite';
-import { fn } from 'storybook/test';
+import { expect, fn } from 'storybook/test';
 import { renderNordStory } from '../../.storybook/render-nord-story';
 import { Button, type ButtonOptions } from './button';
 
@@ -99,10 +99,15 @@ export default {
 
 type Story = StoryObj<ButtonArgs>;
 
-export const Default = {} satisfies Story;
+const appearances = ['primary', 'secondary', 'plain', 'destructive'] as const;
+const sizes = [
+    { value: 'sm', label: 'Small' },
+    { value: 'md', label: 'Medium' },
+    { value: 'lg', label: 'Large' },
+] as const;
 
-export const Primary = {
-    args: { appearance: 'primary', children: 'Save meal' },
+export const Default = {
+    name: 'Playground',
     parameters: {
         docs: {
             description: {
@@ -170,6 +175,87 @@ export const Link = {
                     ${children}
                 </a>
                 <p id="shopping-list" tabindex="-1">Shopping list</p>
+            `,
+        ),
+} satisfies Story;
+
+export const IconOnly = {
+    args: { ariaLabel: 'Add meal', onClick: fn() },
+    parameters: {
+        controls: { disable: true },
+        docs: { description: { story: 'Use Icon layout for a standalone icon with an accessible name.' } },
+    },
+    render: ({ ariaLabel, onClick }) =>
+        renderNordStory(
+            () => html`
+                <button
+                    type="button"
+                    ${Button({ layout: 'icon', size: 'sm', ariaLabel, disabled: false })}
+                    ${on('click', onClick)}
+                >
+                    <span class="stuf-button-story-icon" aria-hidden="true">+</span>
+                </button>
+            `,
+        ),
+    play: async ({ canvas, userEvent, args }) => {
+        const button = canvas.getByRole('button', { name: 'Add meal' });
+        await userEvent.tab();
+        await expect(button).toHaveFocus();
+        await userEvent.keyboard('{Enter}');
+        await userEvent.keyboard(' ');
+        await expect(args.onClick).toHaveBeenCalledTimes(2);
+    },
+} satisfies Story;
+
+export const Disabled = {
+    args: { disabled: true, children: 'Save meal', onClick: fn() },
+    parameters: { controls: { disable: true } },
+    play: async ({ canvas, userEvent, args }) => {
+        const button = canvas.getByRole('button', { name: 'Save meal' });
+        await expect(button).toBeDisabled();
+        await userEvent.tab();
+        await expect(button).not.toHaveFocus();
+        await userEvent.click(button);
+        await expect(args.onClick).not.toHaveBeenCalled();
+    },
+} satisfies Story;
+
+export const Variants = {
+    parameters: {
+        controls: { disable: true },
+        docs: { description: { story: 'Compare all appearances and sizes in their enabled and disabled states.' } },
+    },
+    render: () =>
+        renderNordStory(
+            () => html`
+                <div class="stuf-button-matrix">
+                    ${[false, true].map(
+                        (disabled) => html`
+                            <section>
+                                <h3>${disabled ? 'Disabled' : 'Enabled'}</h3>
+                                <dl>
+                                    ${appearances.map(
+                                        (appearance) => html`
+                                            <dt>${appearance}</dt>
+                                            <dd>
+                                                ${sizes.map(
+                                                    ({ value, label }) => html`
+                                                        <button
+                                                            type="button"
+                                                            ${Button({ appearance, size: value, disabled })}
+                                                        >
+                                                            ${label}
+                                                        </button>
+                                                    `,
+                                                )}
+                                            </dd>
+                                        `,
+                                    )}
+                                </dl>
+                            </section>
+                        `,
+                    )}
+                </div>
             `,
         ),
 } satisfies Story;

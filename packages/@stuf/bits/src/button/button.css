@@ -1,3 +1,5 @@
+@layer stuf.tokens, stuf.components;
+
 @layer stuf.components {
     [stuf-button] {
         --stuf-button-background: var(--stuf-color-control);
@@ -13,6 +15,8 @@
         justify-content: center;
         gap: var(--stuf-space-2);
         min-block-size: var(--stuf-button-min-size);
+        max-inline-size: 100%;
+        padding-block: var(--stuf-space-2);
         padding-inline: var(--stuf-space-4);
         border: 0;
         border-radius: var(--stuf-radius-md);
@@ -22,9 +26,13 @@
         font-size: var(--stuf-button-font-size);
         font-weight: var(--stuf-font-weight-semibold);
         line-height: var(--stuf-line-height-tight);
+        overflow-wrap: anywhere;
+        text-align: center;
         text-decoration: none;
         cursor: pointer;
-        transition: opacity var(--stuf-duration-fast) var(--stuf-ease-standard);
+        transition-property: background-color, opacity, scale;
+        transition-duration: var(--stuf-duration-fast);
+        transition-timing-function: var(--stuf-ease-standard);
 
         &[appearance='primary'] {
             --stuf-button-background: var(--stuf-color-accent);
@@ -67,7 +75,13 @@
         }
 
         &:active:not(:disabled) {
-            opacity: var(--stuf-opacity-pressed);
+            background-color: var(--stuf-button-background-hover);
+        }
+
+        @media (prefers-reduced-motion: no-preference) {
+            &:active:not(:disabled) {
+                scale: var(--stuf-scale-pressed);
+            }
         }
 
         &:disabled {
@@ -78,6 +92,24 @@
         @media (hover: hover) {
             &:hover:not(:disabled) {
                 background-color: var(--stuf-button-background-hover);
+            }
+        }
+
+        @media (forced-colors: active) {
+            border: thin solid ButtonText;
+
+            &:any-link {
+                border-color: LinkText;
+            }
+
+            &:focus-visible {
+                outline-color: Highlight;
+            }
+
+            &:disabled {
+                color: GrayText;
+                border-color: GrayText;
+                opacity: 1;
             }
         }
     }

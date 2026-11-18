@@ -6,6 +6,25 @@
 stuf-nord-story {
     display: block;
     font-family: var(--stuf-font-family-sans);
+    background-color: var(--stuf-color-background);
+    color: var(--stuf-color-text);
+}
+
+.stuf-button-matrix {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr));
+    gap: var(--stuf-space-4);
+
+    & dd {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--stuf-space-2);
+        margin: var(--stuf-space-1) 0 var(--stuf-space-4);
+    }
+}
+
+.stuf-button-story-icon {
+    font-size: var(--stuf-size-icon);
 }
 
 .stuf-palette-grid,

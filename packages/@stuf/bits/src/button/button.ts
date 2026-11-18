@@ -16,7 +16,12 @@ export type ButtonOptions = {
 };
 
 /** Applies the styling hook and supplied options as attributes on the host element. */
-export const Button = ({ appearance, layout, size, disabled, ariaLabel }: ButtonOptions = {}) => {
-    const attributes = { 'stuf-button': '', appearance, layout, size, disabled, 'aria-label': ariaLabel };
-    return attr(Object.fromEntries(Object.entries(attributes).filter(([, value]) => value !== undefined)));
-};
+export const Button = ({ appearance, layout, size, disabled, ariaLabel }: ButtonOptions = {}) =>
+    attr({
+        'stuf-button': '',
+        ...(appearance !== undefined && { appearance }),
+        ...(layout !== undefined && { layout }),
+        ...(size !== undefined && { size }),
+        ...(disabled !== undefined && { disabled }),
+        ...(ariaLabel !== undefined && { 'aria-label': ariaLabel }),
+    });
