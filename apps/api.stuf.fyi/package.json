@@ -9,7 +9,8 @@
         "start": "node --env-file=../../.env dist/main.js",
         "format:write": "oxfmt --write .",
         "format:check": "oxfmt --check .",
-        "lint": "oxlint --type-aware ."
+        "lint": "oxlint --type-aware .",
+        "typecheck": "tsc --noEmit"
     },
     "dependencies": {
         "@fastify/cookie": "11.1.5",

@@ -6,13 +6,25 @@
             "cache": false
         },
         "build": {
-            "dependsOn": ["format:check", "lint"],
-            "outputs": ["dist/**"]
+            "dependsOn": ["format:check", "lint", "typecheck"],
+            "outputs": ["dist/**", "storybook-static/**"]
         },
         "format:write": {
             "cache": false
         },
         "format:check": {},
-        "lint": {}
+        "lint": {},
+        "typecheck": {
+            "dependsOn": ["^typecheck"]
+        },
+        "@stuf/prisma#typecheck": {
+            "dependsOn": ["generate", "^typecheck"]
+        },
+        "generate": {
+            "outputs": ["generated/prisma/**"]
+        },
+        "test": {
+            "passThroughEnv": ["PLAYWRIGHT_BROWSERS_PATH"]
+        }
     }
 }

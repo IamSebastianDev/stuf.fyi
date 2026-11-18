@@ -3,27 +3,42 @@
     "version": "0.0.1",
     "private": true,
     "type": "module",
+    "sideEffects": [
+        "**/*.css"
+    ],
     "exports": {
         "./button": "./src/button/button.ts",
         "./button.css": "./src/button/button.css",
+        "./theme.css": "./src/theme/index.css",
         "./tokens.css": "./src/theme/index.css"
     },
     "scripts": {
         "dev": "storybook dev --port 5175 --exact-port --host 127.0.0.1 --no-open --disable-telemetry",
+        "build": "npm run build:preview",
         "build:preview": "storybook build --disable-telemetry",
         "format:write": "oxfmt --write .",
         "format:check": "oxfmt --check .",
-        "lint": "oxlint ."
+        "lint": "oxlint .",
+        "typecheck": "tsc --noEmit",
+        "test": "vitest run"
+    },
+    "dependencies": {
+        "@fontsource-variable/geist": "5.3.0"
     },
     "devDependencies": {
+        "@grainular/nord": "2.4.0",
         "@repository/config": "*",
+        "@storybook/addon-a11y": "10.6.7",
         "@storybook/addon-docs": "10.6.7",
+        "@storybook/addon-vitest": "10.6.7",
         "@storybook/html-vite": "10.6.7",
         "@types/react": "^19.3.0",
+        "@vitest/browser-playwright": "4.1.12",
+        "playwright": "^1.58.2",
         "react": "^19.3.0",
         "storybook": "10.6.7",
-        "typescript": "^7.0.2",
-        "vite": "^8.2.2"
+        "vite": "^8.2.2",
+        "vitest": "4.1.12"
     },
     "peerDependencies": {
         "@grainular/nord": "^2.4.0"

@@ -8,7 +8,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/npm/cli.git"
+        "url": "git+https://github.com/IamSebastianDev/stuf.fyi.git"
     },
     "workspaces": [
         "./packages/**/*",
@@ -20,6 +20,8 @@
         "format:write": "turbo run format:write",
         "format:check": "turbo run format:check",
         "lint": "turbo run lint",
+        "typecheck": "turbo run typecheck",
+        "test": "turbo run test",
         "db:up": "docker compose -f compose.dev.yml up -d",
         "db:down": "docker compose -f compose.dev.yml down",
         "db:logs": "docker compose -f compose.dev.yml logs -f db",

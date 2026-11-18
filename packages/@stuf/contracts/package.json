@@ -12,13 +12,13 @@
     "scripts": {
         "format:write": "oxfmt --write .",
         "format:check": "oxfmt --check .",
-        "lint": "oxlint --type-aware ."
+        "lint": "oxlint --type-aware .",
+        "typecheck": "tsc --noEmit"
     },
     "dependencies": {
         "valibot": "^1.1.0"
     },
     "devDependencies": {
-        "@repository/config": "*",
-        "typescript": "^7.0.2"
+        "@repository/config": "*"
     }
 }

@@ -4,11 +4,13 @@
     "type": "module",
     "main": "./src/index.ts",
     "scripts": {
+        "generate": "prisma generate",
         "prisma": "node --env-file=../../../.env ../../../node_modules/prisma/build/index.js",
         "db:generate": "npm run prisma -- generate",
         "db:migrate": "npm run prisma -- migrate dev",
         "db:deploy": "npm run prisma -- migrate deploy",
-        "db:studio": "npm run prisma -- studio"
+        "db:studio": "npm run prisma -- studio",
+        "typecheck": "tsc --noEmit"
     },
     "dependencies": {
         "@prisma/adapter-pg": "^7.9.1",
