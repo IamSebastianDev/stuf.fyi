@@ -1,0 +1,74 @@
+@layer stuf.components {
+    [stuf-button] {
+        --stuf-button-background: var(--stuf-color-control);
+        --stuf-button-background-hover: var(--stuf-color-control-hover);
+        --stuf-button-text: var(--stuf-color-text);
+
+        appearance: none;
+        box-sizing: border-box;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--stuf-space-2);
+        min-block-size: var(--stuf-size-control-md);
+        padding-inline: var(--stuf-space-4);
+        border: 0;
+        border-radius: var(--stuf-radius-md);
+        background-color: var(--stuf-button-background);
+        color: var(--stuf-button-text);
+        font-family: var(--stuf-font-family-sans);
+        font-size: var(--stuf-font-size-label);
+        font-weight: var(--stuf-font-weight-semibold);
+        line-height: var(--stuf-line-height-tight);
+        text-decoration: none;
+        cursor: pointer;
+        transition: opacity var(--stuf-duration-fast) var(--stuf-ease-standard);
+
+        &[appearance='primary'] {
+            --stuf-button-background: var(--stuf-color-accent);
+            --stuf-button-background-hover: var(--stuf-color-accent-hover);
+            --stuf-button-text: var(--stuf-color-on-accent);
+        }
+
+        &[appearance='plain'] {
+            --stuf-button-background: transparent;
+            --stuf-button-background-hover: color-mix(in oklch, var(--stuf-color-accent) 12%, transparent);
+            --stuf-button-text: var(--stuf-color-accent);
+        }
+
+        &[appearance='destructive'] {
+            --stuf-button-text: var(--stuf-color-danger);
+        }
+
+        &[layout='full'] {
+            inline-size: 100%;
+            min-block-size: var(--stuf-size-control-lg);
+        }
+
+        &[layout='icon'] {
+            min-block-size: var(--stuf-size-control-sm);
+            min-inline-size: var(--stuf-size-control-sm);
+            padding-inline: 0;
+        }
+
+        &:focus-visible {
+            outline: var(--stuf-focus-ring-width) solid var(--stuf-color-accent);
+            outline-offset: var(--stuf-focus-ring-offset);
+        }
+
+        &:active:not(:disabled) {
+            opacity: var(--stuf-opacity-pressed);
+        }
+
+        &:disabled {
+            opacity: var(--stuf-opacity-disabled);
+            cursor: default;
+        }
+
+        @media (hover: hover) {
+            &:hover:not(:disabled) {
+                background-color: var(--stuf-button-background-hover);
+            }
+        }
+    }
+}

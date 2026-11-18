@@ -10,11 +10,12 @@
         "lint": "oxlint ."
     },
     "dependencies": {
-        "@grainular/grains": "latest",
-        "@grainular/nord": "latest",
-        "@grainular/resource": "^2.3.0",
-        "@grainular/router": "latest",
+        "@grainular/grains": "2.4.0",
+        "@grainular/nord": "2.4.0",
+        "@grainular/resource": "2.4.0",
+        "@grainular/router": "2.4.0",
         "@simplewebauthn/browser": "14.0.0",
+        "@stuf/bits": "*",
         "@stuf/contracts": "*",
         "socket.io-client": "^4.8.4",
         "valibot": "^1.4.2",

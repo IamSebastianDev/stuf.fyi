@@ -10,8 +10,8 @@
         "lint": "oxlint ."
     },
     "dependencies": {
-        "@grainular/grains": "latest",
-        "@grainular/nord": "latest",
+        "@grainular/grains": "2.4.0",
+        "@grainular/nord": "2.4.0",
         "vite": "^8.2.2"
     },
     "devDependencies": {

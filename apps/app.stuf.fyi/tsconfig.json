@@ -2,6 +2,7 @@
     "extends": "@repository/config/base.json",
     "compilerOptions": {
         "lib": ["esnext", "dom", "dom.iterable"],
+        "types": ["vite/client"],
         "skipLibCheck": true,
         "noEmit": true
     },
