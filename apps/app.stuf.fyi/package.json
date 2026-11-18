@@ -14,6 +14,7 @@
         "@grainular/nord": "latest",
         "@grainular/resource": "^2.3.0",
         "@grainular/router": "latest",
+        "@simplewebauthn/browser": "14.0.0",
         "@stuf/contracts": "*",
         "socket.io-client": "^4.8.4",
         "valibot": "^1.4.2",

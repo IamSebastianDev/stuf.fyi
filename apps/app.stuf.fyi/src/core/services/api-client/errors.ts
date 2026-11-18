@@ -25,3 +25,9 @@ export class ResponseValidationError extends Error {
         return this.issues;
     }
 }
+
+export class WebAuthnNotSupportedError extends Error {
+    constructor() {
+        super('This browser does not support passkeys');
+    }
+}

@@ -1,8 +1,8 @@
 import * as v from 'valibot';
 
-/** Converts a backend Date value into the ISO timestamp used by transport DTOs. */
+/** Accepts backend Dates or wire-format timestamps and outputs an ISO timestamp. */
 export const DateSchema = v.pipe(
-    v.date(),
-    v.transform((value) => value.toISOString()),
+    v.union([v.date(), v.pipe(v.string(), v.isoTimestamp())]),
+    v.transform((value) => (value instanceof Date ? value.toISOString() : value)),
     v.isoTimestamp(),
 );
