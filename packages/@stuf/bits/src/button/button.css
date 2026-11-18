@@ -3,6 +3,8 @@
         --stuf-button-background: var(--stuf-color-control);
         --stuf-button-background-hover: var(--stuf-color-control-hover);
         --stuf-button-text: var(--stuf-color-text);
+        --stuf-button-min-size: var(--stuf-size-control-md);
+        --stuf-button-font-size: var(--stuf-font-size-label);
 
         appearance: none;
         box-sizing: border-box;
@@ -10,14 +12,14 @@
         align-items: center;
         justify-content: center;
         gap: var(--stuf-space-2);
-        min-block-size: var(--stuf-size-control-md);
+        min-block-size: var(--stuf-button-min-size);
         padding-inline: var(--stuf-space-4);
         border: 0;
         border-radius: var(--stuf-radius-md);
         background-color: var(--stuf-button-background);
         color: var(--stuf-button-text);
         font-family: var(--stuf-font-family-sans);
-        font-size: var(--stuf-font-size-label);
+        font-size: var(--stuf-button-font-size);
         font-weight: var(--stuf-font-weight-semibold);
         line-height: var(--stuf-line-height-tight);
         text-decoration: none;
@@ -40,14 +42,22 @@
             --stuf-button-text: var(--stuf-color-danger);
         }
 
+        &[size='sm'] {
+            --stuf-button-min-size: var(--stuf-size-control-sm);
+            --stuf-button-font-size: var(--stuf-font-size-body);
+        }
+
+        &[size='lg'] {
+            --stuf-button-min-size: var(--stuf-size-control-lg);
+            --stuf-button-font-size: var(--stuf-font-size-label-lg);
+        }
+
         &[layout='full'] {
             inline-size: 100%;
-            min-block-size: var(--stuf-size-control-lg);
         }
 
         &[layout='icon'] {
-            min-block-size: var(--stuf-size-control-sm);
-            min-inline-size: var(--stuf-size-control-sm);
+            min-inline-size: var(--stuf-button-min-size);
             padding-inline: 0;
         }
 

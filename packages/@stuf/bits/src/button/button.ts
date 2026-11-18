@@ -1,13 +1,22 @@
-import { attr } from '@grainular/nord';
+import { attr, type Subscribable } from '@grainular/nord';
 import './button.css';
 
-/** Styling options for native buttons and links. */
+/** Options for native buttons and links styled with Stuf. */
 export type ButtonOptions = {
     /** Visual emphasis. Defaults to secondary. */
     appearance?: 'primary' | 'secondary' | 'plain' | 'destructive';
-    /** Inline by default. Full fills the available width, and icon is sized for an icon-only control. */
+    /** Controls width. Inline is the default, full fills the container, and icon reserves a square tap target. */
     layout?: 'inline' | 'full' | 'icon';
+    /** Minimum height and label size. Defaults to md. */
+    size?: 'sm' | 'md' | 'lg';
+    /** Prevents activation on a native button. Accepts a boolean or a reactive boolean. */
+    disabled?: boolean | Subscribable<boolean>;
+    /** Accessible name for a button or link without a visible label. */
+    ariaLabel?: string;
 };
 
-/** Applies the same attributes as a literal stuf-button with optional appearance and layout modifiers. */
-export const Button = ({ appearance, layout }: ButtonOptions = {}) => attr({ 'stuf-button': '', appearance, layout });
+/** Applies the styling hook and supplied options as attributes on the host element. */
+export const Button = ({ appearance, layout, size, disabled, ariaLabel }: ButtonOptions = {}) => {
+    const attributes = { 'stuf-button': '', appearance, layout, size, disabled, 'aria-label': ariaLabel };
+    return attr(Object.fromEntries(Object.entries(attributes).filter(([, value]) => value !== undefined)));
+};

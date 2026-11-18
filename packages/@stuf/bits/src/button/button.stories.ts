@@ -1,4 +1,4 @@
-import { attr, html, on } from '@grainular/nord';
+import { html, on } from '@grainular/nord';
 import type { Meta, StoryObj } from '@storybook/html-vite';
 import { fn } from 'storybook/test';
 import { renderNordStory } from '../../.storybook/render-nord-story';
@@ -25,15 +25,13 @@ export default {
             },
         },
     },
-    render: ({ appearance, layout, type, disabled, ariaLabel, className, onClick, children }) =>
+    render: ({ appearance, layout, size, type, disabled, ariaLabel, className, onClick, children }) =>
         renderNordStory(
             () => html`
                 <button
                     type="${type}"
-                    disabled="${disabled}"
                     class="${className}"
-                    ${attr({ 'aria-label': ariaLabel || undefined })}
-                    ${Button({ appearance, layout })}
+                    ${Button({ appearance, layout, size, disabled, ariaLabel: ariaLabel || undefined })}
                     ${on('click', onClick)}
                 >
                     ${children}
@@ -44,6 +42,7 @@ export default {
         children: 'Continue with passkey',
         appearance: 'primary',
         layout: 'inline',
+        size: 'md',
         disabled: false,
         type: 'button',
         ariaLabel: '',
@@ -64,13 +63,19 @@ export default {
         layout: {
             control: 'select',
             options: ['inline', 'full', 'icon'],
-            description: 'Inline, full-width, or icon-only layout.',
+            description: 'Width behavior for inline, full-width, or icon-only controls.',
             table: { category: 'Directive options', defaultValue: { summary: 'inline' } },
+        },
+        size: {
+            control: 'select',
+            options: ['sm', 'md', 'lg'],
+            description: 'Minimum height and label size.',
+            table: { category: 'Directive options', defaultValue: { summary: 'md' } },
         },
         disabled: {
             control: 'boolean',
             description: 'Prevents native button activation.',
-            table: { defaultValue: { summary: 'false' } },
+            table: { category: 'Directive options', defaultValue: { summary: 'false' } },
         },
         type: {
             control: 'select',
@@ -78,7 +83,11 @@ export default {
             description: 'Native form button type.',
             table: { type: { summary: "'button' | 'submit' | 'reset'" } },
         },
-        ariaLabel: { control: 'text', description: 'Accessible name for an icon-only button.' },
+        ariaLabel: {
+            control: 'text',
+            description: 'Accessible name for a control without a visible label.',
+            table: { category: 'Directive options' },
+        },
         className: { control: 'text', description: 'Additional classes supplied by the app.' },
         onClick: {
             control: false,
@@ -139,7 +148,7 @@ export const Destructive = {
 export const Link = {
     args: { appearance: 'primary', children: 'Go to shopping list' },
     parameters: {
-        controls: { include: ['children', 'appearance', 'layout'] },
+        controls: { include: ['children', 'appearance', 'layout', 'size', 'ariaLabel'] },
         docs: {
             description: {
                 story: 'Use an anchor with an href when the control navigates. This link jumps to the shopping list label in the preview.',
@@ -150,10 +159,16 @@ export const Link = {
             },
         },
     },
-    render: ({ appearance, layout, children }) =>
+    render: ({ appearance, layout, size, ariaLabel, children }) =>
         renderNordStory(
             () => html`
-                <a href="#shopping-list" target="_self" ${Button({ appearance, layout })}>${children}</a>
+                <a
+                    href="#shopping-list"
+                    target="_self"
+                    ${Button({ appearance, layout, size, ariaLabel: ariaLabel || undefined })}
+                >
+                    ${children}
+                </a>
                 <p id="shopping-list" tabindex="-1">Shopping list</p>
             `,
         ),
