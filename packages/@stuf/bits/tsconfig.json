@@ -1,0 +1,9 @@
+{
+    "extends": "@repository/config/base.json",
+    "compilerOptions": {
+        "lib": ["esnext", "dom"],
+        "types": ["vite/client"],
+        "noEmit": true
+    },
+    "include": ["src", ".storybook/**/*.ts"]
+}
