@@ -1,0 +1,74 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+export const ThemeColors = ({ colors }) => (
+    <dl className="stuf-theme-grid">
+        {Object.entries(colors).map(([role, usage]) => {
+            const token = `--stuf-color-${role}`;
+            return (
+                <div key={token}>
+                    <dt>
+                        <code>{token}</code>
+                    </dt>
+                    <dd>
+                        <span>{usage}</span>
+                        <div className="stuf-theme-pair">
+                            {['light', 'dark'].map((theme) => (
+                                <span key={theme}>
+                                    <span
+                                        aria-hidden="true"
+                                        className="stuf-docs-swatch"
+                                        data-theme={theme}
+                                        style={{ backgroundColor: `var(${token})` }}
+                                    />
+                                    {theme === 'light' ? 'Light' : 'Dark'}
+                                </span>
+                            ))}
+                        </div>
+                    </dd>
+                </div>
+            );
+        })}
+    </dl>
+);
+
+<Meta title="Design system/Theme colors" />
+
+# Theme colors
+
+Choose a token by its role. Each `--stuf-color-*` token resolves to a palette color for the current scheme.
+
+The default follows the operating system. Set `data-theme="light"` or `data-theme="dark"` on the document or a subtree for an override. Use `data-theme="system"` to follow the system again inside an override.
+
+## Surfaces
+
+<ThemeColors
+    colors={{
+        background: 'Page canvas',
+        surface: 'Grouped content',
+        'surface-raised': 'Elevated surfaces and overlays',
+        control: 'Default interactive surface',
+        'control-hover': 'Hovered interactive surface',
+        border: 'Dividers and outlines',
+    }}
+/>
+
+## Text
+
+<ThemeColors
+    colors={{
+        text: 'Primary text',
+        'text-muted': 'Secondary text',
+        'text-subtle': 'Supporting text',
+    }}
+/>
+
+## Actions and feedback
+
+<ThemeColors
+    colors={{
+        accent: 'Primary actions, links, and focus',
+        'accent-hover': 'Hovered primary actions',
+        'on-accent': 'Text on an accent fill',
+        danger: 'Errors and destructive actions',
+    }}
+/>

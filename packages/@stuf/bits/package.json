@@ -6,7 +6,7 @@
     "exports": {
         "./button": "./src/button/button.ts",
         "./button.css": "./src/button/button.css",
-        "./tokens.css": "./src/design-system/tokens.css"
+        "./tokens.css": "./src/theme/index.css"
     },
     "scripts": {
         "dev": "storybook dev --port 5175 --exact-port --host 127.0.0.1 --no-open --disable-telemetry",

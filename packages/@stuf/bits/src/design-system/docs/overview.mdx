@@ -1,0 +1,28 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Design system/Overview" />
+
+# Design concept
+
+Stuf is an iOS-inspired web app for planning meals together and shopping from one shared list. The week should be easy to scan at home, and the shopping list should be easy to use one-handed in a store.
+
+## Make the next action obvious
+
+- **Show the plan at a glance.** Use the week and day as the structure. Meal names and shopping items should carry the most visual weight.
+- **Keep navigation familiar.** Use stable tabs for main destinations and clear Back or Close controls. Use a sheet for a short task, such as choosing a meal for a day. Give longer tasks their own screen. [Apple’s guidance on sheets](https://developer.apple.com/design/human-interface-guidelines/sheets)
+- **Use color with purpose.** Build hierarchy with type, spacing, and neutral surfaces. Use mint for primary actions, links, and focus. Use red for errors and destructive actions. Show checked items with a checkmark or text as well as a color change.
+
+## Bring iOS interaction conventions to the web
+
+- **Design for touch and keyboard.** Aim for at least 44 × 44 CSS pixels for primary touch targets, with room between adjacent controls. Keep native buttons and links, a visible focus ring, and an accessible name for icon-only controls. [Apple’s accessibility guidance](https://developer.apple.com/design/human-interface-guidelines/accessibility)
+- **Respect display preferences.** Follow system light and dark mode by default and check contrast in both. Let labels wrap at larger text sizes. Reduce motion when the system requests it and keep state changes apparent. [Apple’s Dark Mode guidance](https://developer.apple.com/design/human-interface-guidelines/dark-mode) · [Apple’s motion guidance](https://developer.apple.com/design/human-interface-guidelines/motion)
+
+## Review in Storybook
+
+Check each primitive at a phone width and with larger text. Review its active states in both themes, then try it with a keyboard and touch. Use the token pages for color, type, sizing, and motion decisions.
+
+Import the shared stylesheet at the app's CSS entry point.
+
+```css
+@import '@stuf/bits/tokens.css';
+```

@@ -1,0 +1,14 @@
+:root {
+    --stuf-font-family-sans: Geist, system-ui, -apple-system, sans-serif;
+    --stuf-font-size-caption: 0.8125rem;
+    --stuf-font-size-body: 0.9375rem;
+    --stuf-font-size-label: 1rem;
+    --stuf-font-size-heading: 1.625rem;
+    --stuf-font-size-title: 1.75rem;
+    --stuf-font-weight-regular: 400;
+    --stuf-font-weight-medium: 500;
+    --stuf-font-weight-semibold: 600;
+    --stuf-font-weight-bold: 700;
+    --stuf-line-height-tight: 1.2;
+    --stuf-line-height-body: 1.5;
+}

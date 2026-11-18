@@ -1,0 +1,33 @@
+:where(:root, [data-theme='system']) {
+    color-scheme: light dark;
+}
+
+:where([data-theme='light']) {
+    color-scheme: light;
+}
+
+:where([data-theme='dark']) {
+    color-scheme: dark;
+}
+
+:where([data-theme='system'], [data-theme='light'], [data-theme='dark']) {
+    color: var(--stuf-color-text);
+}
+
+:where(:root, [data-theme='system'], [data-theme='light'], [data-theme='dark']) {
+    /* Resolve the color aliases again in each scope so compiled fallbacks use its local scheme. */
+    --stuf-color-background: light-dark(var(--stuf-palette-neutral-50), var(--stuf-palette-neutral-950));
+    --stuf-color-surface: light-dark(var(--stuf-palette-neutral-150), var(--stuf-palette-neutral-900));
+    --stuf-color-surface-raised: light-dark(var(--stuf-palette-neutral-0), var(--stuf-palette-neutral-875));
+    --stuf-color-control: light-dark(var(--stuf-palette-neutral-150), var(--stuf-palette-neutral-850));
+    --stuf-color-control-hover: light-dark(var(--stuf-palette-neutral-200), var(--stuf-palette-neutral-800));
+    --stuf-color-border: light-dark(var(--stuf-palette-neutral-300), var(--stuf-palette-neutral-800));
+
+    --stuf-color-text: light-dark(var(--stuf-palette-neutral-950), var(--stuf-palette-neutral-100));
+    --stuf-color-text-muted: light-dark(var(--stuf-palette-neutral-650), var(--stuf-palette-neutral-400));
+    --stuf-color-text-subtle: light-dark(var(--stuf-palette-neutral-600), var(--stuf-palette-neutral-500));
+    --stuf-color-accent: light-dark(var(--stuf-palette-mint-750), var(--stuf-palette-mint-300));
+    --stuf-color-accent-hover: light-dark(var(--stuf-palette-mint-800), var(--stuf-palette-mint-200));
+    --stuf-color-on-accent: light-dark(var(--stuf-palette-neutral-0), var(--stuf-palette-neutral-950));
+    --stuf-color-danger: light-dark(var(--stuf-palette-red-700), var(--stuf-palette-red-400));
+}

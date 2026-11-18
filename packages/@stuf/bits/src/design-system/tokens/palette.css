@@ -1,0 +1,26 @@
+:root {
+    /* Lower numbers are lighter. Components consume the semantic colors in theme.css. */
+    --stuf-palette-neutral-0: oklch(1 0 0);
+    --stuf-palette-neutral-50: oklch(0.9851 0 0);
+    --stuf-palette-neutral-100: oklch(0.9639 0.0013 106.42);
+    --stuf-palette-neutral-150: oklch(0.9352 0.0054 286.3);
+    --stuf-palette-neutral-200: oklch(0.8987 0.0054 286.29);
+    --stuf-palette-neutral-300: oklch(0.8318 0.0097 286.19);
+    --stuf-palette-neutral-400: oklch(0.6875 0.0058 286.25);
+    --stuf-palette-neutral-500: oklch(0.635 0.0074 286.19);
+    --stuf-palette-neutral-600: oklch(0.513 0.0125 285.95);
+    --stuf-palette-neutral-650: oklch(0.4636 0.0144 285.82);
+    --stuf-palette-neutral-800: oklch(0.3027 0.0071 285.97);
+    --stuf-palette-neutral-850: oklch(0.2698 0.0055 286.03);
+    --stuf-palette-neutral-875: oklch(0.2405 0.0057 285.97);
+    --stuf-palette-neutral-900: oklch(0.223 0.0038 286.08);
+    --stuf-palette-neutral-950: oklch(0.1642 0.0021 286.17);
+
+    --stuf-palette-mint-200: oklch(0.88 0.1 155);
+    --stuf-palette-mint-300: oklch(0.8 0.12 155);
+    --stuf-palette-mint-750: oklch(0.46 0.105 155);
+    --stuf-palette-mint-800: oklch(0.4 0.09 155);
+
+    --stuf-palette-red-400: oklch(0.72 0.15 25);
+    --stuf-palette-red-700: oklch(0.49 0.17 25);
+}

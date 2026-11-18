@@ -1,0 +1,43 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+export const Palette = ({ family, stops }) => (
+    <ul className="stuf-palette-grid sb-unstyled">
+        {stops.map((stop) => {
+            const token = `--stuf-palette-${family}-${stop}`;
+            return (
+                <li key={token} title={token}>
+                    <span
+                        aria-hidden="true"
+                        className="stuf-docs-swatch"
+                        style={{ backgroundColor: `var(${token})` }}
+                    />
+                    <code>{stop}</code>
+                </li>
+            );
+        })}
+    </ul>
+);
+
+<Meta title="Design system/Color primitives" />
+
+# Color primitives
+
+The OKLCH palettes supply the values for theme colors. Lower tone numbers are lighter within each family. Use semantic theme colors in components so the same styles adapt to light and dark mode.
+
+## Neutral
+
+`--stuf-palette-neutral-{tone}` for canvas, surfaces, borders, and text.
+
+<Palette family="neutral" stops={[0, 50, 100, 150, 200, 300, 400, 500, 600, 650, 800, 850, 875, 900, 950]} />
+
+## Mint
+
+`--stuf-palette-mint-{tone}` for accent colors.
+
+<Palette family="mint" stops={[200, 300, 750, 800]} />
+
+## Red
+
+`--stuf-palette-red-{tone}` for errors and destructive actions.
+
+<Palette family="red" stops={[400, 700]} />

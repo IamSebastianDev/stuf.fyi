@@ -1,0 +1,12 @@
+:root {
+    --stuf-focus-ring-width: 2px;
+    --stuf-focus-ring-offset: 3px;
+    --stuf-opacity-pressed: 0.55;
+    --stuf-opacity-disabled: 0.55;
+    --stuf-duration-fast: 120ms;
+    --stuf-ease-standard: ease;
+
+    @media (prefers-reduced-motion: reduce) {
+        --stuf-duration-fast: 0ms;
+    }
+}

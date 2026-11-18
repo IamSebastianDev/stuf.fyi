@@ -1,0 +1,18 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Design system/Typography" />
+
+# Typography
+
+`--stuf-font-family-sans` uses Geist when available and falls back to the system sans-serif. Use the `rem` scale and let text wrap as the user increases its size.
+
+<ul className="stuf-type-samples sb-unstyled">
+    {['caption', 'body', 'label', 'heading', 'title'].map((size) => (
+        <li key={size}>
+            <code>{`--stuf-font-size-${size}`}</code>
+            <span style={{ fontSize: `var(--stuf-font-size-${size})` }}>Meal planner</span>
+        </li>
+    ))}
+</ul>
+
+Use `--stuf-font-weight-regular`, `--stuf-font-weight-medium`, `--stuf-font-weight-semibold`, or `--stuf-font-weight-bold` for emphasis. Use `--stuf-line-height-body` for reading text and `--stuf-line-height-tight` for compact labels and headings.
