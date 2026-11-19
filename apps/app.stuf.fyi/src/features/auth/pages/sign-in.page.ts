@@ -1,18 +1,19 @@
 import { derived, grain } from '@grainular/grains';
-import { attr, html, on } from '@grainular/nord';
+import { html, on } from '@grainular/nord';
+import { navigate } from '@grainular/router';
 import { browserSupportsWebAuthn } from '@simplewebauthn/browser';
 import { Button } from '@stuf/bits/button';
 import { Icon } from '@stuf/bits/icon';
 import { Surface } from '@stuf/bits/surface';
 import { Text } from '@stuf/bits/text';
-import { Check, KeyRound } from 'lucide';
-import { ApiError, WebAuthnNotSupportedError } from '../../core/services/api-client/errors';
-import { authStore } from './auth.store';
-import { hasUsedPasskey } from './passkey-preference';
-import './sign-in.css';
+import { KeyRound } from 'lucide';
+import { ApiError, WebAuthnNotSupportedError } from '../../../core/services/api-client/errors';
+import { PasskeyFeedback, type PasskeyPhase } from '../components/passkey-feedback';
+import { hasUsedPasskey } from '../services/passkey-preference';
+import { authStore } from '../stores/auth.store';
+import './sign-in.page.css';
 
 type PasskeyAction = keyof typeof authStore.actions;
-type PasskeyPhase = 'idle' | 'pending' | 'verified' | 'error';
 
 const actionLabels: Record<PasskeyAction, string> = {
     authenticate: 'Sign in with a passkey',
@@ -34,7 +35,7 @@ const passkeyError = (cause: unknown): string => {
     return 'Couldn’t continue with a passkey. Try again.';
 };
 
-export const SignIn = ({ onSignedIn }: { onSignedIn: () => void }) => {
+export default function SignInPage() {
     const supported = window.isSecureContext && browserSupportsWebAuthn();
     const [primary, secondary]: [PasskeyAction, PasskeyAction] = hasUsedPasskey()
         ? ['authenticate', 'register']
@@ -52,7 +53,7 @@ export const SignIn = ({ onSignedIn }: { onSignedIn: () => void }) => {
             await authStore.actions[action]();
             request.set({ phase: 'verified', message: 'Signed in' });
             await new Promise<void>((resolve) => window.setTimeout(resolve, 400));
-            onSignedIn();
+            navigate({ path: '/', history: 'replace' });
         } catch (cause) {
             request.set({ phase: 'error', message: passkeyError(cause) });
         }
@@ -86,14 +87,7 @@ export const SignIn = ({ onSignedIn }: { onSignedIn: () => void }) => {
                               >
                                   ${actionLabels[secondary]}
                               </button>
-                              <div class="passkey-feedback" ${attr({ 'data-phase': phase })}>
-                                  <div class="passkey-feedback-panel">
-                                      <span class="passkey-feedback-icon" aria-hidden="true">
-                                          <svg ${Icon({ icon: Check, size: 'md' })}></svg>
-                                      </span>
-                                      <p ${Text({ appearance: 'muted' })} role="status">${message}</p>
-                                  </div>
-                              </div>
+                              ${PasskeyFeedback({ phase, message })}
                               <p ${Text({ size: 'caption', appearance: 'muted' })}>
                                   A synced passkey works on other devices using the same password manager.
                               </p>
@@ -103,4 +97,4 @@ export const SignIn = ({ onSignedIn }: { onSignedIn: () => void }) => {
             </div>
         </main>
     `;
-};
+}

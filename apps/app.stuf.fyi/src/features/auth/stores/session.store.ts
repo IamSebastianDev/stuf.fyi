@@ -1,9 +1,9 @@
 import { derived, grain, readonly } from '@grainular/grains';
 import { AuthSessionResponseSchema, type AuthSessionResponseDto } from '@stuf/contracts/auth';
 import * as v from 'valibot';
-import { ApiError } from '../../core/services/api-client/errors';
-import { client, requestConfig, resolveResponse, validateResult } from '../../core/services/api-client';
-import { rememberPasskeyUse } from './passkey-preference';
+import { ApiError } from '../../../core/services/api-client/errors';
+import { client, requestConfig, resolveResponse, validateResult } from '../../../core/services/api-client';
+import { rememberPasskeyUse } from '../services/passkey-preference';
 
 /** Current authenticated session, or null before/after authentication. */
 const authenticatedSession = grain<AuthSessionResponseDto | null>(null);

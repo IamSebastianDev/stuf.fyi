@@ -17,8 +17,8 @@ import type {
     AuthenticationOptionsResponseDto,
     RegistrationOptionsResponseDto,
 } from '@stuf/contracts/auth';
-import { client, requestConfig, resolveResponse, validateResult } from '../../core/services/api-client';
-import { WebAuthnNotSupportedError } from '../../core/services/api-client/errors';
+import { client, requestConfig, resolveResponse, validateResult } from '../../../core/services/api-client';
+import { WebAuthnNotSupportedError } from '../../../core/services/api-client/errors';
 import { sessionStore } from './session.store';
 
 /** Starts registration by requesting a one-time WebAuthn challenge. */
