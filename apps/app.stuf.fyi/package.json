@@ -24,6 +24,7 @@
         "vite": "^8.2.2"
     },
     "devDependencies": {
-        "@repository/config": "*"
+        "@repository/config": "*",
+        "vite-plugin-qrcode": "^0.4.1"
     }
 }

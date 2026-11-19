@@ -1,4 +1,5 @@
 import { defineConfig, loadEnv } from 'vite';
+import { qrcode } from 'vite-plugin-qrcode';
 
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '../..', '');
@@ -8,9 +9,14 @@ export default defineConfig(({ mode }) => {
 
     return {
         envDir: '../..',
+        plugins: [qrcode()],
+
+        preview: {
+            host: env.APP_HOST ?? 'localhost',
+        },
 
         server: {
-            host: env.APP_HOST ?? 'localhost',
+            host: '0.0.0.0',
             port: Number(env.APP_PORT ?? 5173),
             strictPort: true,
 
