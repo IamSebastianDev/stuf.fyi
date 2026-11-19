@@ -1,17 +1,18 @@
 import { derived, grain } from '@grainular/grains';
-import { html, on } from '@grainular/nord';
+import { attr, html, on } from '@grainular/nord';
 import { browserSupportsWebAuthn } from '@simplewebauthn/browser';
 import { Button } from '@stuf/bits/button';
 import { Icon } from '@stuf/bits/icon';
 import { Surface } from '@stuf/bits/surface';
 import { Text } from '@stuf/bits/text';
-import { KeyRound } from 'lucide';
+import { Check, KeyRound } from 'lucide';
 import { ApiError, WebAuthnNotSupportedError } from '../../core/services/api-client/errors';
 import { authStore } from './auth.store';
 import { hasUsedPasskey } from './passkey-preference';
 import './sign-in.css';
 
 type PasskeyAction = keyof typeof authStore.actions;
+type PasskeyPhase = 'idle' | 'pending' | 'verified' | 'error';
 
 const actionLabels: Record<PasskeyAction, string> = {
     authenticate: 'Sign in with a passkey',
@@ -38,19 +39,22 @@ export const SignIn = ({ onSignedIn }: { onSignedIn: () => void }) => {
     const [primary, secondary]: [PasskeyAction, PasskeyAction] = hasUsedPasskey()
         ? ['authenticate', 'register']
         : ['register', 'authenticate'];
-    const request = grain({ pending: false, message: '' });
-    const pending = derived(request, (state) => state.pending);
+    const request = grain<{ phase: PasskeyPhase; message: string }>({ phase: 'idle', message: '' });
+    const phase = derived(request, (state) => state.phase);
+    const busy = derived(phase, (value) => value === 'pending' || value === 'verified');
     const message = derived(request, (state) => state.message);
 
     const continueWithPasskey = async (action: PasskeyAction) => {
-        if (request().pending) return;
+        if (busy()) return;
 
-        request.set({ pending: true, message: 'Waiting for your passkey…' });
+        request.set({ phase: 'pending', message: 'Waiting for your passkey…' });
         try {
             await authStore.actions[action]();
+            request.set({ phase: 'verified', message: 'Signed in' });
+            await new Promise<void>((resolve) => window.setTimeout(resolve, 400));
             onSignedIn();
         } catch (cause) {
-            request.set({ pending: false, message: passkeyError(cause) });
+            request.set({ phase: 'error', message: passkeyError(cause) });
         }
     };
 
@@ -69,7 +73,7 @@ export const SignIn = ({ onSignedIn }: { onSignedIn: () => void }) => {
                         ? html`
                               <button
                                   type="button"
-                                  ${Button({ appearance: 'inverse', layout: 'full', size: 'lg', disabled: pending })}
+                                  ${Button({ appearance: 'inverse', layout: 'full', size: 'lg', disabled: busy })}
                                   ${on('click', () => void continueWithPasskey(primary))}
                               >
                                   <svg ${Icon({ icon: KeyRound })}></svg>
@@ -77,12 +81,19 @@ export const SignIn = ({ onSignedIn }: { onSignedIn: () => void }) => {
                               </button>
                               <button
                                   type="button"
-                                  ${Button({ appearance: 'plain', layout: 'full', size: 'sm', disabled: pending })}
+                                  ${Button({ appearance: 'plain', layout: 'full', disabled: busy })}
                                   ${on('click', () => void continueWithPasskey(secondary))}
                               >
                                   ${actionLabels[secondary]}
                               </button>
-                              <p ${Text({ size: 'caption', appearance: 'muted' })} role="status">${message}</p>
+                              <div class="passkey-feedback" ${attr({ 'data-phase': phase })}>
+                                  <div class="passkey-feedback-panel">
+                                      <span class="passkey-feedback-icon" aria-hidden="true">
+                                          <svg ${Icon({ icon: Check, size: 'md' })}></svg>
+                                      </span>
+                                      <p ${Text({ appearance: 'muted' })} role="status">${message}</p>
+                                  </div>
+                              </div>
                               <p ${Text({ size: 'caption', appearance: 'muted' })}>
                                   A synced passkey works on other devices using the same password manager.
                               </p>
