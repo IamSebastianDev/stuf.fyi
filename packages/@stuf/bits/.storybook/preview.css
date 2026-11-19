@@ -59,6 +59,19 @@ stuf-nord-story {
     }
 }
 
+.stuf-text-story-example {
+    display: grid;
+    gap: var(--stuf-space-2);
+    max-inline-size: 24rem;
+    padding: var(--stuf-space-4);
+
+    & section {
+        display: grid;
+        gap: var(--stuf-space-1);
+        margin-block-start: var(--stuf-space-2);
+    }
+}
+
 .stuf-separator-story-group {
     max-inline-size: 24rem;
 }

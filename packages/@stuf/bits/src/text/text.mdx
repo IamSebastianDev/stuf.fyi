@@ -1,0 +1,53 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as TextStories from './text.stories';
+
+<Meta of={TextStories} />
+
+# Text
+
+Use `Text` for screen titles, section headings, body copy, labels, and captions. It applies the Stuf type scale to the HTML element you choose.
+
+## Choose the element
+
+Use headings in document order. A compact subsection can be an `h2` styled at `label-lg`. Use `p` for paragraphs and `span` for inline text. Keep a form label on a native `label` associated with its input.
+
+```ts
+import { html } from '@grainular/nord';
+import { Text } from '@stuf/bits/text';
+
+html`
+    <h1 ${Text({ size: 'title' })}>Shopping list</h1>
+    <p ${Text({ size: 'caption', appearance: 'muted' })}>3 of 8 items checked</p>
+    <h2 ${Text({ size: 'label-lg' })}>In the cart</h2>
+    <p ${Text()}>Tomatoes, lemons, and chickpeas.</p>
+`;
+```
+
+<Canvas of={TextStories.InContext} sourceState="none" />
+
+## Choose the size
+
+- **`title`** for the main screen title.
+- **`heading`** for a prominent section heading.
+- **`label-lg`** for a compact section heading or prominent label.
+- **`label`** for field names and row labels.
+- **`body`** for regular copy. This is the default.
+- **`caption`** for short metadata and supporting copy.
+
+Sizes include weight and line height. Text has zero margin, so the surrounding layout can set spacing consistently. The [Typography tokens](?path=/docs/design-system-typography--docs) use `rem` so the scale follows the root font size.
+
+<Canvas of={TextStories.Variants} sourceState="none" />
+
+## Choose the appearance
+
+`default` inherits the current text color, including inside colored controls. Use `muted` for supporting details such as an item count or timestamp.
+
+For plain HTML, import `@stuf/bits/text.css` and apply the same attributes.
+
+```html
+<p stuf-text size="caption" appearance="muted">3 of 8 items checked</p>
+```
+
+## Options
+
+<ArgTypes of={TextStories.Playground} />

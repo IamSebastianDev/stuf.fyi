@@ -1,0 +1,41 @@
+@layer stuf.tokens, stuf.components;
+
+@layer stuf.components {
+    [stuf-text] {
+        margin: 0;
+        color: inherit;
+        font-family: var(--stuf-font-family-sans);
+        font-size: var(--stuf-font-size-body);
+        font-weight: var(--stuf-font-weight-regular);
+        line-height: var(--stuf-line-height-body);
+
+        &[appearance='muted'] {
+            color: var(--stuf-color-text-muted);
+        }
+
+        &:is([size='label'], [size='label-lg'], [size='heading'], [size='title']) {
+            font-weight: var(--stuf-font-weight-semibold);
+            line-height: var(--stuf-line-height-tight);
+        }
+
+        &[size='caption'] {
+            font-size: var(--stuf-font-size-caption);
+        }
+
+        &[size='label'] {
+            font-size: var(--stuf-font-size-label);
+        }
+
+        &[size='label-lg'] {
+            font-size: var(--stuf-font-size-label-lg);
+        }
+
+        &[size='heading'] {
+            font-size: var(--stuf-font-size-heading);
+        }
+
+        &[size='title'] {
+            font-size: var(--stuf-font-size-title);
+        }
+    }
+}
