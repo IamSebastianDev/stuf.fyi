@@ -23,6 +23,7 @@
     --stuf-color-control-hover: light-dark(var(--stuf-palette-neutral-200), var(--stuf-palette-neutral-800));
     --stuf-color-border: light-dark(var(--stuf-palette-neutral-300), var(--stuf-palette-neutral-800));
     --stuf-color-badge: light-dark(var(--stuf-palette-neutral-200), var(--stuf-palette-neutral-800));
+    --stuf-color-progress-track: light-dark(var(--stuf-palette-neutral-300), var(--stuf-palette-neutral-800));
 
     --stuf-color-text: light-dark(var(--stuf-palette-neutral-950), var(--stuf-palette-neutral-100));
     --stuf-color-text-muted: light-dark(var(--stuf-palette-neutral-650), var(--stuf-palette-neutral-400));

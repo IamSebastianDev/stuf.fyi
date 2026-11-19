@@ -1,0 +1,34 @@
+@layer stuf.tokens, stuf.components;
+
+@layer stuf.components {
+    progress[stuf-progress-bar] {
+        display: block;
+        inline-size: 100%;
+        block-size: var(--stuf-size-progress-bar);
+        accent-color: var(--stuf-color-accent);
+
+        @media not (forced-colors: active) {
+            &[value] {
+                appearance: none;
+                overflow: hidden;
+                border: 0;
+                border-radius: var(--stuf-radius-sm);
+                background-color: var(--stuf-color-progress-track);
+
+                &::-webkit-progress-bar {
+                    background-color: transparent;
+                }
+
+                &::-webkit-progress-value {
+                    border-radius: var(--stuf-radius-sm);
+                    background-color: var(--stuf-color-accent);
+                }
+
+                &::-moz-progress-bar {
+                    border-radius: var(--stuf-radius-sm);
+                    background-color: var(--stuf-color-accent);
+                }
+            }
+        }
+    }
+}
