@@ -1,0 +1,30 @@
+@layer stuf.tokens, stuf.components;
+
+@layer stuf.components {
+    [stuf-status-indicator] {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--stuf-space-1);
+        color: var(--stuf-color-text-muted);
+        font-family: var(--stuf-font-family-sans);
+        font-size: var(--stuf-font-size-caption);
+        line-height: var(--stuf-line-height-tight);
+
+        &[appearance='positive'] {
+            --stuf-status-indicator-color: var(--stuf-color-status-positive);
+        }
+
+        &[appearance='pending'] {
+            --stuf-status-indicator-color: var(--stuf-color-status-pending);
+        }
+
+        &:is([appearance='positive'], [appearance='pending'])::before {
+            content: '';
+            inline-size: var(--stuf-size-status-dot);
+            block-size: var(--stuf-size-status-dot);
+            flex: none;
+            border-radius: var(--stuf-radius-circle);
+            background-color: var(--stuf-status-indicator-color);
+        }
+    }
+}

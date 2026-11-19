@@ -32,6 +32,8 @@
     --stuf-color-accent-subtle: color-mix(in oklch, var(--stuf-color-accent) 14%, var(--stuf-color-background));
     --stuf-color-on-accent: light-dark(var(--stuf-palette-neutral-0), var(--stuf-palette-neutral-950));
     --stuf-color-danger: light-dark(var(--stuf-palette-red-700), var(--stuf-palette-red-400));
+    --stuf-color-status-positive: light-dark(var(--stuf-palette-mint-750), var(--stuf-palette-mint-300));
+    --stuf-color-status-pending: light-dark(var(--stuf-palette-blue-750), var(--stuf-palette-blue-300));
 
     --stuf-color-avatar-mint: var(--stuf-palette-mint-300);
     --stuf-color-avatar-blue: var(--stuf-palette-blue-300);

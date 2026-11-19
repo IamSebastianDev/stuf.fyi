@@ -17,6 +17,8 @@
         "./icon.css": "./src/icon/icon.css",
         "./separator": "./src/separator/separator.ts",
         "./separator.css": "./src/separator/separator.css",
+        "./status-indicator": "./src/status-indicator/status-indicator.ts",
+        "./status-indicator.css": "./src/status-indicator/status-indicator.css",
         "./surface": "./src/surface/surface.ts",
         "./surface.css": "./src/surface/surface.css",
         "./theme.css": "./src/theme/index.css",
