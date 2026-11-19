@@ -27,6 +27,38 @@ stuf-nord-story {
     font-size: var(--stuf-size-icon);
 }
 
+.stuf-surface-story-variants {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr));
+    gap: var(--stuf-space-4);
+
+    & figure {
+        margin: 0;
+    }
+
+    & figcaption {
+        margin-block-end: var(--stuf-space-2);
+        font-size: var(--stuf-font-size-body);
+        font-weight: var(--stuf-font-weight-semibold);
+    }
+}
+
+.stuf-surface-story-card {
+    padding: var(--stuf-space-4);
+
+    & h3 {
+        margin: 0;
+        font-size: var(--stuf-font-size-label);
+        font-weight: var(--stuf-font-weight-semibold);
+    }
+
+    & p {
+        margin: var(--stuf-space-1) 0 0;
+        color: var(--stuf-color-text-muted);
+        font-size: var(--stuf-font-size-body);
+    }
+}
+
 .stuf-palette-grid,
 .stuf-theme-grid,
 .stuf-type-samples {

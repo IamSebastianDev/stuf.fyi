@@ -1,0 +1,16 @@
+@layer stuf.tokens, stuf.components;
+
+@layer stuf.components {
+    [stuf-surface] {
+        box-sizing: border-box;
+        border: thin solid transparent;
+        border-radius: var(--stuf-radius-lg);
+        background-color: var(--stuf-color-surface);
+        color: var(--stuf-color-text);
+
+        &[appearance='raised'] {
+            border-color: var(--stuf-color-border);
+            background-color: var(--stuf-color-surface-raised);
+        }
+    }
+}

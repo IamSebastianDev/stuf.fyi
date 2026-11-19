@@ -9,6 +9,8 @@
     "exports": {
         "./button": "./src/button/button.ts",
         "./button.css": "./src/button/button.css",
+        "./surface": "./src/surface/surface.ts",
+        "./surface.css": "./src/surface/surface.css",
         "./theme.css": "./src/theme/index.css",
         "./tokens.css": "./src/theme/index.css"
     },
