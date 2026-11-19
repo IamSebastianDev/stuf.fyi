@@ -25,6 +25,7 @@
         "./status-indicator.css": "./src/status-indicator/status-indicator.css",
         "./surface": "./src/surface/surface.ts",
         "./surface.css": "./src/surface/surface.css",
+        "./switch": "./src/switch/switch.ts",
         "./text": "./src/text/text.ts",
         "./text.css": "./src/text/text.css",
         "./text-field": "./src/text-field/text-field.ts",

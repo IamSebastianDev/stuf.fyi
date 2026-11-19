@@ -37,6 +37,11 @@
         color-mix(in srgb, var(--stuf-palette-mint-300) 50%, var(--stuf-palette-neutral-950))
     );
     --stuf-color-on-checkbox-checked: var(--stuf-palette-neutral-950);
+    --stuf-color-switch-off: light-dark(
+        var(--stuf-palette-neutral-300),
+        color-mix(in oklch, var(--stuf-palette-neutral-800) 75%, var(--stuf-palette-neutral-650))
+    );
+    --stuf-color-switch-thumb: light-dark(var(--stuf-palette-neutral-0), var(--stuf-palette-neutral-100));
     --stuf-color-progress-track: light-dark(var(--stuf-palette-neutral-300), var(--stuf-palette-neutral-875));
 
     --stuf-color-text: light-dark(var(--stuf-palette-neutral-950), var(--stuf-palette-neutral-100));

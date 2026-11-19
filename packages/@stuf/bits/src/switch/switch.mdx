@@ -1,0 +1,38 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks';
+import * as SwitchStories from './switch.stories';
+
+<Meta of={SwitchStories} />
+
+# Switch
+
+Use `Switch` for an on or off setting such as **Meals & plan**. A boolean control from `@grainular/forms` owns its value and disabled state.
+
+<Canvas of={SwitchStories.Playground} sourceState="none" />
+<Controls of={SwitchStories.Playground} />
+
+## Settings row
+
+Use [Control Container](?path=/docs/components-control-container--docs) to label the switch. `layout: 'label-start'` puts the switch at the end of the row and lets the user tap anywhere on the row to toggle it.
+
+```ts
+import { form } from '@grainular/forms';
+import { html } from '@grainular/nord';
+import { ControlContainer } from '@stuf/bits/control-container';
+import { Switch } from '@stuf/bits/switch';
+
+const settings = form({ mealsEnabled: true });
+
+html`
+    <section aria-label="List preferences">
+        ${ControlContainer({
+            control: settings.controls.mealsEnabled,
+            name: 'mealsEnabled',
+            label: 'Meals & plan',
+            layout: 'label-start',
+            children: Switch,
+        })}
+    </section>
+`;
+```
+
+<Canvas of={SwitchStories.Variants} sourceState="none" />
