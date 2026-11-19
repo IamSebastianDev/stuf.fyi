@@ -13,7 +13,15 @@ const preview: Preview = {
             storySort: {
                 order: [
                     'Design system',
-                    ['Overview', 'Color primitives', 'Theme colors', 'Typography', 'Layout', 'Interaction'],
+                    [
+                        'Overview',
+                        'Component inventory',
+                        'Color primitives',
+                        'Theme colors',
+                        'Typography',
+                        'Layout',
+                        'Interaction',
+                    ],
                 ],
             },
         },

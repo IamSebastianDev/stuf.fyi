@@ -1,0 +1,21 @@
+@layer stuf.tokens, stuf.components;
+
+@layer stuf.components {
+    svg[stuf-icon] {
+        --stuf-icon-size: var(--stuf-size-icon-md);
+
+        display: inline-block;
+        inline-size: var(--stuf-icon-size);
+        block-size: var(--stuf-icon-size);
+        flex: none;
+        vertical-align: middle;
+
+        &[size='sm'] {
+            --stuf-icon-size: var(--stuf-size-icon-sm);
+        }
+
+        &[size='lg'] {
+            --stuf-icon-size: var(--stuf-size-icon-lg);
+        }
+    }
+}

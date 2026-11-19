@@ -1,0 +1,87 @@
+import { Markdown, Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Design system/Component inventory" />
+
+# Component inventory
+
+This inventory follows the standalone **Meal Planner Prototype** HTML export and the passkey flow in the app. It covers the planner, meal library, shopping lists, sharing, and settings. The simulated device prompt and demo reset are prototype controls. The browser owns the passkey prompt.
+
+**Implemented** means the primitive is exported by Bits and has a Variants story. **Planned** means the UI is still to be built. Review each Bits addition in its own Variants story before composing the app screens.
+
+## Primitives
+
+Primitives get their appearance from the design tokens and use native elements where possible. Use existing tokens for text and spacing, and compose icon actions with the Button's icon layout.
+
+<Markdown>{`
+| Primitive | Status | Used for |
+| --- | --- | --- |
+| [Button](?path=/story/button--variants) | Implemented | Primary and secondary actions, navigation links, icon actions, and destructive actions. |
+| [Surface](?path=/story/surface--variants) | Implemented | Grouped rows, cards, panels, and emoji tiles. |
+| [Separator](?path=/story/separator--variants) | Implemented | Section rules and dividers inset to match row padding. |
+| [Icon](?path=/story/icon--variants) | Implemented | Navigation, add, search, back, close, copy, passkeys, and checkmarks. |
+| Badge | Planned | Planned-day labels and owner labels. |
+| Avatar | Planned | Member initials and presence in the people list and list switcher. |
+| Status indicator | Planned | Labeled sync and member presence states. |
+| Progress bar | Planned | Shopping completion from empty to complete. |
+`}</Markdown>
+
+## Reusable components
+
+These components combine markup and styles with shared interaction. Build form controls around native inputs and integrate them with @grainular/forms where they participate in a form.
+
+<Markdown>{`
+| Component | Status | Used for |
+| --- | --- | --- |
+| Text field | Planned | List names, invite codes, profile names, meal names, and quick-add inputs. Includes labels, help text, and validation. |
+| Search field | Planned | Meal or ingredient search in the library and dinner picker. Builds on Text field. |
+| Checkbox | Planned | Shopping item completion, store assignments, and selecting lists to import meals from. |
+| Switch | Planned | Enabling or disabling meals and planning when creating or editing a list. |
+| Segmented control | Planned | Switching between the planner's List and Days views. |
+| Color picker | Planned | Choosing a default profile color or a per-list override from the avatar palette. |
+| Chips | Planned | Selecting a store filter, adding a suggested ingredient, and removing an ingredient. |
+| Grouped list and row | Planned | Settings, result lists, and selectable rows with optional secondary text and trailing controls. |
+| Disclosure | Planned | Expanding and collapsing the shopping group for items usually bought elsewhere. |
+| Bottom navigation | Planned | Plan, Meals, List, and Settings destinations, including shopping-only lists. |
+| Screen header | Planned | Titles, Back and Close controls, and trailing actions such as Save or Share. |
+| Sheet | Planned | Dinner selection, store assignment, and new-list creation. |
+| Popover | Planned | Opening the list switcher from the current list's name. |
+| Toast | Planned | Action feedback with optional Undo or View. |
+| Empty state | Planned | Empty shopping lists, empty meal libraries, and searches with no matches. |
+`}</Markdown>
+
+## App components
+
+Keep these with their features in the app. They own the domain data, actions, and screen-specific states.
+
+<Markdown>{`
+| App component | Status | Used for |
+| --- | --- | --- |
+| App shell | Planned | Safe-area layout, scrollable screen content, bottom navigation, and pinned actions. |
+| Passkey sign-in | Planned | Create account and sign in, show pending or error states, and continue to a shared invite. |
+| Create or join | Planned | Start a new list or enter an invite code, with invalid-code feedback. |
+| List switcher | Planned | Show the active list, other lists, and member previews. Open create or join actions. |
+| New-list sheet | Planned | Enter a list name, choose shopping-only mode, and optionally copy meals from other lists. |
+| Week navigator | Planned | Browse weeks, show the date range and dinners planned, and switch between List and Days. |
+| Weekly meal rows | Planned | Show planned dinners and unplanned days with an Add dinner action. |
+| Day strip and card | Planned | Select a weekday, see what is planned, and open the dinner picker. |
+| Meal suggestion | Planned | Show a suggested dinner and its reason, with accept, refresh, and dismiss actions. |
+| Dinner picker | Planned | Search ranked meals, show the current selection, remove or create a meal, and copy and add from another list. |
+| Ingredient transfer | Planned | Show how many ingredients can be added to shopping, with empty-plan and already-added states. |
+| Meal library | Planned | Search meals, see ingredient previews and planned-day labels, and copy meals from another list. |
+| Meal editor | Planned | Create or edit a meal, choose an emoji, and save or delete. |
+| Ingredient editor | Planned | Add ingredients by typing or choosing a suggestion and remove them with chips. |
+| Shopping list header | Planned | Open the list switcher, sharing, and settings. Show sync and completion. |
+| Shopping quick-add | Planned | Add an item from text or from purchase history suggestions. |
+| Shopping item row | Planned | Check or restore an item and show meal, store, and member attribution. |
+| Cart section | Planned | Show checked items with timestamps and offer Clear with Undo. |
+| Store filter and groups | Planned | Choose where to shop and group items by availability, including a collapsible group for items usually bought elsewhere. |
+| Store assignment sheet | Planned | Assign one or more stores to an item or choose Any store or Not sure. |
+| List preferences | Planned | Rename the list and toggle meals and planning. |
+| Store management | Planned | Add, rename, or delete stores for a list. |
+| List sharing | Planned | Show and copy the invite link, display the code, and reset both. |
+| List members | Planned | Show members, presence, the list owner, and removal actions when permitted. |
+| Profile settings | Planned | Edit the default name and color or override them for one list. |
+| Passkey management | Planned | Show registered passkeys and offer add or remove actions. |
+| Account settings screen | Planned | Group passkeys and default profile settings with sign-out. |
+| List settings screen | Planned | Group list preferences, stores, sharing, list profile, and members. |
+`}</Markdown>

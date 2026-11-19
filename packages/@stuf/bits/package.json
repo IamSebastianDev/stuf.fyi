@@ -9,6 +9,8 @@
     "exports": {
         "./button": "./src/button/button.ts",
         "./button.css": "./src/button/button.css",
+        "./icon": "./src/icon/icon.ts",
+        "./icon.css": "./src/icon/icon.css",
         "./separator": "./src/separator/separator.ts",
         "./separator.css": "./src/separator/separator.css",
         "./surface": "./src/surface/surface.ts",
@@ -27,7 +29,8 @@
         "test": "vitest run"
     },
     "dependencies": {
-        "@fontsource-variable/geist": "5.3.0"
+        "@fontsource-variable/geist": "5.3.0",
+        "lucide": "1.38.0"
     },
     "devDependencies": {
         "@grainular/nord": "2.4.0",

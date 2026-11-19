@@ -11,7 +11,9 @@
     --stuf-size-control-sm: 2.75rem;
     --stuf-size-control-md: 3rem;
     --stuf-size-control-lg: 3.25rem;
-    --stuf-size-icon: 1.375rem;
+    --stuf-size-icon-sm: 1rem;
+    --stuf-size-icon-md: 1.375rem;
+    --stuf-size-icon-lg: 1.75rem;
 
     --stuf-radius-sm: 0.5rem;
     --stuf-radius-md: 0.75rem;

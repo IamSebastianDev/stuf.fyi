@@ -24,7 +24,7 @@ stuf-nord-story {
 }
 
 .stuf-button-story-icon {
-    font-size: var(--stuf-size-icon);
+    font-size: var(--stuf-size-icon-md);
 }
 
 .stuf-story-variants {
