@@ -18,3 +18,20 @@ body {
     margin: 0;
     font-size: var(--stuf-font-size-body);
 }
+
+.app-screen {
+    max-inline-size: 27rem;
+    min-block-size: 100dvh;
+    margin-inline: auto;
+    padding-block: calc(var(--stuf-space-6) + env(safe-area-inset-top, 0px))
+        calc(var(--stuf-space-7) + env(safe-area-inset-bottom, 0px));
+    padding-inline: max(var(--stuf-space-6), env(safe-area-inset-left, 0px))
+        max(var(--stuf-space-6), env(safe-area-inset-right, 0px));
+}
+
+.app-status-screen {
+    display: grid;
+    align-content: center;
+    justify-items: start;
+    gap: var(--stuf-space-3);
+}

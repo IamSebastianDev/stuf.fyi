@@ -1,28 +1,31 @@
-import { derived } from '@grainular/grains';
 import { $switch, html, on } from '@grainular/nord';
+import { resource } from '@grainular/resource';
 import { Button } from '@stuf/bits/button';
-import { pingPong } from './core/services/socket-client';
-import { healthStore } from './features/health/health.store';
+import { Text } from '@stuf/bits/text';
+import { AppRoutes } from './app.router';
+import { sessionStore } from './features/auth/session.store';
 
-export const App = () => {
-    const { state, data, error, refresh } = healthStore.state;
-    const { data: socketData, ...channel } = pingPong;
-    socketData.subscribe(console.log);
+const identity = resource(async ({ abortSignal }) => {
+    await sessionStore.actions.fetchIdentity(abortSignal);
+});
 
-    return html`
-        ${$switch(state)
-            .$case('idle', () => html`${derived(data, JSON.stringify)}`)
-            .$case('error', () => html`Error: ${derived(error, (error) => error?.message)}`)
-            .$default(() => html`Loading...`)}
-        <button
-            type="button"
-            ${Button()}
-            ${on('click', () => {
-                refresh();
-                channel.send({ message: 'Test' });
-            })}
-        >
-            Refresh
-        </button>
-    `;
-};
+export const App = () => html`
+    ${$switch(identity.state)
+        .$case('idle', AppRoutes)
+        .$case(
+            'error',
+            () => html`
+                <main class="app-screen app-status-screen">
+                    <h1 ${Text({ size: 'heading' })}>Couldn’t check your session</h1>
+                    <button type="button" ${Button()} ${on('click', identity.refresh)}>Try again</button>
+                </main>
+            `,
+        )
+        .$default(
+            () => html`
+                <main class="app-screen app-status-screen">
+                    <p ${Text({ appearance: 'muted' })} role="status">Checking your session…</p>
+                </main>
+            `,
+        )}
+`;

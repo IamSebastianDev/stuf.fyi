@@ -3,6 +3,7 @@ import { AuthSessionResponseSchema, type AuthSessionResponseDto } from '@stuf/co
 import * as v from 'valibot';
 import { ApiError } from '../../core/services/api-client/errors';
 import { client, requestConfig, resolveResponse, validateResult } from '../../core/services/api-client';
+import { rememberPasskeyUse } from './passkey-preference';
 
 /** Current authenticated session, or null before/after authentication. */
 const authenticatedSession = grain<AuthSessionResponseDto | null>(null);
@@ -19,9 +20,9 @@ const isAuthenticated = derived(authenticatedSession, (session) => session !== n
  * The API client turns non-success responses into ApiError instances and
  * validates successful responses against the shared session contract.
  */
-const getSession = (): Promise<AuthSessionResponseDto> => {
+const getSession = (signal?: AbortSignal): Promise<AuthSessionResponseDto> => {
     return client.query(
-        requestConfig('/auth/session', { authenticated: true }),
+        requestConfig('/auth/session', { authenticated: true, signal }),
         resolveResponse(validateResult(AuthSessionResponseSchema)),
     );
 };
@@ -39,6 +40,7 @@ const logoutRequest = () => {
 
 /** Replaces the local session after a successful authentication ceremony. */
 const setSession = (session: AuthSessionResponseDto): void => {
+    rememberPasskeyUse();
     authenticatedSession.set(session);
 };
 
@@ -54,12 +56,14 @@ const reset = (): void => {
  * failures are rethrown so the caller can handle an unavailable API or an
  * invalid response separately.
  */
-const fetchIdentity = async (): Promise<AuthSessionResponseDto | null> => {
+const fetchIdentity = async (signal?: AbortSignal): Promise<AuthSessionResponseDto | null> => {
     try {
-        const session = await getSession();
+        const session = await getSession(signal);
+        signal?.throwIfAborted();
         setSession(session);
         return session;
     } catch (cause) {
+        signal?.throwIfAborted();
         if (cause instanceof ApiError && cause.statusCode === 401) {
             reset();
             return null;
