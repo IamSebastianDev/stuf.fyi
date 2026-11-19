@@ -27,7 +27,7 @@ stuf-nord-story {
     font-size: var(--stuf-size-icon);
 }
 
-.stuf-surface-story-variants {
+.stuf-story-variants {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr));
     gap: var(--stuf-space-4);
@@ -56,6 +56,24 @@ stuf-nord-story {
         margin: var(--stuf-space-1) 0 0;
         color: var(--stuf-color-text-muted);
         font-size: var(--stuf-font-size-body);
+    }
+}
+
+.stuf-separator-story-group {
+    max-inline-size: 24rem;
+}
+
+.stuf-separator-story-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--stuf-space-3);
+    margin: 0;
+    padding: var(--stuf-space-3) var(--stuf-space-4);
+    font-size: var(--stuf-font-size-body);
+
+    & span:last-child {
+        color: var(--stuf-color-text-muted);
     }
 }
 

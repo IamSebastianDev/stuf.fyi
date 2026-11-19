@@ -49,7 +49,7 @@ export const Variants = {
     render: () =>
         renderNordStory(
             () => html`
-                <div class="stuf-surface-story-variants">
+                <div class="stuf-story-variants">
                     ${appearances.map(
                         ({ value, label }) => html`
                             <figure>

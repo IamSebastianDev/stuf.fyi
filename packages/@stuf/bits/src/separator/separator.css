@@ -1,0 +1,13 @@
+@layer stuf.tokens, stuf.components;
+
+@layer stuf.components {
+    [stuf-separator] {
+        margin: 0;
+        border: 0;
+        border-block-start: thin solid var(--stuf-color-border);
+
+        &[layout='inset'] {
+            margin-inline: var(--stuf-space-4);
+        }
+    }
+}
