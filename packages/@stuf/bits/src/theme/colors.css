@@ -31,6 +31,12 @@
         color-mix(in srgb, var(--stuf-palette-neutral-950) 55%, transparent)
     );
     --stuf-color-badge: light-dark(var(--stuf-palette-neutral-200), var(--stuf-palette-neutral-800));
+    --stuf-color-checkbox-border: var(--stuf-palette-neutral-600);
+    --stuf-color-checkbox-checked: light-dark(
+        color-mix(in srgb, var(--stuf-palette-mint-300) 35%, var(--stuf-palette-neutral-50)),
+        color-mix(in srgb, var(--stuf-palette-mint-300) 50%, var(--stuf-palette-neutral-950))
+    );
+    --stuf-color-on-checkbox-checked: var(--stuf-palette-neutral-950);
     --stuf-color-progress-track: light-dark(var(--stuf-palette-neutral-300), var(--stuf-palette-neutral-875));
 
     --stuf-color-text: light-dark(var(--stuf-palette-neutral-950), var(--stuf-palette-neutral-100));

@@ -80,6 +80,20 @@ stuf-nord-story {
     max-inline-size: 24rem;
 }
 
+.stuf-checkbox-story-row [stuf-control-row] {
+    border-block-end: thin solid var(--stuf-color-divider);
+}
+
+.stuf-checkbox-story-shopping-item [stuf-control-row] {
+    & > [stuf-text] {
+        font-size: var(--stuf-font-size-input);
+    }
+
+    &:has(input:checked:not(:disabled)) {
+        color: var(--stuf-color-text-subtle);
+    }
+}
+
 .stuf-text-field-story-list {
     box-sizing: border-box;
     max-inline-size: calc(24rem + 2 * var(--stuf-space-5));

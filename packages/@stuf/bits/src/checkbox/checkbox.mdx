@@ -1,0 +1,92 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks';
+import * as CheckboxStories from './checkbox.stories';
+
+<Meta of={CheckboxStories} />
+
+# Checkbox
+
+Use `Checkbox` with a boolean control from `@grainular/forms`. The control owns the checked value and disabled state.
+
+- **`default`** shows a circle with a tinted fill when checked.
+- **`checkmark`** shows a mint checkmark when checked and an empty space when unchecked.
+
+<Canvas of={CheckboxStories.Playground} sourceState="none" />
+<Controls of={CheckboxStories.Playground} />
+
+## Shopping rows
+
+Use `ControlContainer` with `layout: 'label-end'` to put the circle first and make the whole row a tap target. Place independent actions such as store assignment alongside the labelled row.
+
+```ts
+import { form } from '@grainular/forms';
+import { html } from '@grainular/nord';
+import { Checkbox } from '@stuf/bits/checkbox';
+import { ControlContainer } from '@stuf/bits/control-container';
+
+const shopping = form({ inCart: false });
+
+html`
+    <section aria-label="Shopping list">
+        ${ControlContainer({
+            control: shopping.controls.inCart,
+            name: 'inCart',
+            label: 'Oat milk',
+            layout: 'label-end',
+            children: (props) => Checkbox(props),
+        })}
+    </section>
+`;
+```
+
+<Canvas of={CheckboxStories.Variants} sourceState="none" />
+
+## Store selection
+
+Use `layout: 'label-start'` on the container and `appearance: 'checkmark'` on the field to place a mint checkmark at the end of the row.
+
+```ts
+const stores = form({ supermarket: true });
+
+html`
+    <div role="group" aria-label="Where to buy lemons">
+        ${ControlContainer({
+            control: stores.controls.supermarket,
+            name: 'supermarket',
+            label: 'Supermarket',
+            layout: 'label-start',
+            children: (props) => Checkbox({ ...props, appearance: 'checkmark' }),
+        })}
+    </div>
+`;
+```
+
+<Canvas of={CheckboxStories.StoreSelection} sourceState="none" />
+
+## Form validation
+
+For a field with help or validation feedback, pass the render props from [Control Container](?path=/docs/components-control-container--docs) into `Checkbox`.
+
+```ts
+import { form, required } from '@grainular/forms';
+import { html } from '@grainular/nord';
+import { Checkbox } from '@stuf/bits/checkbox';
+import { ControlContainer } from '@stuf/bits/control-container';
+
+const review = form({ reviewed: false }, ({ reviewed }) =>
+    required(reviewed, { message: 'Confirm that you reviewed the list.' }),
+);
+
+html`
+    <section aria-label="List review">
+        ${ControlContainer({
+            control: review.controls.reviewed,
+            label: 'I reviewed the list',
+            layout: 'label-end',
+            name: 'reviewed',
+            children: (props) => Checkbox({ ...props, required: true }),
+        })}
+    </section>
+`;
+```
+
+<Canvas of={CheckboxStories.Form} sourceState="none" />

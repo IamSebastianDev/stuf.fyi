@@ -1,0 +1,73 @@
+@layer stuf.tokens, stuf.components;
+
+@layer stuf.components {
+    [stuf-checkbox] {
+        --stuf-checkbox-border-color: var(--stuf-color-checkbox-border);
+        --stuf-checkbox-checked-background: var(--stuf-color-checkbox-checked);
+        --stuf-checkbox-mark-color: var(--stuf-color-on-checkbox-checked);
+
+        display: inline-grid;
+        place-items: center;
+        inline-size: var(--stuf-size-icon-md);
+        block-size: var(--stuf-size-icon-md);
+        flex: none;
+        vertical-align: middle;
+
+        &[appearance='checkmark'] {
+            --stuf-checkbox-border-color: transparent;
+            --stuf-checkbox-checked-background: transparent;
+            --stuf-checkbox-mark-color: var(--stuf-color-accent);
+        }
+
+        &:has(> input:disabled) {
+            opacity: var(--stuf-opacity-disabled);
+        }
+
+        & > input {
+            grid-area: 1 / 1;
+            box-sizing: border-box;
+            inline-size: 100%;
+            block-size: 100%;
+            margin: 0;
+            cursor: pointer;
+
+            &:disabled {
+                cursor: default;
+            }
+        }
+
+        & > svg {
+            grid-area: 1 / 1;
+            display: none;
+            color: var(--stuf-checkbox-mark-color);
+            pointer-events: none;
+        }
+
+        @media not (forced-colors: active) {
+            & > input {
+                appearance: none;
+                border: 1.5px solid var(--stuf-checkbox-border-color);
+                border-radius: var(--stuf-radius-circle);
+                background-color: transparent;
+
+                &:checked {
+                    border-color: transparent;
+                    background-color: var(--stuf-checkbox-checked-background);
+                }
+
+                &[aria-invalid='true'] {
+                    border-color: var(--stuf-color-danger);
+                }
+
+                &:focus-visible {
+                    outline: var(--stuf-focus-ring-width) solid var(--stuf-color-accent);
+                    outline-offset: var(--stuf-focus-ring-offset);
+                }
+            }
+
+            & > input:checked + svg {
+                display: block;
+            }
+        }
+    }
+}

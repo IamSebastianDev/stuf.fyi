@@ -13,6 +13,7 @@
         "./badge.css": "./src/badge/badge.css",
         "./button": "./src/button/button.ts",
         "./button.css": "./src/button/button.css",
+        "./checkbox": "./src/checkbox/checkbox.ts",
         "./control-container": "./src/control-container/control-container.ts",
         "./icon": "./src/icon/icon.ts",
         "./icon.css": "./src/icon/icon.css",
