@@ -18,7 +18,8 @@ type IconArgs = Pick<IconOptions, 'size'> & {
 };
 
 export default {
-    title: 'Icon',
+    title: 'Primitives/Icon',
+    id: 'icon',
     tags: ['autodocs'],
     parameters: {
         docs: {

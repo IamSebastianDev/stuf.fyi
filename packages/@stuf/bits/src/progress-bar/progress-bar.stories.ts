@@ -10,7 +10,8 @@ const progress = ({ value, max }: ProgressBarArgs) => html`
 `;
 
 export default {
-    title: 'Progress Bar',
+    title: 'Primitives/Progress Bar',
+    id: 'progress-bar',
     tags: ['autodocs'],
     parameters: {
         docs: {

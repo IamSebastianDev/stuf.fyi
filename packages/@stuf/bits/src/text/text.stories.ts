@@ -17,7 +17,8 @@ const sizes = [
 type TextArgs = TextOptions & { element: (typeof elements)[number]; content: string };
 
 export default {
-    title: 'Text',
+    title: 'Primitives/Text',
+    id: 'text',
     args: { element: 'p', size: 'body', appearance: 'default', content: 'Ingredients from this week’s plan.' },
     argTypes: {
         element: { control: 'select', options: elements, description: 'Native HTML element used in this example.' },

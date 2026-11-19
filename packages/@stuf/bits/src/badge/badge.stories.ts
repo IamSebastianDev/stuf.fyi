@@ -6,7 +6,8 @@ import { Badge, type BadgeOptions } from './badge';
 type BadgeArgs = BadgeOptions & { label: string };
 
 export default {
-    title: 'Badge',
+    title: 'Primitives/Badge',
+    id: 'badge',
     tags: ['autodocs'],
     parameters: {
         docs: {

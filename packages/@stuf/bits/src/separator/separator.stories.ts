@@ -24,7 +24,8 @@ const listDetails = (options: SeparatorOptions) => html`
 `;
 
 export default {
-    title: 'Separator',
+    title: 'Primitives/Separator',
+    id: 'separator',
     tags: ['autodocs'],
     parameters: {
         docs: {

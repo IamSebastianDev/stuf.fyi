@@ -6,7 +6,8 @@ import { StatusIndicator, type StatusIndicatorAppearance } from './status-indica
 type StatusIndicatorArgs = { appearance: StatusIndicatorAppearance; label: string };
 
 export default {
-    title: 'Status Indicator',
+    title: 'Primitives/Status Indicator',
+    id: 'status-indicator',
     tags: ['autodocs'],
     parameters: {
         docs: {

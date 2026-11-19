@@ -14,7 +14,8 @@ const colors = [
 type AvatarArgs = AvatarOptions & { initials: string; name: string };
 
 export default {
-    title: 'Avatar',
+    title: 'Primitives/Avatar',
+    id: 'avatar',
     tags: ['autodocs'],
     parameters: {
         docs: {

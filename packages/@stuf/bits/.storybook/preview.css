@@ -72,6 +72,12 @@ stuf-nord-story {
     }
 }
 
+.stuf-form-story-example {
+    display: grid;
+    gap: var(--stuf-space-4);
+    max-inline-size: 24rem;
+}
+
 .stuf-separator-story-group {
     max-inline-size: 24rem;
 }

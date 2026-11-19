@@ -11,6 +11,7 @@ const preview: Preview = {
         },
         options: {
             storySort: {
+                method: 'alphabetical',
                 order: [
                     'Design system',
                     [
@@ -22,6 +23,8 @@ const preview: Preview = {
                         'Layout',
                         'Interaction',
                     ],
+                    'Primitives',
+                    'Components',
                 ],
             },
         },

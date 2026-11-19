@@ -16,7 +16,8 @@ const mealCard = (options: SurfaceOptions) => html`
 `;
 
 export default {
-    title: 'Surface',
+    title: 'Primitives/Surface',
+    id: 'surface',
     tags: ['autodocs'],
     parameters: {
         docs: {

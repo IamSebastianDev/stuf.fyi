@@ -15,7 +15,8 @@ type ButtonArgs = ButtonOptions & {
 };
 
 export default {
-    title: 'Button',
+    title: 'Primitives/Button',
+    id: 'button',
     tags: ['autodocs'],
     parameters: {
         docs: {
