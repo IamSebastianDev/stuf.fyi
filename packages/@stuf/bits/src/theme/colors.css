@@ -32,4 +32,11 @@
     --stuf-color-accent-subtle: color-mix(in oklch, var(--stuf-color-accent) 14%, var(--stuf-color-background));
     --stuf-color-on-accent: light-dark(var(--stuf-palette-neutral-0), var(--stuf-palette-neutral-950));
     --stuf-color-danger: light-dark(var(--stuf-palette-red-700), var(--stuf-palette-red-400));
+
+    --stuf-color-avatar-mint: var(--stuf-palette-mint-300);
+    --stuf-color-avatar-blue: var(--stuf-palette-blue-300);
+    --stuf-color-avatar-amber: var(--stuf-palette-amber-300);
+    --stuf-color-avatar-coral: var(--stuf-palette-coral-300);
+    --stuf-color-avatar-violet: var(--stuf-palette-violet-300);
+    --stuf-color-on-avatar: var(--stuf-palette-neutral-950);
 }

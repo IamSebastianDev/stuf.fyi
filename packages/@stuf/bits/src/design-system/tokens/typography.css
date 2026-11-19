@@ -6,6 +6,8 @@
     --stuf-font-size-label-lg: 1.125rem;
     --stuf-font-size-heading: 1.625rem;
     --stuf-font-size-title: 1.75rem;
+    --stuf-font-size-avatar-sm: 0.625rem;
+    --stuf-font-size-avatar-md: var(--stuf-font-size-caption);
     --stuf-font-weight-regular: 400;
     --stuf-font-weight-medium: 500;
     --stuf-font-weight-semibold: 600;

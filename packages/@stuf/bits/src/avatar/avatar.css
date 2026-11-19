@@ -1,0 +1,43 @@
+@layer stuf.tokens, stuf.components;
+
+@layer stuf.components {
+    [stuf-avatar] {
+        --stuf-avatar-size: var(--stuf-size-avatar-md);
+        --stuf-avatar-font-size: var(--stuf-font-size-avatar-md);
+
+        display: inline-grid;
+        place-items: center;
+        inline-size: var(--stuf-avatar-size);
+        block-size: var(--stuf-avatar-size);
+        flex: none;
+        border-radius: var(--stuf-radius-circle);
+        background-color: var(--stuf-color-avatar-blue);
+        color: var(--stuf-color-on-avatar);
+        font-family: var(--stuf-font-family-sans);
+        font-size: var(--stuf-avatar-font-size);
+        font-weight: var(--stuf-font-weight-bold);
+        line-height: var(--stuf-line-height-tight);
+        vertical-align: middle;
+
+        &[size='sm'] {
+            --stuf-avatar-size: var(--stuf-size-avatar-sm);
+            --stuf-avatar-font-size: var(--stuf-font-size-avatar-sm);
+        }
+
+        &[color='mint'] {
+            background-color: var(--stuf-color-avatar-mint);
+        }
+
+        &[color='amber'] {
+            background-color: var(--stuf-color-avatar-amber);
+        }
+
+        &[color='coral'] {
+            background-color: var(--stuf-color-avatar-coral);
+        }
+
+        &[color='violet'] {
+            background-color: var(--stuf-color-avatar-violet);
+        }
+    }
+}

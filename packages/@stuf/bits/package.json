@@ -7,6 +7,8 @@
         "**/*.css"
     ],
     "exports": {
+        "./avatar": "./src/avatar/avatar.ts",
+        "./avatar.css": "./src/avatar/avatar.css",
         "./badge": "./src/badge/badge.ts",
         "./badge.css": "./src/badge/badge.css",
         "./button": "./src/button/button.ts",
