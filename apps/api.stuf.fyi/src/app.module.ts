@@ -8,6 +8,7 @@ import { PrismaModule } from './core/prisma/prisma.module';
 import { SocketModule } from './core/socket/socket.module';
 import { AuthModule } from './features/auth/auth.module';
 import { HealthModule } from './features/health/health.module';
+import { ListModule } from './features/list/list.module';
 
 @Module({
     imports: [
@@ -18,6 +19,7 @@ import { HealthModule } from './features/health/health.module';
         ConfigModule,
         HealthModule,
         AuthModule,
+        ListModule,
         PrismaModule,
         SocketModule,
     ],

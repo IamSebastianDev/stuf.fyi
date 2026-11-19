@@ -1,0 +1,23 @@
+meta {
+  name: list-collection
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/api/v1/lists
+  body: none
+  auth: none
+}
+
+headers {
+  Accept: application/json
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  Returns only lists the authenticated user belongs to, ordered by name. Uses the session cookie from passkey sign-in or registration.
+}

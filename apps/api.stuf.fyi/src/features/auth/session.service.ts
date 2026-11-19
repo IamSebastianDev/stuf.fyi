@@ -4,6 +4,7 @@ import type { FastifyReply, FastifyRequest } from 'fastify';
 import { createHash, randomBytes } from 'node:crypto';
 import { CookieService } from '../../core/cookies/cookie.service';
 import { PrismaService } from '../../core/prisma/prisma.service';
+import { sessionIdentitySelect, type SessionIdentity } from './types/session-identity.type';
 import { sessionWithUserPasskeys, type SessionWithUserPasskeys } from './types/session-with-user-passkeys.type';
 
 type SessionClient = Pick<PrismaService['client'], 'session'>;
@@ -31,25 +32,21 @@ export class SessionService {
     }
 
     async getCurrentSession(request: FastifyRequest) {
-        const sessionToken = this.cookies.get(request, this.sessionCookieName);
-        if (!sessionToken) {
-            throw this.authenticationRequired();
-        }
-
         const session = await this.prismaService.client.session.findUnique({
-            where: { tokenHash: this.hashSessionToken(sessionToken) },
+            where: { tokenHash: this.requireTokenHash(request) },
             include: sessionWithUserPasskeys,
         });
-        if (!session || session.revokedAt || session.expiresAt <= new Date() || session.user.disabledAt) {
-            throw this.authenticationRequired();
-        }
+        return this.toResponse(await this.requireActiveSession(session));
+    }
 
-        await this.prismaService.client.session.update({
-            where: { id: session.id },
-            data: { lastUsedAt: new Date() },
+    /** Verifies the cookie session and returns the user ID for a protected request. */
+    async requireUserId(request: FastifyRequest): Promise<string> {
+        const session = await this.prismaService.client.session.findUnique({
+            where: { tokenHash: this.requireTokenHash(request) },
+            select: sessionIdentitySelect,
         });
-
-        return this.toResponse(session);
+        const { userId } = await this.requireActiveSession(session);
+        return userId;
     }
 
     async revoke(request: FastifyRequest, reply: FastifyReply) {
@@ -71,6 +68,26 @@ export class SessionService {
     toResponse(session: SessionWithUserPasskeys) {
         const { user, ...sessionData } = session;
         return { user, session: sessionData, passkeys: user.passkeys };
+    }
+
+    private requireTokenHash(request: FastifyRequest): string {
+        const sessionToken = this.cookies.get(request, this.sessionCookieName);
+        if (!sessionToken) throw this.authenticationRequired();
+
+        return this.hashSessionToken(sessionToken);
+    }
+
+    private async requireActiveSession<T extends SessionIdentity>(session: T | null): Promise<T> {
+        const now = new Date();
+        if (!session || session.revokedAt || session.expiresAt <= now || session.user.disabledAt) {
+            throw this.authenticationRequired();
+        }
+
+        await this.prismaService.client.session.update({
+            where: { id: session.id },
+            data: { lastUsedAt: now },
+        });
+        return session;
     }
 
     private createSessionToken() {

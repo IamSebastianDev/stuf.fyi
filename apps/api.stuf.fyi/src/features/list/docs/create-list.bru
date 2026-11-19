@@ -1,0 +1,29 @@
+meta {
+  name: create-list
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/api/v1/lists
+  body: json
+  auth: none
+}
+
+headers {
+  Accept: application/json
+  Content-Type: application/json
+}
+
+body:json {
+  "name": "Home",
+  "mealsEnabled": true
+}
+
+assert {
+  res.status: eq 201
+}
+
+docs {
+  Creates a list for the authenticated user and returns the list and its owner membership. Uses the session cookie from passkey sign-in or registration.
+}
