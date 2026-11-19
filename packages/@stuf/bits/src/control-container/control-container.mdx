@@ -1,4 +1,4 @@
-import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks';
 import * as ControlContainerStories from './control-container.stories';
 
 <Meta of={ControlContainerStories} />
@@ -16,6 +16,13 @@ The callback receives `control`, `id`, `name`, and reactive `ariaDescribedBy` an
 The container associates the label and help with the field. It adds validation feedback after the field is touched or the form is validated. The Variants snippet calls `validate()` to show the error state on load.
 
 <Canvas of={ControlContainerStories.Variants} />
+
+## Inline rows
+
+`layout: 'stacked'` puts the label above the field. For a side-by-side row, use `label-start` to put the label first or `label-end` to put it after the field. The inline row acts as one tap target and help and errors appear below it.
+
+<Canvas of={ControlContainerStories.InlineRow} sourceState="none" />
+<Controls of={ControlContainerStories.InlineRow} include={['label', 'layout']} />
 
 ## Submit a form
 

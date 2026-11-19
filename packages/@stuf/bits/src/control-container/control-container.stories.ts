@@ -1,15 +1,21 @@
-import { form, required, type Control } from '@grainular/forms';
+import { control, form, required, type Control } from '@grainular/forms';
 import { grain } from '@grainular/grains';
 import { html, on } from '@grainular/nord';
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { Checkbox } from '@stuf/bits/checkbox';
 import { TextField } from '@stuf/bits/text-field';
 import { expect } from 'storybook/test';
 import { renderNordStory } from '../../.storybook/render-nord-story';
 import { Button } from '../button/button';
 import { Text } from '../text/text';
-import { ControlContainer } from './control-container';
+import { ControlContainer, type ControlContainerProps } from './control-container';
 
-type ControlContainerArgs = { label: string; description?: string; showError: boolean };
+type ControlContainerArgs = {
+    label: string;
+    description?: string;
+    showError: boolean;
+    layout?: ControlContainerProps<boolean>['layout'];
+};
 
 const description = 'This name appears in the meal plan.';
 const placeholder = 'e.g. Chickpea bowls';
@@ -126,6 +132,35 @@ export const Variants = {
         await expect(withHelp).toHaveAccessibleDescription(description);
         await expect(withError).toHaveAccessibleDescription(`${description} Enter a meal name.`);
     },
+} satisfies Story;
+
+export const InlineRow = {
+    args: { label: 'Supermarket', layout: 'label-start' },
+    argTypes: {
+        layout: {
+            control: 'select',
+            options: ['label-start', 'label-end'],
+            description: 'Places the label before or after the field.',
+        },
+    },
+    parameters: {
+        controls: { include: ['label', 'layout'] },
+        layout: 'padded',
+        docs: { codePanel: false },
+    },
+    render: ({ label, layout }) =>
+        renderNordStory(
+            () => html`
+                <div class="stuf-form-story-example">
+                    ${ControlContainer({
+                        label,
+                        layout,
+                        control: control(true),
+                        children: (props) => Checkbox({ ...props, appearance: 'checkmark' }),
+                    })}
+                </div>
+            `,
+        ),
 } satisfies Story;
 
 export const FormExample = {

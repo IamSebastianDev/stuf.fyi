@@ -4,8 +4,36 @@
     [stuf-control-container] {
         display: grid;
 
-        & > label {
+        & > label:not([stuf-control-row]) {
             margin-block-end: var(--stuf-space-2);
+        }
+
+        & > [stuf-control-row] {
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            gap: var(--stuf-space-inline-control);
+            min-block-size: var(--stuf-size-control-md);
+            cursor: pointer;
+
+            &[layout='label-end'] {
+                flex-direction: row-reverse;
+            }
+
+            & > [stuf-text] {
+                flex: 1;
+                min-inline-size: 0;
+                font-size: var(--stuf-font-size-label);
+                overflow-wrap: anywhere;
+            }
+
+            &:has(:disabled) {
+                cursor: default;
+
+                & > [stuf-text] {
+                    opacity: var(--stuf-opacity-disabled);
+                }
+            }
         }
 
         & > p,

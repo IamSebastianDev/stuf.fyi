@@ -1,6 +1,6 @@
 import { $controlErrors, type Control } from '@grainular/forms';
 import { combined, derived } from '@grainular/grains';
-import { html, type Fragment, type Subscribable } from '@grainular/nord';
+import { attr, html, type Fragment, type Subscribable } from '@grainular/nord';
 import { Text } from '../text/text';
 import './control-container.css';
 
@@ -26,6 +26,8 @@ export type ControlContainerProps<T> = {
     control: Control<T>;
     /** Visible label associated with the field. */
     label: string;
+    /** Places the label above the field or on either side of an inline row. */
+    layout?: 'stacked' | 'label-start' | 'label-end';
     /** Field name used in form data. */
     name?: string;
     /** Optional instructions associated with the field. */
@@ -35,7 +37,14 @@ export type ControlContainerProps<T> = {
 };
 
 /** Renders the shared label, help, and errors for a single form control. */
-export const ControlContainer = <T>({ control, label, name, description, children }: ControlContainerProps<T>) => {
+export const ControlContainer = <T>({
+    control,
+    label,
+    layout = 'stacked',
+    name,
+    description,
+    children,
+}: ControlContainerProps<T>) => {
     const { id, touched, isValid } = control;
     const descriptionId = `${id}-description`;
     const errorsId = `${id}-errors`;
@@ -44,10 +53,20 @@ export const ControlContainer = <T>({ control, label, name, description, childre
         ariaInvalid,
         (showError) => [description && descriptionId, showError && errorsId].filter(Boolean).join(' ') || null,
     );
+    const field = children({ control, id, name, ariaDescribedBy, ariaInvalid });
+
     return html`
         <div stuf-control-container>
-            <label for="${id}" ${Text({ size: 'label' })}>${label}</label>
-            ${children({ control, id, name, ariaDescribedBy, ariaInvalid })}
+            ${
+                layout === 'stacked'
+                    ? html`<label for="${id}" ${Text({ size: 'label' })}>${label}</label>${field}`
+                    : html`
+                          <label for="${id}" stuf-control-row ${attr({ layout })}>
+                              <span ${Text()}>${label}</span>
+                              ${field}
+                          </label>
+                      `
+            }
             ${
                 description &&
                 html`<p id="${descriptionId}" ${Text({ size: 'caption', appearance: 'muted' })}>${description}</p>`
