@@ -9,14 +9,16 @@ enum WebAuthnChallengePurpose {
 /// Users are intentionally not identified by email or password. The
 /// webAuthnUserId is the stable opaque identifier supplied to WebAuthn.
 model User {
-  id             String              @id @default(uuid())
-  webAuthnUserId String              @unique
-  createdAt      DateTime            @default(now())
-  updatedAt      DateTime            @updatedAt
-  disabledAt     DateTime?
-  passkeys       PasskeyCredential[]
-  sessions       Session[]
-  challenges     WebAuthnChallenge[]
+  id              String              @id @default(uuid())
+  webAuthnUserId  String              @unique
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+  disabledAt      DateTime?
+  passkeys        PasskeyCredential[]
+  sessions        Session[]
+  challenges      WebAuthnChallenge[]
+  ownedLists      List[]              @relation("ListOwner")
+  listMemberships ListMember[]
 }
 
 /// A public-key credential registered by a user on an authenticator.

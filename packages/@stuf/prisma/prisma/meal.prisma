@@ -1,0 +1,47 @@
+/// A meal saved in a list's library and available to schedule for dinner.
+model Meal {
+  id        String   @id @default(uuid())
+  listId    String
+  name      String
+  /// The meal's display icon. Currently stores an emoji.
+  icon      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  list           List             @relation(fields: [listId], references: [id], onDelete: Cascade)
+  ingredients    MealIngredient[]
+  plannedDinners PlannedDinner[]
+
+  @@unique([listId, id])
+}
+
+/// An ingredient belonging to one meal in its display order.
+model MealIngredient {
+  id       String @id @default(uuid())
+  mealId   String
+  name     String
+  /// Zero-based position in the meal's ingredient list.
+  position Int
+
+  meal Meal @relation(fields: [mealId], references: [id], onDelete: Cascade)
+
+  @@unique([mealId, position])
+}
+
+/// The dinner assigned to a calendar day in a list.
+/// The meal reference includes the list ID to keep assignments within the same list.
+model PlannedDinner {
+  id        String   @id @default(uuid())
+  listId    String
+  mealId    String
+  /// The calendar date as shown in the planner.
+  date      DateTime @db.Date
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  list List @relation(fields: [listId], references: [id], onDelete: Cascade)
+  meal Meal @relation(fields: [listId, mealId], references: [listId, id], onDelete: Cascade)
+
+  @@unique([listId, date])
+  @@index([listId, mealId])
+}

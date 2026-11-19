@@ -1,0 +1,50 @@
+/// A shared list containing shopping items and, when enabled, a meal library and plan.
+model List {
+  id           String   @id @default(uuid())
+  name         String
+  /// The list's display icon. Currently stores an emoji.
+  icon         String
+  mealsEnabled Boolean  @default(true)
+  ownerId      String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  owner          User            @relation("ListOwner", fields: [ownerId], references: [id], onDelete: Restrict)
+  members        ListMember[]
+  meals          Meal[]
+  plannedDinners PlannedDinner[]
+  shoppingItems  ShoppingItem[]
+
+  @@index([ownerId])
+}
+
+/// Grants a user access to a shared list. The list owner also has a membership.
+model ListMember {
+  id        String   @id @default(uuid())
+  listId    String
+  userId    String
+  createdAt DateTime @default(now())
+
+  list List @relation(fields: [listId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([listId, userId])
+  @@index([userId])
+}
+
+/// An item added manually or transferred from the meal plan into a shared list.
+model ShoppingItem {
+  id             String    @id @default(uuid())
+  listId         String
+  name           String
+  /// Canonical name used to prevent duplicate items within the list.
+  normalizedName String
+  /// When the item was checked off, if it is in the cart.
+  checkedAt      DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  list List @relation(fields: [listId], references: [id], onDelete: Cascade)
+
+  @@unique([listId, normalizedName])
+}
