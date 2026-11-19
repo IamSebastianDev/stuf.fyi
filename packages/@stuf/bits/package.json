@@ -21,6 +21,7 @@
         "./progress-bar.css": "./src/progress-bar/progress-bar.css",
         "./separator": "./src/separator/separator.ts",
         "./separator.css": "./src/separator/separator.css",
+        "./sheet": "./src/sheet/sheet.ts",
         "./status-indicator": "./src/status-indicator/status-indicator.ts",
         "./status-indicator.css": "./src/status-indicator/status-indicator.css",
         "./surface": "./src/surface/surface.ts",
@@ -30,7 +31,8 @@
         "./text.css": "./src/text/text.css",
         "./text-field": "./src/text-field/text-field.ts",
         "./theme.css": "./src/theme/index.css",
-        "./tokens.css": "./src/theme/index.css"
+        "./tokens.css": "./src/theme/index.css",
+        "./transition": "./src/directives/transition/transition.directive.ts"
     },
     "scripts": {
         "dev": "storybook dev --port 5175 --exact-port --host 127.0.0.1 --no-open --disable-telemetry",

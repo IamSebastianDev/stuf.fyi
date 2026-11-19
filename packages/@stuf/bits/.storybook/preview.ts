@@ -25,6 +25,7 @@ const preview: Preview = {
                     ],
                     'Primitives',
                     'Components',
+                    'Directives',
                 ],
             },
         },

@@ -308,3 +308,9 @@ stuf-nord-story {
         font-family: var(--stuf-font-family-sans);
     }
 }
+
+.stuf-transition-story {
+    display: grid;
+    justify-items: start;
+    gap: var(--stuf-space-2);
+}

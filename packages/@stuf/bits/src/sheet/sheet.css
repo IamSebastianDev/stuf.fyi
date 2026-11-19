@@ -1,0 +1,94 @@
+@layer stuf.tokens, stuf.components;
+
+@layer stuf.components {
+    :root:has(dialog[stuf-sheet][open]) {
+        overflow: hidden;
+    }
+
+    dialog[stuf-sheet] {
+        anchor-name: --stuf-sheet-viewport;
+        position: fixed;
+        inset: 0;
+        inline-size: 100%;
+        block-size: 100%;
+        max-inline-size: none;
+        max-block-size: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        border: 0;
+        background: transparent;
+        color: var(--stuf-color-text);
+
+        &::backdrop {
+            background: transparent;
+        }
+
+        &[stuf-sheet-closing] {
+            pointer-events: none;
+        }
+
+        & > [stuf-sheet-backdrop] {
+            position: absolute;
+            inset: 0;
+            background-color: var(--stuf-color-overlay);
+            touch-action: none;
+        }
+
+        & > [stuf-sheet-content] {
+            position: fixed;
+            position-anchor: --stuf-sheet-viewport;
+            inset: auto 0 anchor(end, 0px);
+            box-sizing: border-box;
+            inline-size: 100%;
+            max-inline-size: min(100%, var(--stuf-sheet-max-inline-size, 27rem));
+            max-block-size: calc(100dvh - max(var(--stuf-space-4), env(safe-area-inset-top, 0px)));
+            margin-inline: auto;
+            overflow: auto;
+            overscroll-behavior: contain;
+            border-radius: var(--stuf-radius-lg) var(--stuf-radius-lg) 0 0;
+            background-color: var(--stuf-color-surface-raised);
+            box-shadow: var(--stuf-shadow-raised);
+            transform: translateY(var(--stuf-sheet-drag-offset, 0px));
+            padding-block-end: calc(var(--stuf-space-6) + env(safe-area-inset-bottom, 0px));
+            padding-inline: max(var(--stuf-space-5), env(safe-area-inset-left, 0px))
+                max(var(--stuf-space-5), env(safe-area-inset-right, 0px));
+        }
+
+        & [stuf-sheet-handle] {
+            display: grid;
+            justify-items: center;
+            align-items: start;
+            block-size: var(--stuf-space-7);
+            padding-block-start: var(--stuf-space-2);
+            touch-action: none;
+            user-select: none;
+            cursor: grab;
+
+            &::before {
+                content: '';
+                inline-size: var(--stuf-space-7);
+                block-size: var(--stuf-space-1);
+                border-radius: var(--stuf-radius-sm);
+                background-color: var(--stuf-color-border);
+            }
+        }
+
+        & [stuf-sheet-header] {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--stuf-space-3);
+            margin-block-end: var(--stuf-space-3);
+
+            & > h2 {
+                overflow-wrap: anywhere;
+            }
+
+            & > button {
+                flex: none;
+                color: var(--stuf-color-text-muted);
+            }
+        }
+    }
+}

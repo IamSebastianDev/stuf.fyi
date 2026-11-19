@@ -7,7 +7,7 @@ export default defineConfig({
         projects: (['light', 'dark'] as const).map((theme) => ({
             plugins: [storybookTest({ initialGlobals: { theme } })],
             optimizeDeps: {
-                include: ['storybook/internal/core-events', 'storybook/theming'],
+                include: ['storybook/actions', 'storybook/internal/core-events', 'storybook/theming'],
             },
             test: {
                 name: `storybook-${theme}`,

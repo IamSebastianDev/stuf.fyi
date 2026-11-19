@@ -26,6 +26,7 @@
         var(--stuf-palette-neutral-200),
         color-mix(in srgb, var(--stuf-color-text) 6%, transparent)
     );
+    --stuf-color-overlay: color-mix(in srgb, var(--stuf-palette-neutral-950) 55%, transparent);
     --stuf-color-shadow: light-dark(
         color-mix(in srgb, var(--stuf-palette-neutral-950) 18%, transparent),
         color-mix(in srgb, var(--stuf-palette-neutral-950) 55%, transparent)

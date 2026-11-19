@@ -1,0 +1,74 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks';
+import * as TransitionStories from './transition.stories';
+
+<Meta of={TransitionStories} />
+
+# Transition
+
+Call `createTransition()` once per group of elements that should animate together. Its `transition` directive registers a recipe on an element. Its `trigger` plays the registered recipes together.
+
+<Canvas of={TransitionStories.Playground} sourceState="none" />
+<Controls of={TransitionStories.Playground} />
+
+## Use it in a template
+
+The button starts both animations. The wrapping element fades in while its label slides into place.
+
+```ts
+import { html, on } from '@grainular/nord';
+import { createTransition, fade, slideY } from '@stuf/bits/transition';
+
+export const Example = () => {
+    const { transition, trigger } = createTransition();
+
+    return html`
+        <button type="button" ${on('click', () => void trigger.in())}>Replay</button>
+        <div ${transition(fade, { duration: 240 })}>
+            <p ${transition.in(slideY, { distance: '0.5rem', duration: 360 })}>Preview</p>
+        </div>
+    `;
+};
+```
+
+Use `transition(recipe, options)` for both directions. Use `transition.in()` or `transition.out()` to register a recipe for one direction.
+
+## Built-in recipes
+
+- **`fade`** animates opacity. An intro starts at `0` and ends at `opacity`, which defaults to `1`. An outro fades from the current opacity to `0`. Use it on a backdrop or content that should appear without moving.
+- **`slideY`** animates a vertical transform. Pass a CSS length or percentage as `distance`. A positive distance starts the intro below the resting position and sends the outro downward. For example, use `'100%'` for the Sheet panel or `'0.5rem'` for a short slide.
+
+Both recipes accept `duration` and `delay` in milliseconds and a CSS `easing` value. The defaults are a duration of `220` ms, no delay, and `ease`. If a trigger interrupts an animation, the built-in recipes use the element’s current appearance as the new starting point.
+
+<Canvas of={TransitionStories.Variants} sourceState="none" />
+
+## Write a recipe
+
+A recipe is a function that receives the DOM element, the options passed in the template, and a context with `direction` and `interrupted`. When its registration matches the triggered direction, it returns `keyframes` and optional `timing` for the Web Animations API. Read computed styles inside the recipe to pick up where an interrupted run left off.
+
+```ts
+import type { TransitionRecipe } from '@stuf/bits/transition';
+
+const scale: TransitionRecipe<{ from: number; duration: number }> = (
+    element,
+    { from, duration },
+    { direction, interrupted },
+) => {
+    const compact = `scale(${from})`;
+    const current = getComputedStyle(element).transform;
+
+    return {
+        keyframes: {
+            transform: direction === 'in' ? [interrupted ? current : compact, 'scale(1)'] : [current, compact],
+        },
+        timing: { duration },
+    };
+};
+```
+
+Register it with `transition(scale, { from: 0.96, duration: 180 })`. The directive releases the animated styles when the group finishes. Set the resting styles in CSS and use the trigger’s result to apply any visibility change.
+
+## Choose when to play
+
+Call `trigger.in()` or `trigger.out()` from the handler that owns visibility. Both return a promise that resolves to `true` when the group settles and to `false` when newer playback takes over. Reduced motion skips playback and resolves immediately.
+
+[Sheet](?path=/story/sheet--playground) registers its panel and backdrop in one group. The native open handler calls `trigger.in()`. The dismiss handler awaits `trigger.out()` and then closes the dialog.
