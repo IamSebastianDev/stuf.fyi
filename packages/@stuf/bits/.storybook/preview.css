@@ -23,10 +23,6 @@ stuf-nord-story {
     }
 }
 
-.stuf-button-story-icon {
-    font-size: var(--stuf-size-icon-md);
-}
-
 .stuf-story-variants {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr));
@@ -59,6 +55,12 @@ stuf-nord-story {
     }
 }
 
+.stuf-surface-story-list-switcher {
+    border-radius: var(--stuf-radius-lg);
+    background-color: var(--stuf-color-surface-raised);
+    box-shadow: var(--stuf-shadow-raised);
+}
+
 .stuf-text-story-example {
     display: grid;
     gap: var(--stuf-space-2);
@@ -78,8 +80,106 @@ stuf-nord-story {
     max-inline-size: 24rem;
 }
 
+.stuf-text-field-story-list {
+    box-sizing: border-box;
+    max-inline-size: calc(24rem + 2 * var(--stuf-space-5));
+    margin-inline: auto;
+    padding: var(--stuf-space-5);
+}
+
+.stuf-text-field-story-row {
+    --stuf-text-field-row-divider: var(--stuf-color-divider);
+
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    column-gap: var(--stuf-space-inline-control);
+    min-block-size: var(--stuf-size-control-lg);
+    box-shadow: inset 0 -1px var(--stuf-text-field-row-divider);
+
+    &:has(> [stuf-text-field] > input:focus-visible) {
+        --stuf-text-field-row-divider: var(--stuf-color-accent);
+    }
+
+    & > [stuf-text-field] {
+        --stuf-text-field-icon-gap: calc(var(--stuf-space-inline-control) + 0.125rem);
+        --stuf-text-field-icon-size: var(--stuf-size-icon-sm);
+        --stuf-text-field-icon-slot: var(--stuf-size-icon-md);
+        --stuf-text-field-icon-color: var(--stuf-color-accent);
+
+        display: flex;
+        flex: 1;
+        align-self: stretch;
+
+        & > input:focus-visible {
+            border-block-end-color: transparent;
+        }
+    }
+
+    & > [stuf-button] {
+        min-inline-size: var(--stuf-size-control-sm);
+        justify-content: flex-end;
+        padding-inline: 0;
+        -webkit-font-smoothing: antialiased;
+
+        &:hover:not(:active) {
+            background-color: var(--stuf-button-background);
+        }
+
+        &:focus-visible {
+            outline: none;
+        }
+    }
+}
+
+.stuf-text-field-story-settings-row {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: var(--stuf-space-3);
+    padding-inline: var(--stuf-space-3);
+    border: 0;
+    border-radius: 0.625rem;
+
+    &:has(> [stuf-text-field] > input:focus-visible) {
+        outline: thin solid var(--stuf-color-accent);
+        outline-offset: -1px;
+    }
+
+    & > label {
+        font-size: 0.875rem;
+    }
+
+    & > [stuf-text-field] > input {
+        font-size: var(--stuf-font-size-label);
+
+        &:focus-visible {
+            border-block-end-color: transparent;
+        }
+    }
+}
+
+.stuf-text-field-story-meal-name [stuf-text-field] > input {
+    font-size: var(--stuf-font-size-heading);
+    font-weight: var(--stuf-font-weight-semibold);
+    line-height: var(--stuf-line-height-tight);
+    letter-spacing: var(--stuf-letter-spacing-heading);
+    text-align: center;
+}
+
+.stuf-text-field-story-invite-code [stuf-text-field] > input {
+    font-size: var(--stuf-font-size-label-lg);
+    font-weight: var(--stuf-font-weight-semibold);
+    letter-spacing: var(--stuf-letter-spacing-invite-code);
+    text-transform: uppercase;
+}
+
 .stuf-separator-story-group {
     max-inline-size: 24rem;
+}
+
+.stuf-separator-story-inset {
+    margin-inline: var(--stuf-space-4);
 }
 
 .stuf-separator-story-row {

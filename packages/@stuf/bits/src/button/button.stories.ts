@@ -1,7 +1,9 @@
 import { html, on } from '@grainular/nord';
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { KeyRound, Plus } from 'lucide';
 import { expect, fn } from 'storybook/test';
 import { renderNordStory } from '../../.storybook/render-nord-story';
+import { Icon } from '../icon/icon';
 import { Button, type ButtonOptions } from './button';
 
 /** Styling options and native attributes exposed as Storybook controls. */
@@ -26,13 +28,13 @@ export default {
             },
         },
     },
-    render: ({ appearance, layout, size, type, disabled, ariaLabel, className, onClick, children }) =>
+    render: ({ appearance, layout, shape, size, type, disabled, ariaLabel, className, onClick, children }) =>
         renderNordStory(
             () => html`
                 <button
                     type="${type}"
                     class="${className}"
-                    ${Button({ appearance, layout, size, disabled, ariaLabel: ariaLabel || undefined })}
+                    ${Button({ appearance, layout, shape, size, disabled, ariaLabel: ariaLabel || undefined })}
                     ${on('click', onClick)}
                 >
                     ${children}
@@ -40,9 +42,9 @@ export default {
             `,
         ),
     args: {
-        children: 'Continue with passkey',
-        appearance: 'primary',
+        children: 'Save meal',
         layout: 'inline',
+        shape: 'default',
         size: 'md',
         disabled: false,
         type: 'button',
@@ -57,15 +59,21 @@ export default {
         },
         appearance: {
             control: 'select',
-            options: ['primary', 'secondary', 'plain', 'destructive'],
+            options: ['primary', 'secondary', 'inverse', 'plain', 'destructive'],
             description: 'Visual emphasis.',
-            table: { category: 'Directive options', defaultValue: { summary: 'secondary' } },
+            table: { category: 'Directive options', defaultValue: { summary: 'primary' } },
         },
         layout: {
             control: 'select',
             options: ['inline', 'full', 'icon'],
             description: 'Width behavior for inline, full-width, or icon-only controls.',
             table: { category: 'Directive options', defaultValue: { summary: 'inline' } },
+        },
+        shape: {
+            control: 'select',
+            options: ['default', 'round'],
+            description: 'Rounds a button in icon layout.',
+            table: { category: 'Directive options', defaultValue: { summary: 'default' } },
         },
         size: {
             control: 'select',
@@ -100,7 +108,7 @@ export default {
 
 type Story = StoryObj<ButtonArgs>;
 
-const appearances = ['primary', 'secondary', 'plain', 'destructive'] as const;
+const appearances = ['primary', 'secondary', 'inverse', 'plain', 'destructive'] as const;
 const sizes = [
     { value: 'sm', label: 'Small' },
     { value: 'md', label: 'Medium' },
@@ -127,6 +135,25 @@ export const Secondary = {
             },
         },
     },
+} satisfies Story;
+
+export const Inverse = {
+    args: { appearance: 'inverse', layout: 'full', size: 'lg', children: 'Continue with passkey' },
+    parameters: {
+        controls: { disable: true },
+        docs: { description: { story: 'Use inverse for high-emphasis neutral actions such as passkey sign-in.' } },
+    },
+    render: ({ appearance, layout, size, children }) =>
+        renderNordStory(
+            () => html`
+                <div class="stuf-form-story-example">
+                    <button type="button" ${Button({ appearance, layout, size })}>
+                        <svg ${Icon({ icon: KeyRound })}></svg>
+                        ${children}
+                    </button>
+                </div>
+            `,
+        ),
 } satisfies Story;
 
 export const Plain = {
@@ -191,10 +218,10 @@ export const IconOnly = {
             () => html`
                 <button
                     type="button"
-                    ${Button({ layout: 'icon', size: 'sm', ariaLabel, disabled: false })}
+                    ${Button({ appearance: 'primary', layout: 'icon', shape: 'round', size: 'sm', ariaLabel })}
                     ${on('click', onClick)}
                 >
-                    <span class="stuf-button-story-icon" aria-hidden="true">+</span>
+                    <svg ${Icon({ icon: Plus })}></svg>
                 </button>
             `,
         ),

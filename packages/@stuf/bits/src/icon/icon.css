@@ -13,9 +13,5 @@
         &[size='sm'] {
             --stuf-icon-size: var(--stuf-size-icon-sm);
         }
-
-        &[size='lg'] {
-            --stuf-icon-size: var(--stuf-size-icon-lg);
-        }
     }
 }

@@ -1,15 +1,10 @@
 import { html } from '@grainular/nord';
 import type { Meta, StoryObj } from '@storybook/html-vite';
 import { renderNordStory } from '../../.storybook/render-nord-story';
-import { Surface, type SurfaceOptions } from './surface';
+import { Surface } from './surface';
 
-const appearances = [
-    { value: 'default', label: 'Default' },
-    { value: 'raised', label: 'Raised' },
-] as const;
-
-const mealCard = (options: SurfaceOptions) => html`
-    <article class="stuf-surface-story-card" ${Surface(options)}>
+const mealCard = () => html`
+    <article class="stuf-surface-story-card" ${Surface()}>
         <h3>Chickpea bowls with lemon yogurt</h3>
         <p>Thursday dinner</p>
     </article>
@@ -23,23 +18,14 @@ export default {
         docs: {
             description: {
                 component:
-                    'Group content with a shared background and rounded corners. Use the default Surface for cards and grouped rows. Use raised for a panel that needs to stand out.',
+                    'Group cards and rows with a shared background and rounded corners. Overlays such as the list switcher set their elevation in their own styles.',
             },
         },
     },
-    render: (options) => renderNordStory(() => mealCard(options)),
-    args: { appearance: 'default' },
-    argTypes: {
-        appearance: {
-            control: 'select',
-            options: appearances.map(({ value }) => value),
-            description: 'Sets the background and edge treatment.',
-            table: { defaultValue: { summary: 'default' } },
-        },
-    },
-} satisfies Meta<SurfaceOptions>;
+    render: () => renderNordStory(mealCard),
+} satisfies Meta;
 
-type Story = StoryObj<SurfaceOptions>;
+type Story = StoryObj;
 
 export const Playground = {
     parameters: { layout: 'centered' },
@@ -51,14 +37,17 @@ export const Variants = {
         renderNordStory(
             () => html`
                 <div class="stuf-story-variants">
-                    ${appearances.map(
-                        ({ value, label }) => html`
-                            <figure>
-                                <figcaption>${label}</figcaption>
-                                ${mealCard({ appearance: value })}
-                            </figure>
-                        `,
-                    )}
+                    <figure>
+                        <figcaption>Meal card</figcaption>
+                        ${mealCard()}
+                    </figure>
+                    <figure>
+                        <figcaption>List switcher</figcaption>
+                        <section class="stuf-surface-story-card stuf-surface-story-list-switcher" ${Surface()}>
+                            <h3>Home</h3>
+                            <p>8 to get · 3 dinners this week</p>
+                        </section>
+                    </figure>
                 </div>
             `,
         ),

@@ -1,0 +1,24 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as ControlContainerStories from './control-container.stories';
+
+<Meta of={ControlContainerStories} />
+
+# Control Container
+
+Call `ControlContainer` in your Nord template with the Grainular Forms control, label, and optional help text. Return a Bits field component such as [TextField](?path=/docs/text-field--docs) from `children` and pass through the callback props.
+
+The callback receives `control`, `id`, `name`, and reactive `ariaDescribedBy` and `ariaInvalid` props. The field applies them to its own input. Set options such as `placeholder` on `TextField` and define validation rules and messages in the form schema.
+
+<Canvas of={ControlContainerStories.Playground} sourceState="shown" />
+
+## Labels, help, and errors
+
+The container associates the label and help with the field. It adds validation feedback after the field is touched or the form is validated. The Variants snippet calls `validate()` to show the error state on load.
+
+<Canvas of={ControlContainerStories.Variants} />
+
+## Submit a form
+
+Use `novalidate` so the submit handler can run Grainular validation. Set `required` on the field for required input semantics and define the validator and message in the form schema.
+
+<Canvas of={ControlContainerStories.FormExample} />

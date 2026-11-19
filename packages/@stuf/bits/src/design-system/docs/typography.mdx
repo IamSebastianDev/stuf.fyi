@@ -9,7 +9,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 Use [Text](?path=/docs/text--docs) to apply these styles to a native heading, paragraph, or label.
 
 <ul className="stuf-type-samples sb-unstyled">
-    {['caption', 'body', 'label', 'label-lg', 'heading', 'title'].map((size) => (
+    {['caption-sm', 'caption', 'body', 'label', 'input', 'label-lg', 'subheading', 'heading'].map((size) => (
         <li key={size}>
             <code>{`--stuf-font-size-${size}`}</code>
             <span style={{ fontSize: `var(--stuf-font-size-${size})` }}>Meal planner</span>
@@ -18,5 +18,7 @@ Use [Text](?path=/docs/text--docs) to apply these styles to a native heading, pa
 </ul>
 
 `--stuf-font-size-avatar-sm` and `--stuf-font-size-avatar-md` set the initials size for list previews and member rows.
+
+`--stuf-letter-spacing-heading` tightens larger titles. `--stuf-letter-spacing-section-label` and `--stuf-letter-spacing-invite-code` open up uppercase labels and invite codes.
 
 Use `--stuf-font-weight-regular`, `--stuf-font-weight-medium`, `--stuf-font-weight-semibold`, or `--stuf-font-weight-bold` for emphasis. Use `--stuf-line-height-body` for reading text and `--stuf-line-height-tight` for compact labels and headings.

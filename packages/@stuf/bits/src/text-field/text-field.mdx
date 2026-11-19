@@ -1,0 +1,23 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks';
+import * as TextFieldStories from './text-field.stories';
+
+<Meta of={TextFieldStories} />
+
+# Text Field
+
+`TextField` is the styled single-line input for string values. See [Control Container](?path=/docs/components-control-container--docs) for template and form examples.
+
+<Canvas of={TextFieldStories.Playground} sourceState="none" />
+<Controls of={TextFieldStories.Playground} />
+
+## Field states
+
+Use the default appearance for outlined fields and `type: 'search'` for compact search. Use `plain` with `align: 'end'` for values opposite their labels in settings. The meal editor can style its plain name field as a centered heading. The join form can style its outlined code field in uppercase and set `maxLength`.
+
+<Canvas of={TextFieldStories.Variants} sourceState="none" />
+
+## Add item row
+
+The shopping list uses `appearance: 'plain'` with a leading plus in a 52 px row. The row supplies a full-width divider and shows the trailing Add action when the field contains text beyond whitespace. For a standalone field, provide `ariaLabel` or associate a visible label with its `id`.
+
+<Canvas of={TextFieldStories.AddItem} sourceState="none" />

@@ -13,6 +13,7 @@
         "./badge.css": "./src/badge/badge.css",
         "./button": "./src/button/button.ts",
         "./button.css": "./src/button/button.css",
+        "./control-container": "./src/control-container/control-container.ts",
         "./icon": "./src/icon/icon.ts",
         "./icon.css": "./src/icon/icon.css",
         "./progress-bar": "./src/progress-bar/progress-bar.ts",
@@ -25,6 +26,7 @@
         "./surface.css": "./src/surface/surface.css",
         "./text": "./src/text/text.ts",
         "./text.css": "./src/text/text.css",
+        "./text-field": "./src/text-field/text-field.ts",
         "./theme.css": "./src/theme/index.css",
         "./tokens.css": "./src/theme/index.css"
     },
@@ -43,6 +45,8 @@
         "lucide": "1.38.0"
     },
     "devDependencies": {
+        "@grainular/forms": "2.4.0",
+        "@grainular/grains": "2.4.0",
         "@grainular/nord": "2.4.0",
         "@repository/config": "*",
         "@storybook/addon-a11y": "10.6.7",
@@ -58,6 +62,8 @@
         "vitest": "4.1.12"
     },
     "peerDependencies": {
+        "@grainular/forms": "^2.4.0",
+        "@grainular/grains": "^2.4.0",
         "@grainular/nord": "^2.4.0"
     }
 }

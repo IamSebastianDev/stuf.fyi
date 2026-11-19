@@ -2,9 +2,11 @@
 
 @layer stuf.components {
     [stuf-status-indicator] {
+        --stuf-status-indicator-gap: 0.375rem;
+
         display: inline-flex;
         align-items: center;
-        gap: var(--stuf-space-1);
+        gap: var(--stuf-status-indicator-gap);
         color: var(--stuf-color-text-muted);
         font-family: var(--stuf-font-family-sans);
         font-size: var(--stuf-font-size-caption);

@@ -7,7 +7,7 @@ export type IconOptions = {
     /** An icon definition imported from Lucide. */
     icon: IconNode;
     /** Size of the glyph. Defaults to md. */
-    size?: 'sm' | 'md' | 'lg';
+    size?: 'sm' | 'md';
 };
 
 /** Renders a Lucide icon inside the supplied SVG. Give informative icons a native accessible name. */

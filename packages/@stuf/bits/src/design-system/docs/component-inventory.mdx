@@ -15,15 +15,15 @@ Primitives get their appearance from the design tokens and use native elements w
 <Markdown>{`
 | Primitive | Status | Used for |
 | --- | --- | --- |
-| [Button](?path=/story/button--variants) | Implemented | Primary and secondary actions, navigation links, icon actions, and destructive actions. |
-| [Surface](?path=/story/surface--variants) | Implemented | Grouped rows, cards, panels, and emoji tiles. |
-| [Separator](?path=/story/separator--variants) | Implemented | Section rules and dividers inset to match row padding. |
+| [Button](?path=/story/button--variants) | Implemented | Mint primary actions, inverse passkey actions, neutral secondary actions, round Add meal, and destructive actions. |
+| [Surface](?path=/story/surface--variants) | Implemented | Shared background and corners for grouped settings and meal cards. |
+| [Separator](?path=/story/separator--variants) | Implemented | Hairlines between sections and rows. Each layout sets its own inset. |
 | [Icon](?path=/story/icon--variants) | Implemented | Navigation, add, search, back, close, copy, passkeys, and checkmarks. |
 | [Badge](?path=/story/badge--variants) | Implemented | Planned-day labels and owner labels. |
 | [Avatar](?path=/story/avatar--variants) | Implemented | Member initials and profile colors in the people list and list switcher. |
 | [Status Indicator](?path=/story/status-indicator--variants) | Implemented | Labeled sync and member presence states. |
 | [Progress Bar](?path=/story/progress-bar--variants) | Implemented | Shopping completion from empty to complete. |
-| [Text](?path=/story/text--variants) | Implemented | Screen titles, section headings, labels, body copy, and captions. |
+| [Text](?path=/story/text--variants) | Implemented | Screen titles, sheet headings, uppercase section labels, body copy, and captions. |
 `}</Markdown>
 
 ## Reusable components
@@ -33,8 +33,8 @@ These components combine markup and styles with shared interaction. Build form c
 <Markdown>{`
 | Component | Status | Used for |
 | --- | --- | --- |
-| Text field | Planned | List names, invite codes, profile names, meal names, and quick-add inputs. Includes labels, help text, and validation. |
-| Search field | Planned | Meal or ingredient search in the library and dinner picker. Builds on Text field. |
+| [Control Container](?path=/story/components-control-container--variants) | Implemented | Shared label, help text, and validation layout around a Bits form field. |
+| [Text Field](?path=/story/text-field--variants) | Implemented | Outlined forms, compact meal and ingredient search, and plain fields for inline editing. |
 | Checkbox | Planned | Shopping item completion, store assignments, and selecting lists to import meals from. |
 | Switch | Planned | Enabling or disabling meals and planning when creating or editing a list. |
 | Segmented control | Planned | Switching between the planner's List and Days views. |
@@ -60,7 +60,7 @@ Keep these with their features in the app. They own the domain data, actions, an
 | App shell | Planned | Safe-area layout, scrollable screen content, bottom navigation, and pinned actions. |
 | Passkey sign-in | Planned | Create account and sign in, show pending or error states, and continue to a shared invite. |
 | Create or join | Planned | Start a new list or enter an invite code, with invalid-code feedback. |
-| List switcher | Planned | Show the active list, other lists, and member previews. Open create or join actions. |
+| List switcher | Planned | Show the active list, other lists, and member previews in a raised popover. Open create or join actions. |
 | New-list sheet | Planned | Enter a list name, choose shopping-only mode, and optionally copy meals from other lists. |
 | Week navigator | Planned | Browse weeks, show the date range and dinners planned, and switch between List and Days. |
 | Weekly meal rows | Planned | Show planned dinners and unplanned days with an Add dinner action. |

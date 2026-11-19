@@ -1,0 +1,124 @@
+@layer stuf.tokens, stuf.components;
+
+@layer stuf.components {
+    [stuf-text-field] {
+        --stuf-text-field-inset: var(--stuf-space-4);
+        --stuf-text-field-min-size: var(--stuf-size-control-lg);
+        --stuf-text-field-background: transparent;
+        --stuf-text-field-border: var(--stuf-color-border);
+        --stuf-text-field-icon-gap: var(--stuf-space-2);
+        --stuf-text-field-icon-size: var(--stuf-size-icon-md);
+        --stuf-text-field-icon-slot: var(--stuf-text-field-icon-size);
+        --stuf-text-field-icon-color: var(--stuf-color-text-muted);
+        --stuf-text-field-font-size: var(--stuf-font-size-input);
+
+        position: relative;
+        display: block;
+        min-inline-size: 0;
+
+        & > svg[stuf-icon] {
+            position: absolute;
+            inset-block: 0;
+            inset-inline-start: calc(
+                var(--stuf-text-field-inset) + (var(--stuf-text-field-icon-slot) - var(--stuf-text-field-icon-size)) / 2
+            );
+            margin-block: auto;
+            inline-size: var(--stuf-text-field-icon-size);
+            block-size: var(--stuf-text-field-icon-size);
+            color: var(--stuf-text-field-icon-color);
+            pointer-events: none;
+        }
+
+        & > input {
+            --stuf-text-field-focus-color: var(--stuf-color-accent);
+
+            appearance: none;
+            box-sizing: border-box;
+            display: block;
+            min-inline-size: 0;
+            inline-size: 100%;
+            min-block-size: var(--stuf-text-field-min-size);
+            padding: var(--stuf-space-2) var(--stuf-text-field-inset);
+            border: thin solid var(--stuf-text-field-border);
+            border-radius: var(--stuf-radius-md);
+            background-color: var(--stuf-text-field-background);
+            color: var(--stuf-color-text);
+            font-family: var(--stuf-font-family-sans);
+            font-size: var(--stuf-text-field-font-size);
+            line-height: var(--stuf-line-height-body);
+
+            &::placeholder {
+                color: var(--stuf-color-text-subtle);
+                opacity: 1;
+            }
+
+            &[aria-invalid='true'] {
+                --stuf-text-field-focus-color: var(--stuf-color-danger);
+
+                border-color: var(--stuf-color-danger);
+            }
+
+            &:focus-visible {
+                outline: var(--stuf-focus-ring-width) solid var(--stuf-text-field-focus-color);
+                outline-offset: var(--stuf-focus-ring-offset);
+            }
+
+            &:disabled {
+                opacity: var(--stuf-opacity-disabled);
+            }
+        }
+
+        & > svg[stuf-icon] + input {
+            padding-inline-start: calc(
+                var(--stuf-text-field-inset) + var(--stuf-text-field-icon-slot) + var(--stuf-text-field-icon-gap)
+            );
+        }
+
+        &:has(> input:disabled) > svg[stuf-icon] {
+            opacity: var(--stuf-opacity-disabled);
+        }
+
+        &[appearance='default']:has(> input[type='search']) {
+            --stuf-text-field-inset: var(--stuf-space-3);
+            --stuf-text-field-min-size: var(--stuf-size-control-sm);
+            --stuf-text-field-background: var(--stuf-color-control);
+            --stuf-text-field-border: transparent;
+            --stuf-text-field-icon-size: var(--stuf-size-icon-sm);
+            --stuf-text-field-font-size: var(--stuf-font-size-label);
+        }
+
+        &[appearance='plain'] {
+            --stuf-text-field-inset: 0px;
+            --stuf-text-field-min-size: var(--stuf-size-control-md);
+
+            & > input {
+                border: 0;
+                border-block-end: thin solid transparent;
+                border-radius: 0;
+                line-height: normal;
+                -webkit-font-smoothing: antialiased;
+
+                &[aria-invalid='true'] {
+                    border-block-end-color: var(--stuf-color-danger);
+                }
+
+                &::placeholder {
+                    color: var(--stuf-color-placeholder);
+                }
+
+                &:focus-visible {
+                    outline: 0;
+                    border-block-end-color: var(--stuf-text-field-focus-color);
+                }
+            }
+        }
+
+        &[align='start'] > input {
+            text-align: start;
+        }
+
+        &[align='end'] > input {
+            text-align: end;
+        }
+    }
+}

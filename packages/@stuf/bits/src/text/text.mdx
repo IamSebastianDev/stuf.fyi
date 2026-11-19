@@ -9,16 +9,16 @@ Use `Text` for screen titles, section headings, body copy, labels, and captions.
 
 ## Choose the element
 
-Use headings in document order. A compact subsection can be an `h2` styled at `label-lg`. Use `p` for paragraphs and `span` for inline text. Keep a form label on a native `label` associated with its input.
+Use headings in document order. A compact subsection can be an `h2` styled with `section-label`. Use `p` for paragraphs and `span` for inline text. Keep a form label on a native `label` associated with its input.
 
 ```ts
 import { html } from '@grainular/nord';
 import { Text } from '@stuf/bits/text';
 
 html`
-    <h1 ${Text({ size: 'title' })}>Shopping list</h1>
+    <h1 ${Text({ size: 'heading' })}>Shopping list</h1>
     <p ${Text({ size: 'caption', appearance: 'muted' })}>3 of 8 items checked</p>
-    <h2 ${Text({ size: 'label-lg' })}>In the cart</h2>
+    <h2 ${Text({ size: 'section-label', appearance: 'muted' })}>In the cart</h2>
     <p ${Text()}>Tomatoes, lemons, and chickpeas.</p>
 `;
 ```
@@ -27,12 +27,12 @@ html`
 
 ## Choose the size
 
-- **`title`** for the main screen title.
-- **`heading`** for a prominent section heading.
-- **`label-lg`** for a compact section heading or prominent label.
+- **`heading`** for a screen title or prominent section heading.
+- **`subheading`** for a short title in a sheet or panel.
 - **`label`** for field names and row labels.
 - **`body`** for regular copy. This is the default.
 - **`caption`** for short metadata and supporting copy.
+- **`section-label`** for compact uppercase labels such as Ingredients and Sign-in.
 
 Sizes include weight and line height. Text has zero margin, so the surrounding layout can set spacing consistently. The [Typography tokens](?path=/docs/design-system-typography--docs) use `rem` so the scale follows the root font size.
 

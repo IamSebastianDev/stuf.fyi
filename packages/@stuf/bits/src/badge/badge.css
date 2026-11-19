@@ -5,13 +5,13 @@
         box-sizing: border-box;
         display: inline-block;
         max-inline-size: 100%;
-        padding: var(--stuf-space-1) var(--stuf-space-2);
-        border-radius: var(--stuf-radius-sm);
+        padding: 0.1875rem var(--stuf-space-2);
+        border-radius: var(--stuf-radius-badge);
         background-color: var(--stuf-color-badge);
         color: var(--stuf-color-text-muted);
         font-family: var(--stuf-font-family-sans);
-        font-size: var(--stuf-font-size-caption);
-        font-weight: var(--stuf-font-weight-semibold);
+        font-size: var(--stuf-font-size-caption-sm);
+        font-weight: var(--stuf-font-weight-regular);
         line-height: var(--stuf-line-height-tight);
         overflow-wrap: anywhere;
         vertical-align: middle;
@@ -19,6 +19,7 @@
         &[appearance='accent'] {
             background-color: var(--stuf-color-accent-subtle);
             color: var(--stuf-color-accent);
+            font-weight: var(--stuf-font-weight-semibold);
         }
     }
 }

@@ -4,13 +4,8 @@
     [stuf-surface] {
         box-sizing: border-box;
         border: thin solid transparent;
-        border-radius: var(--stuf-radius-lg);
+        border-radius: var(--stuf-radius-md);
         background-color: var(--stuf-color-surface);
         color: var(--stuf-color-text);
-
-        &[appearance='raised'] {
-            border-color: var(--stuf-color-border);
-            background-color: var(--stuf-color-surface-raised);
-        }
     }
 }

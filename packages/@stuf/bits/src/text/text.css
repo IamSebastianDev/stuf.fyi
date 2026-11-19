@@ -13,9 +13,15 @@
             color: var(--stuf-color-text-muted);
         }
 
-        &:is([size='label'], [size='label-lg'], [size='heading'], [size='title']) {
+        &:is([size='section-label'], [size='label'], [size='subheading'], [size='heading']) {
             font-weight: var(--stuf-font-weight-semibold);
             line-height: var(--stuf-line-height-tight);
+        }
+
+        &[size='section-label'] {
+            font-size: var(--stuf-font-size-caption-sm);
+            letter-spacing: var(--stuf-letter-spacing-section-label);
+            text-transform: uppercase;
         }
 
         &[size='caption'] {
@@ -26,16 +32,13 @@
             font-size: var(--stuf-font-size-label);
         }
 
-        &[size='label-lg'] {
-            font-size: var(--stuf-font-size-label-lg);
+        &[size='subheading'] {
+            font-size: var(--stuf-font-size-subheading);
         }
 
         &[size='heading'] {
             font-size: var(--stuf-font-size-heading);
-        }
-
-        &[size='title'] {
-            font-size: var(--stuf-font-size-title);
+            letter-spacing: var(--stuf-letter-spacing-heading);
         }
     }
 }

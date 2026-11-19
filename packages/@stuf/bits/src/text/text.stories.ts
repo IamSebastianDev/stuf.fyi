@@ -6,12 +6,12 @@ import { Text, type TextOptions } from './text';
 
 const elements = ['h1', 'h2', 'h3', 'p', 'span'] as const;
 const sizes = [
+    { size: 'section-label', label: 'Section label', sample: 'Ingredients' },
     { size: 'caption', label: 'Caption', sample: '3 of 8 items checked' },
     { size: 'body', label: 'Body', sample: 'Ingredients from this week’s plan.' },
     { size: 'label', label: 'Label', sample: 'List name' },
-    { size: 'label-lg', label: 'Large label', sample: 'In the cart' },
+    { size: 'subheading', label: 'Subheading', sample: 'Choose dinner' },
     { size: 'heading', label: 'Heading', sample: 'This week' },
-    { size: 'title', label: 'Title', sample: 'Shopping list' },
 ] as const;
 
 type TextArgs = TextOptions & { element: (typeof elements)[number]; content: string };
@@ -73,10 +73,10 @@ export const InContext = {
         renderNordStory(
             () => html`
                 <section class="stuf-text-story-example" ${Surface()}>
-                    <h2 ${Text({ size: 'title' })}>Shopping list</h2>
+                    <h2 ${Text({ size: 'heading' })}>Shopping list</h2>
                     <p ${Text({ size: 'caption', appearance: 'muted' })}>3 of 8 items checked</p>
                     <section>
-                        <h3 ${Text({ size: 'label-lg' })}>In the cart</h3>
+                        <h3 ${Text({ size: 'section-label', appearance: 'muted' })}>In the cart</h3>
                         <p ${Text()}>Tomatoes, lemons, and chickpeas.</p>
                     </section>
                 </section>

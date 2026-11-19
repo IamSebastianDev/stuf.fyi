@@ -2,9 +2,9 @@
 
 @layer stuf.components {
     [stuf-button] {
-        --stuf-button-background: var(--stuf-color-control);
-        --stuf-button-background-hover: var(--stuf-color-control-hover);
-        --stuf-button-text: var(--stuf-color-text);
+        --stuf-button-background: var(--stuf-color-accent);
+        --stuf-button-background-hover: var(--stuf-color-accent-hover);
+        --stuf-button-text: var(--stuf-color-on-accent);
         --stuf-button-min-size: var(--stuf-size-control-md);
         --stuf-button-font-size: var(--stuf-font-size-label);
 
@@ -34,10 +34,20 @@
         transition-duration: var(--stuf-duration-fast);
         transition-timing-function: var(--stuf-ease-standard);
 
-        &[appearance='primary'] {
-            --stuf-button-background: var(--stuf-color-accent);
-            --stuf-button-background-hover: var(--stuf-color-accent-hover);
-            --stuf-button-text: var(--stuf-color-on-accent);
+        &[appearance='secondary'] {
+            --stuf-button-background: var(--stuf-color-control);
+            --stuf-button-background-hover: var(--stuf-color-control-hover);
+            --stuf-button-text: var(--stuf-color-text);
+        }
+
+        &[appearance='inverse'] {
+            --stuf-button-background: var(--stuf-color-text);
+            --stuf-button-background-hover: color-mix(
+                in oklch,
+                var(--stuf-color-text) 90%,
+                var(--stuf-color-background)
+            );
+            --stuf-button-text: var(--stuf-color-background);
         }
 
         &[appearance='plain'] {
@@ -47,6 +57,8 @@
         }
 
         &[appearance='destructive'] {
+            --stuf-button-background: var(--stuf-color-control);
+            --stuf-button-background-hover: var(--stuf-color-control-hover);
             --stuf-button-text: var(--stuf-color-danger);
         }
 
@@ -57,7 +69,6 @@
 
         &[size='lg'] {
             --stuf-button-min-size: var(--stuf-size-control-lg);
-            --stuf-button-font-size: var(--stuf-font-size-label-lg);
         }
 
         &[layout='full'] {
@@ -67,6 +78,10 @@
         &[layout='icon'] {
             min-inline-size: var(--stuf-button-min-size);
             padding-inline: 0;
+
+            &[shape='round'] {
+                border-radius: var(--stuf-radius-circle);
+            }
         }
 
         &:focus-visible {

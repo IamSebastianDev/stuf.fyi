@@ -4,10 +4,6 @@
     [stuf-separator] {
         margin: 0;
         border: 0;
-        border-block-start: thin solid var(--stuf-color-border);
-
-        &[layout='inset'] {
-            margin-inline: var(--stuf-space-4);
-        }
+        border-block-start: thin solid var(--stuf-color-divider);
     }
 }

@@ -1,0 +1,20 @@
+@layer stuf.tokens, stuf.components;
+
+@layer stuf.components {
+    [stuf-control-container] {
+        display: grid;
+
+        & > label {
+            margin-block-end: var(--stuf-space-2);
+        }
+
+        & > p,
+        & > [stuf-control-errors] > p {
+            margin-block-start: var(--stuf-space-2);
+        }
+
+        & > [stuf-control-errors] > p {
+            color: var(--stuf-color-danger);
+        }
+    }
+}

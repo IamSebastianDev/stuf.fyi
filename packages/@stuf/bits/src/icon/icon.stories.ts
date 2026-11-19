@@ -10,7 +10,6 @@ const icons = { ArrowLeft, CircleCheck, Plus, Search };
 const sizes = [
     { size: 'sm', label: 'Small', pixels: 16 },
     { size: 'md', label: 'Medium', pixels: 22 },
-    { size: 'lg', label: 'Large', pixels: 28 },
 ] as const;
 
 type IconArgs = Pick<IconOptions, 'size'> & {
@@ -25,7 +24,7 @@ export default {
         docs: {
             description: {
                 component:
-                    'Place Icon on a native SVG and pass a named Lucide import. Use small for compact metadata, medium for controls, and large for standalone icons. Icons inherit text color. Give informative icons an accessible name and label icon-only buttons on the button itself.',
+                    'Place Icon on a native SVG and pass a named Lucide import. Use small for compact metadata and medium for controls. Icons inherit text color. Give informative icons an accessible name and label icon-only buttons on the button itself.',
             },
         },
     },
@@ -69,7 +68,7 @@ export const Variants = {
                     </figure>
                     <figure>
                         <figcaption>Icon-only action</figcaption>
-                        <button type="button" ${Button({ layout: 'icon', ariaLabel: 'Back' })}>
+                        <button type="button" ${Button({ appearance: 'secondary', layout: 'icon', ariaLabel: 'Back' })}>
                             <svg ${Icon({ icon: ArrowLeft })}></svg>
                         </button>
                     </figure>

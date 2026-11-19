@@ -2,20 +2,15 @@ import { html } from '@grainular/nord';
 import type { Meta, StoryObj } from '@storybook/html-vite';
 import { renderNordStory } from '../../.storybook/render-nord-story';
 import { Surface } from '../surface/surface';
-import { Separator, type SeparatorOptions } from './separator';
+import { Separator } from './separator';
 
-const layouts = [
-    { value: 'full', label: 'Full width' },
-    { value: 'inset', label: 'Inset' },
-] as const;
-
-const listDetails = (options: SeparatorOptions) => html`
+const listDetails = (dividerClass = '') => html`
     <div class="stuf-separator-story-group" ${Surface()}>
         <p class="stuf-separator-story-row">
             <span>List name</span>
             <span>Home</span>
         </p>
-        <hr ${Separator(options)} aria-hidden="true" />
+        <hr class="${dividerClass}" ${Separator()} aria-hidden="true" />
         <p class="stuf-separator-story-row">
             <span>Members</span>
             <span>2 people</span>
@@ -31,23 +26,14 @@ export default {
         docs: {
             description: {
                 component:
-                    'A full-width rule divides sections. An inset rule aligns with the row padding on both sides of a grouped surface.',
+                    'Use a hairline to divide sections or rows. Set inline margins in the surrounding layout when the rule should align with the row content.',
             },
         },
     },
-    render: (options) => renderNordStory(() => listDetails(options)),
-    args: { layout: 'full' },
-    argTypes: {
-        layout: {
-            control: 'select',
-            options: layouts.map(({ value }) => value),
-            description: 'Controls whether the rule is inset on both sides.',
-            table: { defaultValue: { summary: 'full' } },
-        },
-    },
-} satisfies Meta<SeparatorOptions>;
+    render: () => renderNordStory(listDetails),
+} satisfies Meta;
 
-type Story = StoryObj<SeparatorOptions>;
+type Story = StoryObj;
 
 export const Playground = {} satisfies Story;
 
@@ -57,14 +43,14 @@ export const Variants = {
         renderNordStory(
             () => html`
                 <div class="stuf-story-variants">
-                    ${layouts.map(
-                        ({ value, label }) => html`
-                            <figure>
-                                <figcaption>${label}</figcaption>
-                                ${listDetails({ layout: value })}
-                            </figure>
-                        `,
-                    )}
+                    <figure>
+                        <figcaption>Full width</figcaption>
+                        ${listDetails()}
+                    </figure>
+                    <figure>
+                        <figcaption>Aligned with row content</figcaption>
+                        ${listDetails('stuf-separator-story-inset')}
+                    </figure>
                 </div>
             `,
         ),
