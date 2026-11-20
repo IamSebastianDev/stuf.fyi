@@ -1,0 +1,33 @@
+meta {
+  name: update-user-profile
+  type: http
+  seq: 1
+}
+
+patch {
+  url: {{baseUrl}}/api/v1/users/me
+  body: json
+  auth: none
+}
+
+headers {
+  Accept: application/json
+  Content-Type: application/json
+}
+
+body:json {
+  "displayName": "Lena",
+  "profileColor": "VIOLET"
+}
+
+assert {
+  res.status: eq 200
+  res.body.displayName: eq Lena
+  res.body.profileColor: eq VIOLET
+}
+
+docs {
+  Updates the default profile of the current user. Uses the session cookie from passkey sign-in or registration.
+
+  Send either or both fields. Omitted fields keep their current values. Send null or a blank display name to clear it. The response contains the updated public user profile.
+}
