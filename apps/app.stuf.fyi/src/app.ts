@@ -4,7 +4,7 @@ import { $outlet } from '@grainular/router';
 import { BottomNav, type BottomNavItem } from '@stuf/bits/bottom-nav';
 import { Circle, CircleDot, Menu, Square } from 'lucide';
 import { router } from './app.router';
-import { SessionGate } from './features/auth/components/session-gate';
+import { SessionGate } from './features/auth/session-gate';
 import { sessionStore } from './features/auth/stores/session.store';
 
 const destinations: readonly BottomNavItem[] = [

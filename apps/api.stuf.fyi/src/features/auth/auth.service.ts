@@ -8,30 +8,41 @@ import {
     type AuthenticationResponseJSON,
     type RegistrationResponseJSON,
 } from '@simplewebauthn/server';
+import { AuthErrorCode } from '@stuf/contracts/auth';
 import type { PasskeyCredential } from '@stuf/prisma';
-import type { FastifyReply, FastifyRequest } from 'fastify';
-import { randomBytes } from 'node:crypto';
-import { CookieService } from '../../core/cookies/cookie.service';
-import { PrismaService } from '../../core/prisma/prisma.service';
 import { SessionService } from '../session/session.service';
+import { PrismaService } from '../../core/prisma/prisma.service';
 import { UserService } from '../user/user.service';
+import { RegistrationVerificationService } from './registration-verification.service';
 
 @Injectable()
 export class AuthService {
     constructor(
         private readonly prismaService: PrismaService,
         private readonly config: ConfigService,
-        private readonly cookies: CookieService,
         private readonly sessions: SessionService,
         private readonly users: UserService,
+        private readonly registrationVerification: RegistrationVerificationService,
     ) {}
 
-    async createRegistrationOptions(reply: FastifyReply) {
+    async sendRegistrationEmail(email: string): Promise<void> {
+        await this.registrationVerification.sendLink(email, this.origin);
+    }
+
+    async createRegistrationOptions(token: string) {
+        const { email, tokenHash } = await this.registrationVerification.getVerification(token);
+        if (await this.users.findByEmail(email)) {
+            throw new ConflictException({
+                errorCode: AuthErrorCode.RegistrationEmailAlreadyUsed,
+                message: 'An account already exists for this email',
+            });
+        }
+
         const options = await generateRegistrationOptions({
             rpName: this.config.get('WEBAUTHN_RP_NAME', 'Stuf'),
             rpID: this.rpID,
-            userName: `user-${randomBytes(6).toString('hex')}`,
-            userDisplayName: 'Stuf user',
+            userName: email,
+            userDisplayName: email,
             authenticatorSelection: {
                 residentKey: 'required',
                 userVerification: 'required',
@@ -39,47 +50,48 @@ export class AuthService {
             attestationType: 'none',
         });
 
+        const expiresInMs = this.challengeTtlMs;
         await this.prismaService.client.webAuthnChallenge.create({
             data: {
                 challenge: options.challenge,
                 purpose: 'REGISTRATION',
                 webAuthnUserId: options.user.id,
-                expiresAt: new Date(Date.now() + this.challengeTtlMs),
+                emailVerificationHash: tokenHash,
+                expiresAt: new Date(Date.now() + expiresInMs),
             },
         });
 
-        this.cookies.set(reply, this.registrationChallengeCookieName, options.challenge, this.challengeTtlMs);
-
-        return options;
+        return { options, expiresInMs };
     }
 
-    async registerPasskey(response: RegistrationResponseJSON, request: FastifyRequest, reply: FastifyReply) {
-        const challenge = this.requireChallenge(request, this.registrationChallengeCookieName);
+    async registerPasskey(response: RegistrationResponseJSON, challenge: string | undefined) {
         const storedChallenge = await this.getChallenge(challenge, 'REGISTRATION');
         const verification = await this.verifyRegistration(response, storedChallenge.challenge);
 
-        if (!verification.verified || !storedChallenge.webAuthnUserId) {
+        if (!verification.verified || !storedChallenge.webAuthnUserId || !storedChallenge.emailVerificationHash) {
             throw new BadRequestException({
-                errorCode: 'WEBAUTHN_VERIFICATION_FAILED',
+                errorCode: AuthErrorCode.WebAuthnVerificationFailed,
                 message: 'Passkey registration could not be verified',
             });
         }
-        const webAuthnUserId = storedChallenge.webAuthnUserId;
+        const { webAuthnUserId, emailVerificationHash } = storedChallenge;
 
         const existingCredential = await this.prismaService.client.passkeyCredential.findUnique({
             where: { credentialId: verification.registrationInfo.credential.id },
         });
         if (existingCredential) {
             throw new ConflictException({
-                errorCode: 'PASSKEY_ALREADY_REGISTERED',
+                errorCode: AuthErrorCode.PasskeyAlreadyRegistered,
                 message: 'Passkey is already registered',
             });
         }
 
         const now = new Date();
-        const session = await this.prismaService.client.$transaction(async (transaction) => {
+        return this.prismaService.client.$transaction(async (transaction) => {
+            const email = await this.registrationVerification.consume(transaction, emailVerificationHash, now);
             const user = await transaction.user.create({
                 data: {
+                    email,
                     webAuthnUserId,
                     passkeys: {
                         create: {
@@ -101,32 +113,27 @@ export class AuthService {
 
             return this.sessions.create(user.id, transaction, now);
         });
-
-        this.finishCeremony(reply, this.registrationChallengeCookieName, session.sessionToken);
-        return this.sessions.toResponse(session.session);
     }
 
-    async createAuthenticationOptions(reply: FastifyReply) {
+    async createAuthenticationOptions() {
         const options = await generateAuthenticationOptions({
             rpID: this.rpID,
             userVerification: 'required',
         });
 
+        const expiresInMs = this.challengeTtlMs;
         await this.prismaService.client.webAuthnChallenge.create({
             data: {
                 challenge: options.challenge,
                 purpose: 'AUTHENTICATION',
-                expiresAt: new Date(Date.now() + this.challengeTtlMs),
+                expiresAt: new Date(Date.now() + expiresInMs),
             },
         });
 
-        this.cookies.set(reply, this.authenticationChallengeCookieName, options.challenge, this.challengeTtlMs);
-
-        return options;
+        return { options, expiresInMs };
     }
 
-    async authenticatePasskey(response: AuthenticationResponseJSON, request: FastifyRequest, reply: FastifyReply) {
-        const challenge = this.requireChallenge(request, this.authenticationChallengeCookieName);
+    async authenticatePasskey(response: AuthenticationResponseJSON, challenge: string | undefined) {
         const storedChallenge = await this.getChallenge(challenge, 'AUTHENTICATION');
         const passkey = await this.prismaService.client.passkeyCredential.findUnique({
             where: { credentialId: response.id },
@@ -135,7 +142,7 @@ export class AuthService {
 
         if (!passkey || !user || user.disabledAt) {
             throw new UnauthorizedException({
-                errorCode: 'PASSKEY_NOT_FOUND',
+                errorCode: AuthErrorCode.PasskeyNotFound,
                 message: 'Passkey authentication failed',
             });
         }
@@ -143,13 +150,13 @@ export class AuthService {
         const verification = await this.verifyAuthentication(response, storedChallenge.challenge, passkey);
         if (!verification.verified) {
             throw new UnauthorizedException({
-                errorCode: 'WEBAUTHN_VERIFICATION_FAILED',
+                errorCode: AuthErrorCode.WebAuthnVerificationFailed,
                 message: 'Passkey authentication failed',
             });
         }
 
         const now = new Date();
-        const session = await this.prismaService.client.$transaction(async (transaction) => {
+        return this.prismaService.client.$transaction(async (transaction) => {
             await transaction.passkeyCredential.update({
                 where: { id: passkey.id },
                 data: {
@@ -164,9 +171,6 @@ export class AuthService {
 
             return this.sessions.create(passkey.userId, transaction, now);
         });
-
-        this.finishCeremony(reply, this.authenticationChallengeCookieName, session.sessionToken);
-        return this.sessions.toResponse(session.session);
     }
 
     private async verifyRegistration(response: RegistrationResponseJSON, challenge: string) {
@@ -180,7 +184,7 @@ export class AuthService {
             });
         } catch {
             throw new BadRequestException({
-                errorCode: 'WEBAUTHN_VERIFICATION_FAILED',
+                errorCode: AuthErrorCode.WebAuthnVerificationFailed,
                 message: 'Passkey registration could not be verified',
             });
         }
@@ -207,29 +211,20 @@ export class AuthService {
             });
         } catch {
             throw new UnauthorizedException({
-                errorCode: 'WEBAUTHN_VERIFICATION_FAILED',
+                errorCode: AuthErrorCode.WebAuthnVerificationFailed,
                 message: 'Passkey authentication failed',
             });
         }
     }
 
-    private finishCeremony(reply: FastifyReply, challengeCookieName: string, sessionToken: string) {
-        this.cookies.clear(reply, challengeCookieName);
-        this.sessions.setCookie(reply, sessionToken);
-    }
-
-    private requireChallenge(request: FastifyRequest, cookieName: string) {
-        const challenge = this.cookies.get(request, cookieName);
+    private async getChallenge(challenge: string | undefined, purpose: 'REGISTRATION' | 'AUTHENTICATION') {
         if (!challenge) {
             throw new UnauthorizedException({
-                errorCode: 'WEBAUTHN_CHALLENGE_MISSING',
+                errorCode: AuthErrorCode.WebAuthnChallengeMissing,
                 message: 'WebAuthn ceremony has expired or was not started',
             });
         }
-        return challenge;
-    }
 
-    private async getChallenge(challenge: string, purpose: 'REGISTRATION' | 'AUTHENTICATION') {
         const storedChallenge = await this.prismaService.client.webAuthnChallenge.findUnique({
             where: { challenge },
         });
@@ -240,7 +235,7 @@ export class AuthService {
             storedChallenge.expiresAt <= new Date()
         ) {
             throw new BadRequestException({
-                errorCode: 'WEBAUTHN_CHALLENGE_INVALID',
+                errorCode: AuthErrorCode.WebAuthnChallengeInvalid,
                 message: 'WebAuthn challenge is invalid or expired',
             });
         }
@@ -260,13 +255,5 @@ export class AuthService {
 
     private get challengeTtlMs() {
         return Number(this.config.get('AUTH_CHALLENGE_TTL_MS', String(5 * 60 * 1000)));
-    }
-
-    private get registrationChallengeCookieName() {
-        return this.config.get('AUTH_REGISTRATION_CHALLENGE_COOKIE_NAME', 'stuf_registration_challenge');
-    }
-
-    private get authenticationChallengeCookieName() {
-        return this.config.get('AUTH_AUTHENTICATION_CHALLENGE_COOKIE_NAME', 'stuf_authentication_challenge');
     }
 }

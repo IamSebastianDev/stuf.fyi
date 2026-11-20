@@ -1,0 +1,45 @@
+@layer stuf.tokens, stuf.components;
+
+@layer stuf.components {
+    [stuf-color-picker] {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+
+        & > label {
+            position: relative;
+            display: grid;
+            place-items: center;
+            min-inline-size: 2.125rem;
+            min-block-size: var(--stuf-size-control-sm);
+        }
+
+        & input {
+            position: absolute;
+            inset: 0;
+            inline-size: 100%;
+            block-size: 100%;
+            margin: 0;
+            opacity: 0;
+            cursor: pointer;
+
+            &:checked + span {
+                outline: var(--stuf-focus-ring-width) solid var(--stuf-color-text);
+                outline-offset: 2px;
+            }
+
+            &:focus-visible + span {
+                outline: var(--stuf-focus-ring-width) solid var(--stuf-color-accent);
+                outline-offset: var(--stuf-focus-ring-offset);
+            }
+
+            &:disabled {
+                cursor: default;
+            }
+
+            &:disabled + span {
+                opacity: var(--stuf-opacity-disabled);
+            }
+        }
+    }
+}

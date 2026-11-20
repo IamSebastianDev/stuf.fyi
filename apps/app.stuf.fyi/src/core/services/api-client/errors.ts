@@ -26,8 +26,10 @@ export class ResponseValidationError extends Error {
     }
 }
 
+/** Thrown when the current browser or origin cannot run a passkey ceremony. */
 export class WebAuthnNotSupportedError extends Error {
     constructor() {
         super('This browser does not support passkeys');
+        this.name = 'WebAuthnNotSupportedError';
     }
 }

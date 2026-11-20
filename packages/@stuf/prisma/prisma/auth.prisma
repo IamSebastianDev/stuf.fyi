@@ -54,17 +54,30 @@ model Session {
 /// carries the generated WebAuthn user handle until the User is created.
 /// They must be consumed after successful use.
 model WebAuthnChallenge {
-  id             String                   @id @default(uuid())
-  challenge      String                   @unique
-  purpose        WebAuthnChallengePurpose
-  userId         String?
-  webAuthnUserId String?
-  createdAt      DateTime                 @default(now())
-  expiresAt      DateTime
-  consumedAt     DateTime?
+  id                    String                   @id @default(uuid())
+  challenge             String                   @unique
+  purpose               WebAuthnChallengePurpose
+  userId                String?
+  webAuthnUserId        String?
+  /// Hash of the email link authorizing this registration ceremony.
+  emailVerificationHash String?
+  createdAt             DateTime                 @default(now())
+  expiresAt             DateTime
+  consumedAt            DateTime?
 
   user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([expiresAt])
   @@index([userId, purpose])
+}
+
+/// A rate-limited, short-lived link proving control of the email used at signup.
+/// Only its hash is persisted. The proof is consumed when the account is created.
+model RegistrationEmailVerification {
+  email       String   @id
+  tokenHash   String   @unique
+  requestedAt DateTime
+  expiresAt   DateTime
+
+  @@index([expiresAt])
 }

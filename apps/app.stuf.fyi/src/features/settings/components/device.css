@@ -1,0 +1,24 @@
+.settings-device {
+    & > button {
+        --stuf-button-background: transparent;
+        --stuf-button-background-hover: var(--stuf-color-control-hover);
+        justify-content: flex-start;
+        inline-size: 100%;
+        min-block-size: var(--stuf-size-control-md);
+        padding-inline: var(--stuf-space-inline-control);
+    }
+
+    & > [appearance='plain'] {
+        --stuf-button-text: var(--stuf-color-text);
+    }
+
+    & > [appearance='destructive'] {
+        border-block-start: thin solid var(--stuf-color-divider);
+        border-start-start-radius: 0;
+        border-start-end-radius: 0;
+    }
+
+    & > p {
+        padding-inline: var(--stuf-space-inline-control);
+    }
+}

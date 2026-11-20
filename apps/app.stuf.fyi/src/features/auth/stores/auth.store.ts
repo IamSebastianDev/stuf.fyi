@@ -1,11 +1,8 @@
-import {
-    browserSupportsWebAuthn,
-    startAuthentication,
-    startRegistration,
-    type AuthenticationResponseJSON,
-    type PublicKeyCredentialCreationOptionsJSON,
-    type PublicKeyCredentialRequestOptionsJSON,
-    type RegistrationResponseJSON,
+import type {
+    AuthenticationResponseJSON,
+    PublicKeyCredentialCreationOptionsJSON,
+    PublicKeyCredentialRequestOptionsJSON,
+    RegistrationResponseJSON,
 } from '@simplewebauthn/browser';
 import {
     AuthSessionResponseSchema,
@@ -16,17 +13,33 @@ import type {
     AuthSessionResponseDto,
     AuthenticationOptionsResponseDto,
     RegistrationOptionsResponseDto,
+    RegistrationEmailRequestDto,
+    VerifiedRegistrationRequestDto,
 } from '@stuf/contracts/auth';
+import * as v from 'valibot';
 import { client, requestConfig, resolveResponse, validateResult } from '../../../core/services/api-client';
 import { WebAuthnNotSupportedError } from '../../../core/services/api-client/errors';
 import { sessionStore } from './session.store';
 
-/** Starts registration by requesting a one-time WebAuthn challenge. */
-const getRegistrationOptions = (): Promise<RegistrationOptionsResponseDto> => {
+/** Whether this browser can run a passkey ceremony on the current origin. */
+export const supportsPasskeys = (): boolean =>
+    globalThis.isSecureContext === true && typeof globalThis.PublicKeyCredential === 'function';
+
+/** Sends a verification link for the email entered during signup. */
+const sendRegistrationEmail = (input: RegistrationEmailRequestDto): Promise<void> => {
+    return client.query(
+        requestConfig('/auth/passkeys/register/email', { method: 'POST', json: input }),
+        resolveResponse(validateResult(v.undefined())),
+    );
+};
+
+/** Exchanges the email proof for a one-time WebAuthn registration challenge. */
+const getRegistrationOptions = (input: VerifiedRegistrationRequestDto): Promise<RegistrationOptionsResponseDto> => {
     return client.query(
         requestConfig('/auth/passkeys/register/options', {
             method: 'POST',
             authenticated: true,
+            json: input,
         }),
         resolveResponse(validateResult(RegistrationOptionsResponseSchema)),
     );
@@ -71,14 +84,17 @@ const verifyAuthentication = (response: AuthenticationResponseJSON): Promise<Aut
  * Runs the complete registration ceremony.
  *
  * The browser performs the credential creation step; only its serialized
- * response is sent to the API. A successful response updates sessionStore.
+ * response is sent to the API. A successful response updates the shared session.
  */
-const register = async (): Promise<AuthSessionResponseDto> => {
-    if (!browserSupportsWebAuthn()) {
+const register = async (input: VerifiedRegistrationRequestDto): Promise<AuthSessionResponseDto> => {
+    if (!supportsPasskeys()) {
         throw new WebAuthnNotSupportedError();
     }
 
-    const options = await getRegistrationOptions();
+    const [{ startRegistration }, options] = await Promise.all([
+        import('@simplewebauthn/browser'),
+        getRegistrationOptions(input),
+    ]);
     const credential = await startRegistration({
         optionsJSON: options as PublicKeyCredentialCreationOptionsJSON,
     });
@@ -94,11 +110,14 @@ const register = async (): Promise<AuthSessionResponseDto> => {
  * assertion and establishes the HttpOnly session cookie.
  */
 const authenticate = async (): Promise<AuthSessionResponseDto> => {
-    if (!browserSupportsWebAuthn()) {
+    if (!supportsPasskeys()) {
         throw new WebAuthnNotSupportedError();
     }
 
-    const options = await getAuthenticationOptions();
+    const [{ startAuthentication }, options] = await Promise.all([
+        import('@simplewebauthn/browser'),
+        getAuthenticationOptions(),
+    ]);
     const credential = await startAuthentication({
         optionsJSON: options as PublicKeyCredentialRequestOptionsJSON,
     });
@@ -108,9 +127,5 @@ const authenticate = async (): Promise<AuthSessionResponseDto> => {
 };
 
 export const authStore = {
-    /** Passkey ceremony commands; session state is owned by sessionStore. */
-    actions: {
-        register,
-        authenticate,
-    },
+    actions: { sendRegistrationEmail, register, authenticate },
 };

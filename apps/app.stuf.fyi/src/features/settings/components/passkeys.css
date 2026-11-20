@@ -1,0 +1,33 @@
+.settings-passkeys {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    & > li {
+        display: flex;
+        align-items: center;
+        gap: var(--stuf-space-3);
+        min-block-size: 3.5rem;
+        padding: var(--stuf-space-2) var(--stuf-space-inline-control);
+        overflow-wrap: anywhere;
+
+        &.settings-empty {
+            min-block-size: auto;
+            padding: var(--stuf-space-3) var(--stuf-space-inline-control);
+        }
+
+        & + li {
+            border-block-start: thin solid var(--stuf-color-divider);
+        }
+    }
+}
+
+.settings-passkey-icon {
+    display: grid;
+    flex: none;
+    place-items: center;
+    inline-size: 2.125rem;
+    aspect-ratio: 1;
+    border-radius: var(--stuf-radius-sm);
+    background-color: var(--stuf-color-background);
+}

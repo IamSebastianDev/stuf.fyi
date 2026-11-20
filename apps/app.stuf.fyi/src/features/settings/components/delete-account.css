@@ -1,0 +1,16 @@
+.settings-delete-confirmation {
+    display: grid;
+    gap: var(--stuf-space-2);
+
+    & [role='alert'] {
+        color: var(--stuf-color-danger);
+    }
+
+    & .settings-delete-actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: var(--stuf-space-2);
+        margin-block-start: var(--stuf-space-2);
+    }
+}

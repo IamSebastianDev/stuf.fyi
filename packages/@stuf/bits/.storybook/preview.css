@@ -152,33 +152,6 @@ stuf-nord-story {
     }
 }
 
-.stuf-text-field-story-settings-row {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    align-items: center;
-    gap: var(--stuf-space-3);
-    padding-inline: var(--stuf-space-3);
-    border: 0;
-    border-radius: 0.625rem;
-
-    &:has(> [stuf-text-field] > input:focus-visible) {
-        outline: thin solid var(--stuf-color-accent);
-        outline-offset: -1px;
-    }
-
-    & > label {
-        font-size: 0.875rem;
-    }
-
-    & > [stuf-text-field] > input {
-        font-size: var(--stuf-font-size-label);
-
-        &:focus-visible {
-            border-block-end-color: transparent;
-        }
-    }
-}
-
 .stuf-text-field-story-meal-name [stuf-text-field] > input {
     font-size: var(--stuf-font-size-heading);
     font-weight: var(--stuf-font-weight-semibold);
@@ -313,4 +286,8 @@ stuf-nord-story {
     display: grid;
     justify-items: start;
     gap: var(--stuf-space-2);
+}
+
+[stuf-auth-screen] {
+    --stuf-auth-screen-min-block-size: min(38rem, 100dvh);
 }

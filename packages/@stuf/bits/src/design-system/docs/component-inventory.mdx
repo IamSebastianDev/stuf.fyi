@@ -44,8 +44,9 @@ These components combine markup and styles with shared interaction. Build form c
 | [Text Field](?path=/story/text-field--variants) | Implemented | Outlined forms, compact meal and ingredient search, and plain fields for inline editing. |
 | [Checkbox](?path=/story/checkbox--variants) | Implemented | Shopping item completion and store assignments. |
 | [Switch](?path=/story/switch--variants) | Implemented | Enabling or disabling meals and planning when creating or editing a list. |
+| [Authentication](?path=/docs/auth-flow--docs) | Implemented | Passkey sign-in, email signup, verification, and session recovery. |
 | Segmented control | Planned | Switching between the planner’s week and day views. |
-| Color picker | Planned | Choosing a default profile color or a per-list override from the avatar palette. |
+| [Color picker](?path=/story/color-picker--variants) | Implemented | Choosing a default profile color or a per-list override from the avatar palette. |
 | Chips | Planned | Selecting stores or lists to copy meals from, adding suggested ingredients, and removing ingredients. |
 | Grouped list and row | Planned | Settings, result lists, and selectable rows with optional secondary text and trailing controls. |
 | Disclosure | Planned | Expanding and collapsing the shopping group for items usually bought elsewhere. |
@@ -65,7 +66,6 @@ Keep these with their features in the app. They own the domain data, actions, an
 | App component | Status | Used for |
 | --- | --- | --- |
 | App shell | In use | Safe-area layout, scrollable screen content, and bottom navigation. |
-| Passkey sign-in | Planned | Create account and sign in, show pending or error states, and continue to a shared invite. |
 | Create or join | Planned | Start a new list or enter an invite code, with invalid-code feedback. |
 | List switcher | Planned | Show the active list, other lists, and member previews in a raised popover. Open create or join actions. |
 | New-list sheet | Planned | Enter a list name, choose shopping-only mode, and optionally copy meals from other lists. |
@@ -88,8 +88,8 @@ Keep these with their features in the app. They own the domain data, actions, an
 | Store management | Planned | Add, rename, or delete stores for a list. |
 | List sharing | Planned | Show and copy the invite link, display the code, and reset both. |
 | List members | Planned | Show members, presence, the list owner, and removal actions when permitted. |
-| Profile settings | Planned | Edit the default name and color or override them for one list. |
+| Profile settings | In use | Edit the account’s default name and color. Per-list overrides are planned. |
 | Passkey management | Planned | Show registered passkeys and offer add or remove actions. |
-| Account settings screen | In use | View registered passkeys and sign out. Default profile and passkey management are planned. |
+| Account settings screen | In use | Edit the default profile, view registered passkeys, and sign out. Passkey management is planned. |
 | List settings screen | Planned | Group list preferences, stores, sharing, list profile, and members. |
 `}</Markdown>

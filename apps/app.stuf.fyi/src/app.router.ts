@@ -19,4 +19,14 @@ export const router = createRouter('/', [
         component: () => import('./features/auth/pages/sign-in.page'),
         use: [requireGuest],
     },
+    {
+        path: '/sign-up',
+        component: () => import('./features/auth/pages/sign-up.page'),
+        use: [requireGuest],
+    },
+    {
+        path: '/sign-up/verify',
+        component: () => import('./features/auth/pages/verify-email.page'),
+        use: [requireGuest],
+    },
 ]);

@@ -9,11 +9,12 @@ enum ProfileColor {
 
 /// The application identity associated with one or more passkeys.
 ///
-/// Users are intentionally not identified by email or password. The
-/// webAuthnUserId is the stable opaque identifier supplied to WebAuthn.
+/// The webAuthnUserId is the stable opaque identifier supplied to WebAuthn.
 model User {
   id              String              @id @default(uuid())
   webAuthnUserId  String              @unique
+  /// Verified address used to identify the account. Older accounts may have no email yet.
+  email           String?             @unique
   /// Optional account-wide display name used as the default when creating or joining a list.
   displayName     String?
   /// Account-wide avatar color used as the default when creating or joining a list.

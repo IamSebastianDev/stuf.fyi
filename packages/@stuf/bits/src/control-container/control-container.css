@@ -27,6 +27,28 @@
                 overflow-wrap: anywhere;
             }
 
+            &:has(> [stuf-text-field][appearance='plain']) {
+                padding-inline: var(--stuf-space-inline-control);
+                border-radius: var(--stuf-radius-md);
+
+                & > [stuf-text] {
+                    color: var(--stuf-color-text-muted);
+                    font-size: var(--stuf-font-size-body);
+                }
+
+                &:has(> [stuf-text-field] > input:focus-visible) {
+                    outline: thin solid var(--stuf-color-accent);
+                }
+
+                &:has(> [stuf-text-field] > input[aria-invalid='true']:focus-visible) {
+                    outline-color: var(--stuf-color-danger);
+                }
+
+                & > [stuf-text-field] > input:focus-visible {
+                    border-block-end-color: transparent;
+                }
+            }
+
             &:has(:disabled) {
                 cursor: default;
 

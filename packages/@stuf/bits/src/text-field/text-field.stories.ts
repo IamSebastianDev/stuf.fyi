@@ -3,6 +3,7 @@ import { derived, grain } from '@grainular/grains';
 import { $if, html, on } from '@grainular/nord';
 import type { Meta, StoryObj } from '@storybook/html-vite';
 import { Button } from '@stuf/bits/button';
+import { ControlContainer } from '@stuf/bits/control-container';
 import { Surface } from '@stuf/bits/surface';
 import { Text } from '@stuf/bits/text';
 import { TextField, type TextFieldProps } from '@stuf/bits/text-field';
@@ -156,16 +157,13 @@ export const Variants = {
                     </figure>
                     <figure>
                         <figcaption>Settings row</figcaption>
-                        <div class="stuf-text-field-story-settings-row" ${Surface()}>
-                            <label for="text-field-profile-name" ${Text({ size: 'caption', appearance: 'muted' })}
-                                >Name</label
-                            >
-                            ${TextField({
+                        <div ${Surface()}>
+                            ${ControlContainer({
                                 control: control(''),
-                                id: 'text-field-profile-name',
-                                appearance: 'plain',
-                                align: 'end',
-                                placeholder: 'Optional',
+                                label: 'Name',
+                                layout: 'label-start',
+                                children: (props) =>
+                                    TextField({ ...props, appearance: 'plain', align: 'end', placeholder: 'Optional' }),
                             })}
                         </div>
                     </figure>
@@ -176,6 +174,14 @@ export const Variants = {
                 </div>
             `,
         ),
+    play: async ({ canvas, userEvent }) => {
+        const input = canvas.getByRole('textbox', { name: /^Name$/ });
+        await userEvent.click(input);
+        await expect(input).toHaveFocus();
+        await expect(input.closest('label')).toHaveStyle({ outlineStyle: 'solid' });
+        await expect(getComputedStyle(input).borderBottomColor).toBe('rgba(0, 0, 0, 0)');
+        input.blur();
+    },
 } satisfies Story;
 
 export const AddItem = {

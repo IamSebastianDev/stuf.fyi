@@ -1,0 +1,28 @@
+.settings-profile {
+    display: grid;
+    gap: var(--stuf-space-2);
+
+    & .settings-profile-row {
+        min-block-size: var(--stuf-size-control-md);
+    }
+
+    & .settings-profile-color {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--stuf-space-2);
+        padding-inline: var(--stuf-space-inline-control);
+    }
+
+    & .settings-profile-error {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--stuf-space-2);
+        color: var(--stuf-color-danger);
+    }
+}
+
+.settings-profile-help {
+    padding-inline: var(--stuf-space-1);
+}

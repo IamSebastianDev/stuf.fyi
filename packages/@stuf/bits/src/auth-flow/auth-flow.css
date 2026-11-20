@@ -1,0 +1,97 @@
+@layer stuf.tokens, stuf.components;
+
+@layer stuf.components {
+    [stuf-auth-screen] {
+        display: grid;
+        box-sizing: border-box;
+        max-inline-size: 27rem;
+        min-block-size: var(--stuf-auth-screen-min-block-size, 100dvh);
+        margin-inline: auto;
+        padding-block: calc(var(--stuf-space-6) + env(safe-area-inset-top, 0px))
+            calc(var(--stuf-space-7) + env(safe-area-inset-bottom, 0px));
+        padding-inline: max(var(--stuf-space-6), env(safe-area-inset-left, 0px))
+            max(var(--stuf-space-6), env(safe-area-inset-right, 0px));
+
+        &.passkey-screen {
+            grid-template-rows: 1fr auto;
+            gap: var(--stuf-space-6);
+        }
+
+        .passkey-intro {
+            display: grid;
+            align-content: center;
+            justify-items: start;
+            gap: var(--stuf-space-3);
+            text-wrap: pretty;
+
+            & > h1 {
+                font-size: clamp(1.875rem, 1.25rem + 3vi, 2.125rem);
+            }
+
+            & > p {
+                font-size: var(--stuf-font-size-input);
+            }
+        }
+
+        .passkey-mark {
+            display: grid;
+            place-items: center;
+            inline-size: 4rem;
+            block-size: 4rem;
+            margin-block-end: var(--stuf-space-2);
+            border-radius: var(--stuf-radius-lg);
+            background-color: var(--stuf-color-control);
+            font-size: 2.125rem;
+            line-height: 1;
+        }
+
+        .passkey-actions {
+            display: grid;
+            gap: var(--stuf-space-2);
+            text-align: center;
+            text-wrap: pretty;
+
+            & > [stuf-button][appearance='inverse'] {
+                min-block-size: 3.5rem;
+                font-size: var(--stuf-font-size-input);
+            }
+
+            & > p {
+                font-size: var(--stuf-font-size-body);
+            }
+
+            & > .passkey-error {
+                color: var(--stuf-color-danger);
+
+                &:empty {
+                    position: absolute;
+                }
+            }
+        }
+
+        &.registration-screen {
+            align-content: center;
+            gap: var(--stuf-space-6);
+
+            & > header,
+            & .registration-actions {
+                display: grid;
+                gap: var(--stuf-space-3);
+            }
+
+            & .registration-message:empty {
+                position: absolute;
+            }
+
+            & .registration-error {
+                color: var(--stuf-color-danger);
+            }
+        }
+
+        &.session-status-screen {
+            align-content: center;
+            justify-items: start;
+            gap: var(--stuf-space-3);
+        }
+    }
+}

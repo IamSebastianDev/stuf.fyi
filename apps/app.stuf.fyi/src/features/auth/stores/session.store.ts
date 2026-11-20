@@ -1,9 +1,9 @@
 import { derived, grain, readonly } from '@grainular/grains';
 import { AuthSessionResponseSchema, type AuthSessionResponseDto } from '@stuf/contracts/auth';
+import type { UserResponse } from '@stuf/contracts/user';
 import * as v from 'valibot';
-import { ApiError } from '../../../core/services/api-client/errors';
 import { client, requestConfig, resolveResponse, validateResult } from '../../../core/services/api-client';
-import { rememberPasskeyUse } from '../services/passkey-preference';
+import { ApiError } from '../../../core/services/api-client/errors';
 
 /** Current authenticated session, or null before/after authentication. */
 const authenticatedSession = grain<AuthSessionResponseDto | null>(null);
@@ -40,8 +40,12 @@ const logoutRequest = () => {
 
 /** Replaces the local session after a successful authentication ceremony. */
 const setSession = (session: AuthSessionResponseDto): void => {
-    rememberPasskeyUse();
     authenticatedSession.set(session);
+};
+
+/** Applies the server's updated profile to the current account while preserving its passkeys. */
+const updateUser = (user: UserResponse): void => {
+    authenticatedSession.update((session) => (session?.user.id === user.id ? { ...session, user } : session));
 };
 
 /** Clears local session state without making a network request. */
@@ -91,6 +95,7 @@ export const sessionStore = {
     /** Commands that change or refresh the current session. */
     actions: {
         setSession,
+        updateUser,
         reset,
         fetchIdentity,
         logout,

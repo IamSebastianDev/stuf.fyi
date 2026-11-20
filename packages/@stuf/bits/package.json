@@ -7,6 +7,7 @@
         "**/*.css"
     ],
     "exports": {
+        "./auth-flow": "./src/auth-flow/auth-flow.ts",
         "./avatar": "./src/avatar/avatar.ts",
         "./avatar.css": "./src/avatar/avatar.css",
         "./badge": "./src/badge/badge.ts",
@@ -15,6 +16,7 @@
         "./button": "./src/button/button.ts",
         "./button.css": "./src/button/button.css",
         "./checkbox": "./src/checkbox/checkbox.ts",
+        "./color-picker": "./src/color-picker/color-picker.ts",
         "./control-container": "./src/control-container/control-container.ts",
         "./icon": "./src/icon/icon.ts",
         "./icon.css": "./src/icon/icon.css",

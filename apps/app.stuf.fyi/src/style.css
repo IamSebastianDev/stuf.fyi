@@ -7,6 +7,7 @@
 }
 
 :root {
+    overscroll-behavior: none;
     background-color: var(--stuf-color-background);
     color: var(--stuf-color-text);
     font-family: var(--stuf-font-family-sans);
@@ -29,11 +30,9 @@ body {
         max(var(--stuf-space-6), env(safe-area-inset-right, 0px));
 }
 
-.app-status-screen {
-    display: grid;
-    align-content: center;
-    justify-items: start;
-    gap: var(--stuf-space-3);
+.app-shell-content,
+[stuf-sheet-content] {
+    overscroll-behavior: none;
 }
 
 .app-shell:has(> [stuf-bottom-nav]) {
@@ -45,7 +44,6 @@ body {
 
     & > .app-shell-content {
         overflow: auto;
-        overscroll-behavior-block: contain;
     }
 
     & .app-screen {

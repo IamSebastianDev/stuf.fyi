@@ -26,7 +26,10 @@ export async function extractFromResponse(response: Response): Promise<ResponseS
 
     // Otherwise, we try to parse the backend response
     // to see if we have received a usable error
-    const parsed = safeParse(HttpErrorResponseSchema, data);
+    const parsed = safeParse(
+        HttpErrorResponseSchema,
+        typeof data === 'object' && data !== null ? { ...data, statusCode: response.status } : data,
+    );
     return {
         ok: false,
         response,
