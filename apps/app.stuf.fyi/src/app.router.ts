@@ -1,10 +1,17 @@
-import { createRouter } from '@grainular/router';
+import { createRouter, pre } from '@grainular/router';
 import { requireGuest, requireSession } from './core/guards/session.guards';
+
+const settingsPage = () => import('./features/settings/pages/settings.page');
 
 export const router = createRouter('/', [
     {
         path: '/',
-        component: () => import('./pages/home.page'),
+        component: settingsPage,
+        use: [requireSession, pre(({ redirect }) => redirect('/settings'))],
+    },
+    {
+        path: '/settings',
+        component: settingsPage,
         use: [requireSession],
     },
     {

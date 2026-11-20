@@ -11,6 +11,7 @@
         "./avatar.css": "./src/avatar/avatar.css",
         "./badge": "./src/badge/badge.ts",
         "./badge.css": "./src/badge/badge.css",
+        "./bottom-nav": "./src/bottom-nav/bottom-nav.ts",
         "./button": "./src/button/button.ts",
         "./button.css": "./src/button/button.css",
         "./checkbox": "./src/checkbox/checkbox.ts",

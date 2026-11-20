@@ -11,6 +11,7 @@
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
+        "@grainular/forms": "2.4.0",
         "@grainular/grains": "2.4.0",
         "@grainular/nord": "2.4.0",
         "@grainular/resource": "2.4.0",

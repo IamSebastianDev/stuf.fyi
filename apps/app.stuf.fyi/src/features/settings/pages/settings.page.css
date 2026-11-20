@@ -1,0 +1,58 @@
+.settings-page {
+    display: grid;
+    align-content: start;
+    gap: var(--stuf-space-7);
+
+    & > section {
+        display: grid;
+        gap: var(--stuf-space-2);
+    }
+
+    & .settings-passkeys {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        & > li {
+            display: flex;
+            align-items: center;
+            gap: var(--stuf-space-3);
+            min-block-size: 3.5rem;
+            padding: var(--stuf-space-2) var(--stuf-space-inline-control);
+            overflow-wrap: anywhere;
+
+            & + li {
+                border-block-start: thin solid var(--stuf-color-divider);
+            }
+        }
+    }
+
+    & .settings-passkey-icon {
+        display: grid;
+        flex: none;
+        place-items: center;
+        inline-size: 2.125rem;
+        aspect-ratio: 1;
+        border-radius: var(--stuf-radius-sm);
+        background-color: var(--stuf-color-background);
+    }
+
+    & .settings-empty {
+        padding: var(--stuf-space-3) var(--stuf-space-inline-control);
+    }
+
+    & .settings-device {
+        & > button {
+            --stuf-button-text: var(--stuf-color-text);
+            --stuf-button-background-hover: var(--stuf-color-control-hover);
+            justify-content: flex-start;
+            inline-size: 100%;
+            min-block-size: var(--stuf-size-control-md);
+            padding-inline: var(--stuf-space-inline-control);
+        }
+
+        & > p {
+            padding-inline: var(--stuf-space-inline-control);
+        }
+    }
+}

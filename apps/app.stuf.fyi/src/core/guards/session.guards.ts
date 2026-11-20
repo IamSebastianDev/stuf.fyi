@@ -6,5 +6,5 @@ export const requireSession = pre(({ redirect }) => {
 });
 
 export const requireGuest = pre(({ redirect }) => {
-    if (sessionStore.state.isAuthenticated()) redirect('/');
+    if (sessionStore.state.isAuthenticated()) redirect('/settings');
 });

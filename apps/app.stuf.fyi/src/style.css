@@ -35,3 +35,21 @@ body {
     justify-items: start;
     gap: var(--stuf-space-3);
 }
+
+.app-shell:has(> [stuf-bottom-nav]) {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    block-size: 100dvh;
+    max-inline-size: 27rem;
+    margin-inline: auto;
+
+    & > .app-shell-content {
+        overflow: auto;
+        overscroll-behavior-block: contain;
+    }
+
+    & .app-screen {
+        min-block-size: 100%;
+        padding-block-end: var(--stuf-space-5);
+    }
+}

@@ -8,6 +8,13 @@ This inventory follows the standalone **Meal Planner Prototype** HTML export and
 
 **Implemented** means the primitive is exported by Bits and has a Variants story. **Planned** means the UI is still to be built. Review each Bits addition in its own Variants story before composing the app screens.
 
+## Product terms
+
+- **Lists** are named shared containers such as Home and Cabin weekend. Members, sharing, and list preferences belong here.
+- **Shopping** covers the active list’s items, cart, stores, and progress. The navigation label is **List**.
+- **Meals** is the active list’s recipe library.
+- **Plan** schedules meals for specific days on the active list. Week and day views show the same plan at different levels of detail.
+
 ## Primitives
 
 Primitives get their appearance from the design tokens and use native elements where possible. Use Text for typography, spacing tokens for layout, and Button's icon layout for icon actions.
@@ -37,12 +44,12 @@ These components combine markup and styles with shared interaction. Build form c
 | [Text Field](?path=/story/text-field--variants) | Implemented | Outlined forms, compact meal and ingredient search, and plain fields for inline editing. |
 | [Checkbox](?path=/story/checkbox--variants) | Implemented | Shopping item completion and store assignments. |
 | [Switch](?path=/story/switch--variants) | Implemented | Enabling or disabling meals and planning when creating or editing a list. |
-| Segmented control | Planned | Switching between the planner's List and Days views. |
+| Segmented control | Planned | Switching between the planner’s week and day views. |
 | Color picker | Planned | Choosing a default profile color or a per-list override from the avatar palette. |
 | Chips | Planned | Selecting stores or lists to copy meals from, adding suggested ingredients, and removing ingredients. |
 | Grouped list and row | Planned | Settings, result lists, and selectable rows with optional secondary text and trailing controls. |
 | Disclosure | Planned | Expanding and collapsing the shopping group for items usually bought elsewhere. |
-| Bottom navigation | Planned | Plan, Meals, List, and Settings destinations, including shopping-only lists. |
+| [Bottom navigation](?path=/story/bottom-nav--variants) | Implemented | Plan, Meals, List, and Settings destinations, including shopping-only lists. |
 | Screen header | Planned | Titles, Back and Close controls, and trailing actions such as Save or Share. |
 | [Sheet](?path=/story/sheet--variants) | Implemented | Dinner selection, store assignment, and new-list creation. |
 | Popover | Planned | Opening the list switcher from the current list's name. |
@@ -57,12 +64,12 @@ Keep these with their features in the app. They own the domain data, actions, an
 <Markdown>{`
 | App component | Status | Used for |
 | --- | --- | --- |
-| App shell | Planned | Safe-area layout, scrollable screen content, bottom navigation, and pinned actions. |
+| App shell | In use | Safe-area layout, scrollable screen content, and bottom navigation. |
 | Passkey sign-in | Planned | Create account and sign in, show pending or error states, and continue to a shared invite. |
 | Create or join | Planned | Start a new list or enter an invite code, with invalid-code feedback. |
 | List switcher | Planned | Show the active list, other lists, and member previews in a raised popover. Open create or join actions. |
 | New-list sheet | Planned | Enter a list name, choose shopping-only mode, and optionally copy meals from other lists. |
-| Week navigator | Planned | Browse weeks, show the date range and dinners planned, and switch between List and Days. |
+| Week navigator | Planned | Browse weeks, show the date range and dinners planned, and switch between week and day views. |
 | Weekly meal rows | Planned | Show planned dinners and unplanned days with an Add dinner action. |
 | Day strip and card | Planned | Select a weekday, see what is planned, and open the dinner picker. |
 | Meal suggestion | Planned | Show a suggested dinner and its reason, with accept, refresh, and dismiss actions. |
@@ -71,7 +78,7 @@ Keep these with their features in the app. They own the domain data, actions, an
 | Meal library | Planned | Search meals, see ingredient previews and planned-day labels, and copy meals from another list. |
 | Meal editor | Planned | Create or edit a meal, choose an emoji, and save or delete. |
 | Ingredient editor | Planned | Add ingredients by typing or choosing a suggestion and remove them with chips. |
-| Shopping list header | Planned | Open the list switcher, sharing, and settings. Show sync and completion. |
+| Shopping header | Planned | Open the list switcher, sharing, and settings. Show sync and completion. |
 | Shopping quick-add | Planned | Add an item from text or from purchase history suggestions. |
 | Shopping item row | Planned | Check or restore an item and show meal, store, and member attribution. |
 | Cart section | Planned | Show checked items with timestamps and offer Clear with Undo. |
@@ -83,6 +90,6 @@ Keep these with their features in the app. They own the domain data, actions, an
 | List members | Planned | Show members, presence, the list owner, and removal actions when permitted. |
 | Profile settings | Planned | Edit the default name and color or override them for one list. |
 | Passkey management | Planned | Show registered passkeys and offer add or remove actions. |
-| Account settings screen | Planned | Group passkeys and default profile settings with sign-out. |
+| Account settings screen | In use | View registered passkeys and sign out. Default profile and passkey management are planned. |
 | List settings screen | Planned | Group list preferences, stores, sharing, list profile, and members. |
 `}</Markdown>

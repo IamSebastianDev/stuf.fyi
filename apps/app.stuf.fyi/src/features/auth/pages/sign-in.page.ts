@@ -53,7 +53,7 @@ export default function SignInPage() {
             await authStore.actions[action]();
             request.set({ phase: 'verified', message: 'Signed in' });
             await new Promise<void>((resolve) => window.setTimeout(resolve, 400));
-            navigate({ path: '/', history: 'replace' });
+            navigate({ path: '/settings', history: 'replace' });
         } catch (cause) {
             request.set({ phase: 'error', message: passkeyError(cause) });
         }
