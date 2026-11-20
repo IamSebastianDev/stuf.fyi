@@ -66,8 +66,8 @@ export class SessionService {
     }
 
     toResponse(session: SessionWithUserPasskeys) {
-        const { user, ...sessionData } = session;
-        return { user, session: sessionData, passkeys: user.passkeys };
+        const { user } = session;
+        return { user, passkeys: user.passkeys };
     }
 
     private requireTokenHash(request: FastifyRequest): string {

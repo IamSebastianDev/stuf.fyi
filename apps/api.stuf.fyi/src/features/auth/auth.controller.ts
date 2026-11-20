@@ -1,16 +1,12 @@
-import { Body, Controller, Get, HttpCode, Post, Req, Res, SerializeOptions } from '@nestjs/common';
+import { Body, Controller, Post, Req, Res, SerializeOptions } from '@nestjs/common';
 import { type AuthenticationResponseJSON, type RegistrationResponseJSON } from '@simplewebauthn/server';
-import { AuthSessionResponseSchema, type AuthSessionResponseDto } from '@stuf/contracts/auth';
+import { AuthSessionResponseSchema, type AuthSessionResponseInput } from '@stuf/contracts/auth';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 import { AuthService } from './auth.service';
-import { SessionService } from './session.service';
 
 @Controller({ version: '1', path: '/auth' })
 export class AuthController {
-    constructor(
-        private readonly authService: AuthService,
-        private readonly sessionService: SessionService,
-    ) {}
+    constructor(private readonly authService: AuthService) {}
 
     @Post('passkeys/register/options')
     getRegistrationOptions(@Res({ passthrough: true }) reply: FastifyReply) {
@@ -23,8 +19,8 @@ export class AuthController {
         @Body() response: RegistrationResponseJSON,
         @Req() request: FastifyRequest,
         @Res({ passthrough: true }) reply: FastifyReply,
-    ): Promise<AuthSessionResponseDto> {
-        return this.authService.registerPasskey(response, request, reply) as unknown as Promise<AuthSessionResponseDto>;
+    ): Promise<AuthSessionResponseInput> {
+        return this.authService.registerPasskey(response, request, reply);
     }
 
     @Post('passkeys/authenticate/options')
@@ -38,23 +34,7 @@ export class AuthController {
         @Body() response: AuthenticationResponseJSON,
         @Req() request: FastifyRequest,
         @Res({ passthrough: true }) reply: FastifyReply,
-    ): Promise<AuthSessionResponseDto> {
-        return this.authService.authenticatePasskey(
-            response,
-            request,
-            reply,
-        ) as unknown as Promise<AuthSessionResponseDto>;
-    }
-
-    @Get('session')
-    @SerializeOptions({ schema: AuthSessionResponseSchema })
-    getSession(@Req() request: FastifyRequest): Promise<AuthSessionResponseDto> {
-        return this.sessionService.getCurrentSession(request) as unknown as Promise<AuthSessionResponseDto>;
-    }
-
-    @Post('logout')
-    @HttpCode(204)
-    logout(@Req() request: FastifyRequest, @Res({ passthrough: true }) reply: FastifyReply) {
-        return this.sessionService.revoke(request, reply);
+    ): Promise<AuthSessionResponseInput> {
+        return this.authService.authenticatePasskey(response, request, reply);
     }
 }

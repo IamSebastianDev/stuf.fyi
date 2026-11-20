@@ -5,8 +5,8 @@ import {
     ListCollectionResponseSchema,
     type CreateListRequestDto,
 } from '@stuf/contracts/list';
-import { SessionUserId } from '../auth/session-user-id.decorator';
-import { SessionGuard } from '../auth/session.guard';
+import { SessionUserId } from '../session/session-user-id.decorator';
+import { SessionGuard } from '../session/session.guard';
 import { ListService } from './list.service';
 
 @Controller({ version: '1', path: '/lists' })

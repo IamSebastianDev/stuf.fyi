@@ -9,6 +9,7 @@ import { SocketModule } from './core/socket/socket.module';
 import { AuthModule } from './features/auth/auth.module';
 import { HealthModule } from './features/health/health.module';
 import { ListModule } from './features/list/list.module';
+import { UserModule } from './features/user/user.module';
 
 @Module({
     imports: [
@@ -20,6 +21,7 @@ import { ListModule } from './features/list/list.module';
         HealthModule,
         AuthModule,
         ListModule,
+        UserModule,
         PrismaModule,
         SocketModule,
     ],

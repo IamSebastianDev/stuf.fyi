@@ -17,3 +17,7 @@ headers {
 assert {
   res.status: eq 200
 }
+
+docs {
+  Restores the signed-in user and their registered passkeys from the browser's session cookie. The frontend uses this on a fresh load. Passkey sign-in and registration return the same data.
+}

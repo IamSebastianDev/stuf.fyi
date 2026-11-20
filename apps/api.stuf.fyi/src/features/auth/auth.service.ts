@@ -8,12 +8,13 @@ import {
     type AuthenticationResponseJSON,
     type RegistrationResponseJSON,
 } from '@simplewebauthn/server';
+import type { PasskeyCredential } from '@stuf/prisma';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 import { randomBytes } from 'node:crypto';
 import { CookieService } from '../../core/cookies/cookie.service';
 import { PrismaService } from '../../core/prisma/prisma.service';
-import { SessionService } from './session.service';
-import { passkeyWithUser, type PasskeyWithUser } from './types/passkey-with-user.type';
+import { SessionService } from '../session/session.service';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class AuthService {
@@ -22,6 +23,7 @@ export class AuthService {
         private readonly config: ConfigService,
         private readonly cookies: CookieService,
         private readonly sessions: SessionService,
+        private readonly users: UserService,
     ) {}
 
     async createRegistrationOptions(reply: FastifyReply) {
@@ -128,10 +130,10 @@ export class AuthService {
         const storedChallenge = await this.getChallenge(challenge, 'AUTHENTICATION');
         const passkey = await this.prismaService.client.passkeyCredential.findUnique({
             where: { credentialId: response.id },
-            include: passkeyWithUser,
         });
+        const user = passkey && (await this.users.findById(passkey.userId));
 
-        if (!passkey || passkey.user.disabledAt) {
+        if (!passkey || !user || user.disabledAt) {
             throw new UnauthorizedException({
                 errorCode: 'PASSKEY_NOT_FOUND',
                 message: 'Passkey authentication failed',
@@ -187,7 +189,7 @@ export class AuthService {
     private async verifyAuthentication(
         response: AuthenticationResponseJSON,
         challenge: string,
-        passkey: PasskeyWithUser,
+        passkey: PasskeyCredential,
     ) {
         try {
             return await verifyAuthenticationResponse({
